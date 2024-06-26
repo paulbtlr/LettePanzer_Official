@@ -1,9 +1,11 @@
 import pygame
 
+font_path = "Assets\Schrift\Pixellari.ttf"  # Pfad zur heruntergeladenen Schriftart
+
 class Button:
     def __init__(self, text, position, width, height):
         self.text = text
-        self.font = pygame.font.Font(None, 36)
+        self.font = pygame.font.Font(font_path, 36)
         self.color = (100, 100, 100)
         self.highlight_color = (150, 150, 150)
         self.position = position
@@ -18,9 +20,16 @@ class Button:
         else:
             pygame.draw.rect(surface, self.color, self.rect)
         
-        text_render = self.font.render(self.text, True, (255, 255, 255))
-        text_rect = text_render.get_rect(center=self.rect.center)
-        surface.blit(text_render, text_rect)
+        # Split text into lines if \n is present
+        lines = self.text.split('\n')
+
+        # Render each line of text
+        for i, line in enumerate(lines):
+            text_render = self.font.render(line, True, (255, 255, 255))
+            text_rect = text_render.get_rect()
+            text_rect.centerx = self.rect.centerx
+            text_rect.y = self.rect.centery + (i * self.font.get_height())  # Vertical offset for multiple lines
+            surface.blit(text_render, text_rect)
 
     def update(self, event):
         if event.type == pygame.MOUSEMOTION:
@@ -40,7 +49,7 @@ class UI:
         button_info = [
             {"text": "WEAPONS", "position": (800, 880), "width": 300, "height": 50},
             {"text": "FIRE", "position": (1150, 880), "width": 300, "height": 150},
-            {"text": "LEAVE GAME", "position": (1740, 880), "width": 180, "height": 150}
+            {"text": "LEAVE\nGAME", "position": (1740, 880), "width": 180, "height": 150}  # Updated text here
         ]
 
         for info in button_info:
