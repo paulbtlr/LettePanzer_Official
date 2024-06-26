@@ -27,7 +27,7 @@ waves = []
 
 for _ in range(num_waves):
     wave_length = random.randint(100, 400)
-    amplitude = random.randint(10, 80)
+    amplitude = random.randint(10, 40)
     phase_shift = random.uniform(0, 2 * math.pi)
     waves.append((wave_length, amplitude, phase_shift))
 
