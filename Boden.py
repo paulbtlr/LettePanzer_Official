@@ -43,7 +43,7 @@ while running:
         for wave in waves:
             wave_length, amplitude, phase_shift = wave
             y += amplitude * math.sin(x / wave_length * 2 * math.pi + phase_shift)
-        y = int(window_size[1] / 1.75 + y)
+        y = int(window_size[1] / 1.5 + y)
         pygame.draw.line(screen, LIGHT_GRAY, (x, y), (x, window_size[1]))
 
     # Update the display
