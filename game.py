@@ -9,7 +9,7 @@ from pygame.locals import (
     QUIT
 )
 
-
+#initialise pygame
 pygame.init()
 
 SCREEN_WIDTH = 800
