@@ -1,57 +1,89 @@
 import pygame
 import sys
 
-# Pygame initialisieren
+
 pygame.init()
 
-# Bildschirmabmessungen
+
 screen_width = 1920
 screen_height = 1050
 
-# Farben definieren
+# Farben 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 BLUE = (0, 0, 255)
 GREEN = (0, 255, 0)
+GRAY = (200, 200, 200)
 
 # Spielfeld erstellen
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption('1v1 Spiel')
 
-# Spielergrößen und -positionen
+# Spielergrößen
 player_width = 50
 player_height = 60
 player_speed = 10
 
-# Zielposition und -größe
+# Zielposition
 goal_width = 30
 goal_height = 30
 goal_x = screen_width // 2 - goal_width // 2
 goal_y = screen_height // 2 - goal_height // 2
 
-# Schriftart für den Siegtext
-font_path = "Assets\Schrift\Pixellari.ttf"  # Pfad zur heruntergeladenen Schriftart
+# Schriftart 
+font_path = "Assets/Schrift/Pixellari.ttf"  # Pfad zur heruntergeladenen Schriftart
 font = pygame.font.Font(font_path, 65)
+font_button = pygame.font.Font(font_path, 50)
 
-# Funktion zur Anzeige der Gewinnnachricht
+
+button_width = 300
+button_height = 100
+button_start_x = screen_width // 2 - button_width // 2
+button_start_y = screen_height // 2
+button_restart_y = button_start_y + 150
+button_quit_y = button_restart_y + 150
+
+# Funktion zur Anzeige der Gewinnnachricht und Buttons
 def display_winner(winner):
     winner_text = font.render(f"{winner} hat gewonnen!", True, BLACK)
     screen.fill(WHITE)
     screen.blit(winner_text, (screen_width // 2 - winner_text.get_width() // 2, screen_height // 4 - winner_text.get_height() // 2))
-    pygame.display.flip()
-    wait_for_key()
+    
+    # Buttons 
+    draw_button("Startmenü", button_start_x, button_start_y)
+    draw_button("Neustarten", button_start_x, button_restart_y)
+    draw_button("Quit", button_start_x, button_quit_y)
 
-# Funktion zum Warten auf eine Tasteneingabe
-def wait_for_key():
+    pygame.display.flip()
+    wait_for_click()
+
+# Funktion zum Zeichnen eines Buttons
+def draw_button(text, x, y):
+    pygame.draw.rect(screen, GRAY, (x, y, button_width, button_height))
+    button_text = font_button.render(text, True, BLACK)
+    screen.blit(button_text, (x + (button_width - button_text.get_width()) // 2, y + (button_height - button_text.get_height()) // 2))
+
+# Funktion zum Warten auf eine Mausklick
+def wait_for_click():
     waiting = True
     while waiting:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN:
-                waiting = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_x, mouse_y = pygame.mouse.get_pos()
+                if button_start_x <= mouse_x <= button_start_x + button_width:
+                    if button_start_y <= mouse_x <= button_start_y + button_height:
+                        # Startmenü-Button
+                        waiting = False
+                    elif button_restart_y <= mouse_y <= button_restart_y + button_height:
+                        # Neustarten-Button
+                        waiting = False
+                    elif button_quit_y <= mouse_y <= button_quit_y + button_height:
+                        pygame.quit()
+                        sys.exit()
 
 # Hauptspielschleife
 while True:
@@ -91,7 +123,7 @@ while True:
         if keys[pygame.K_s]:
             player2_y += player_speed
         
-        # Bildschirm mit weißem Hintergrund füllen
+        
         screen.fill(WHITE)
         
         # Spieler zeichnen
@@ -111,8 +143,8 @@ while True:
             display_winner("Spieler 2")
             running = False
         
-        # Bildschirm aktualisieren
+        
         pygame.display.flip()
         
-        # Framerate setzen
+        
         pygame.time.Clock().tick(30)
