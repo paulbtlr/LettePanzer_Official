@@ -17,14 +17,15 @@ pygame.display.set_caption('Lette Panzer')
 LIGHT_BLUE = (50, 100, 255)
 LIGHT_GRAY = (200, 200, 200)
 
-# Define wave parameters
-wave_length = 200  # Wellenlänge der Welle
-#min_amplitude = 10  # Minimale Amplitude
-#max_amplitude = 80  # Maximale Amplitude
-amplitude = 50
-# Function to calculate amplitude based on x position
-#def calculate_amplitude(x):
-#    return random.randint(min_amplitude, max_amplitude)
+# Define parameters for multiple waves
+num_waves = 3
+waves = []
+
+for _ in range(num_waves):
+    wave_length = random.randint(100, 400)
+    amplitude = random.randint(10, 80)
+    phase_shift = random.uniform(0, 2 * math.pi)
+    waves.append((wave_length, amplitude, phase_shift))
 
 # Main loop
 running = True
@@ -36,10 +37,13 @@ while running:
     # Fill the screen with a light blue color for the sky
     screen.fill(LIGHT_BLUE)
 
-    # Draw the terrain with waves
+    # Draw the terrain with multiple waves
     for x in range(window_size[0]):
-        #amplitude = calculate_amplitude(x)
-        y = int(window_size[1] / 2 + amplitude * math.sin(x / wave_length * 2 * math.pi))
+        y = 0
+        for wave in waves:
+            wave_length, amplitude, phase_shift = wave
+            y += amplitude * math.sin(x / wave_length * 2 * math.pi + phase_shift)
+        y = int(window_size[1] / 1.75 + y)
         pygame.draw.line(screen, LIGHT_GRAY, (x, y), (x, window_size[1]))
 
     # Update the display
