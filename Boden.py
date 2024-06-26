@@ -2,6 +2,7 @@ import pygame
 import sys
 import math
 import random
+from UI import UI
 
 # Initialize Pygame
 pygame.init()
@@ -16,6 +17,9 @@ pygame.display.set_caption('Lette Panzer')
 # Define colors
 LIGHT_BLUE = (50, 100, 255)
 LIGHT_GRAY = (200, 200, 200)
+
+# Initialize UI
+ui = UI(screen)
 
 # Define parameters for multiple waves
 num_waves = 3
@@ -33,6 +37,9 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        
+        # Pass events to UI
+        ui.update(event)
 
     # Fill the screen with a light blue color for the sky
     screen.fill(LIGHT_BLUE)
@@ -45,6 +52,9 @@ while running:
             y += amplitude * math.sin(x / wave_length * 2 * math.pi + phase_shift)
         y = int(window_size[1] / 1.5 + y)
         pygame.draw.line(screen, LIGHT_GRAY, (x, y), (x, window_size[1]))
+
+    # Draw UI buttons
+    ui.draw()
 
     # Update the display
     pygame.display.flip()
