@@ -28,7 +28,7 @@ class Button:
             text_render = self.font.render(line, True, (255, 255, 255))
             text_rect = text_render.get_rect()
             text_rect.centerx = self.rect.centerx
-            text_rect.y = self.rect.centery + (i * self.font.get_height())  # Vertical offset for multiple lines
+            text_rect.y = self.rect.centery + (i * self.font.get_height()) - 15  # Vertical offset for multiple lines
             surface.blit(text_render, text_rect)
 
     def update(self, event):
@@ -49,7 +49,7 @@ class UI:
         button_info = [
             {"text": "WEAPONS", "position": (800, 880), "width": 300, "height": 50},
             {"text": "FIRE", "position": (1150, 880), "width": 300, "height": 150},
-            {"text": "LEAVE\nGAME", "position": (1740, 880), "width": 180, "height": 150}  # Updated text here
+            {"text": "LEAVE\nGAME", "position": (1740, 880), "width": 180, "height": 150}  
         ]
 
         for info in button_info:
