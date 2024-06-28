@@ -17,7 +17,7 @@ pygame.display.set_caption('Lette Panzer')
 
 # Define colors
 LIGHT_BLUE = (50, 100, 255)
-LIGHT_GRAY = (200, 200, 200)
+LIGHT_GRAY = (205,133,63)
 
 # Initialize UI
 ui = UI(screen)
@@ -40,7 +40,7 @@ def get_ground_height(x):
     return int(window_size[1] / 1.5 + y)
 
 # Initialize Panzer
-panzer = Panzer("Assets/can.png", (100, get_ground_height(100)))
+panzer = Panzer("Assets/Bilder/Spieler/Panzer/Ptest.png", (100, get_ground_height(100)))
 
 # Main loop
 running = True
