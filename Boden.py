@@ -3,6 +3,7 @@ import sys
 import math
 import random
 from UI import UI
+from Panzer import Panzer
 
 # Initialize Pygame
 pygame.init()
@@ -27,9 +28,19 @@ waves = []
 
 for _ in range(num_waves):
     wave_length = random.randint(100, 400)
-    amplitude = random.randint(10, 40)
+    amplitude = random.randint(10, 80)
     phase_shift = random.uniform(0, 2 * math.pi)
     waves.append((wave_length, amplitude, phase_shift))
+
+def get_ground_height(x):
+    y = 0
+    for wave in waves:
+        wave_length, amplitude, phase_shift = wave
+        y += amplitude * math.sin(x / wave_length * 2 * math.pi + phase_shift)
+    return int(window_size[1] / 1.5 + y)
+
+# Initialize Panzer
+panzer = Panzer("Assets/can.png", (100, get_ground_height(100)))
 
 # Main loop
 running = True
@@ -37,6 +48,11 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                panzer.move_left()
+            elif event.key == pygame.K_RIGHT:
+                panzer.move_right()
         
         # Pass events to UI
         ui.update(event)
@@ -46,12 +62,12 @@ while running:
 
     # Draw the terrain with multiple waves
     for x in range(window_size[0]):
-        y = 0
-        for wave in waves:
-            wave_length, amplitude, phase_shift = wave
-            y += amplitude * math.sin(x / wave_length * 2 * math.pi + phase_shift)
-        y = int(window_size[1] / 1.5 + y)
+        y = get_ground_height(x)
         pygame.draw.line(screen, LIGHT_GRAY, (x, y), (x, window_size[1]))
+
+    # Update panzer position and draw
+    panzer.update_position(get_ground_height(panzer.position[0]))
+    panzer.draw(screen)
 
     # Draw UI buttons
     ui.draw()
