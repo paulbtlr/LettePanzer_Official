@@ -15,15 +15,12 @@ RED = (255, 0, 0)
 BLUE = (0, 0, 255)
 GREEN = (0, 255, 0)
 GRAY = (200, 200, 200)
-DARK_GRAY = (100, 100, 100)
 
 # Spielfeld erstellen
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption('1v1 Spiel')
 
 # Spielergrößen
-player_width = 50
-player_height = 60
 player_speed = 10
 
 # Zielposition
@@ -40,11 +37,16 @@ font_button = pygame.font.Font(font_path, 50)
 
 button_width = 300
 button_height = 100
-button_spacing = 10  # Abstand zwischen den Buttons
+button_spacing = 10  
 button_y = screen_height // 2
 button_menu_x = screen_width // 2 - (1.5 * button_width + button_spacing)
 button_neustart_x = screen_width // 2 - (0.5 * button_width)
 button_quit_x = screen_width // 2 + (0.5 * button_width + button_spacing)
+
+
+player1_image = pygame.image.load('Assets/Bilder/Fisch.png')  
+player2_image = pygame.image.load('Assets/Bilder/Fisch2.png')  
+player_width, player_height = player1_image.get_size()
 
 # Funktion zur Anzeige der Gewinnnachricht und Buttons
 def display_winner(winner):
@@ -65,7 +67,6 @@ def draw_buttons():
     draw_button("Startmenü", button_menu_x, button_y, mouse_x, mouse_y)
     draw_button("Neustarten", button_neustart_x, button_y, mouse_x, mouse_y)
     draw_button("Quit", button_quit_x, button_y, mouse_x, mouse_y)
-    button_offset_y = 0  # Initial offset for vertical movement
 
 # Funktion zum Zeichnen eines Buttons
 def draw_button(text, x, y, mouse_x, mouse_y):
@@ -146,19 +147,19 @@ while True:
         screen.fill(WHITE)
         
         # Spieler zeichnen
-        player1 = pygame.Rect(player1_x, player1_y, player_width, player_height)
-        player2 = pygame.Rect(player2_x, player2_y, player_width, player_height)
+        player1_rect = player1_image.get_rect(topleft=(player1_x, player1_y))
+        player2_rect = player2_image.get_rect(topleft=(player2_x, player2_y))
         goal = pygame.Rect(goal_x, goal_y, goal_width, goal_height)
         
-        pygame.draw.rect(screen, RED, player1)
-        pygame.draw.rect(screen, BLUE, player2)
+        screen.blit(player1_image, player1_rect)
+        screen.blit(player2_image, player2_rect)
         pygame.draw.rect(screen, GREEN, goal)
         
         # Überprüfen, ob ein Spieler das Ziel erreicht hat
-        if player1.colliderect(goal):
+        if player1_rect.colliderect(goal):
             display_winner("Spieler 1")
             running = False
-        if player2.colliderect(goal):
+        if player2_rect.colliderect(goal):
             display_winner("Spieler 2")
             running = False
         
