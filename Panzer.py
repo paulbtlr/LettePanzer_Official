@@ -8,7 +8,8 @@ class Panzer:
         self.velocity = 5  # Geschwindigkeit des Panzers
 
     def draw(self, surface):
-        surface.blit(self.image, self.position)
+        img = pygame.transform.flip(self.image, True, False)
+        surface.blit(img, self.position)
         print(self.position[0])
         print(self.position[1])
 
