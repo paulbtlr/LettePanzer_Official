@@ -18,7 +18,7 @@ class Panzer:
 
     def update_position(self, ground_height):
         # Ensure the panzer stays on the ground
-        self.position[1] = ground_height - self.image.get_height()
+        self.position[1] = ground_height - self.image.get_height() + 10  # Adjusted to keep panzer on the ground
 
     def get_rect(self):
         return self.image.get_rect(topleft=self.position)
