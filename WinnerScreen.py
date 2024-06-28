@@ -44,8 +44,8 @@ button_neustart_x = screen_width // 2 - (0.5 * button_width)
 button_quit_x = screen_width // 2 + (0.5 * button_width + button_spacing)
 
 
-player1_image = pygame.image.load('Assets/Bilder/Fisch.png')  
-player2_image = pygame.image.load('Assets/Bilder/Fisch2.png')  
+player1_image = pygame.image.load('Assets/Bilder/Spieler/Fisch.png')  
+player2_image = pygame.image.load('Assets/Bilder/Spieler/Fisch2.png')  
 player_width, player_height = player1_image.get_size()
 
 # Funktion zur Anzeige der Gewinnnachricht und Buttons
