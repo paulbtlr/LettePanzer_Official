@@ -42,7 +42,6 @@ def main():
 
     # Initialize Panzer
     panzer = Panzer("Assets/Bilder/Spieler/Panzer/Test/Ptest.png", (95, get_ground_height(95)))  # Startposition leicht nach links verschoben
-
     # Main loop
     running = True
     while running:
@@ -63,7 +62,7 @@ def main():
 
         # Draw the terrain with multiple waves
         for x in range(window_size[0]):
-            y = get_ground_height(x)
+            y = get_ground_height(x-30)
             pygame.draw.line(screen, PERU, (x, y), (x, window_size[1]))
 
         # Update panzer position and draw

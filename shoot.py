@@ -19,13 +19,6 @@ class Shoot() :
 
     def move(self):
         key = pygame.key.get_pressed()
-        key_up = pygame.KEYUP
-        SPEED = 5
-        dx = 0
-        dy = self.rect.y
-
-        dx = SPEED
-        dy = SPEED / 2
 
         if((key[pygame.K_UP] == True) and (self.shooting == False)):
           self.counter += 1

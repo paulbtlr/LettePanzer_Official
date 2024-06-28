@@ -9,6 +9,8 @@ class Panzer:
 
     def draw(self, surface):
         surface.blit(self.image, self.position)
+        print(self.position[0])
+        print(self.position[1])
 
     def move_left(self):
         self.position[0] -= self.velocity
