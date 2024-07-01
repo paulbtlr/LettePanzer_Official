@@ -1,7 +1,7 @@
 import pygame
 
 class Panzer:
-    def __init__(self, image_path, start_position, scale_size=(50, 30)):
+    def __init__(self, image_path, start_position, scale_size=(100, 60)):
         self.image = pygame.image.load(image_path)
         self.image = pygame.transform.scale(self.image, scale_size)  # Skalieren des Bildes
         self.position = list(start_position)

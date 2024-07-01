@@ -62,7 +62,7 @@ def main():
 
         # Draw the terrain with multiple waves
         for x in range(window_size[0]):
-            y = get_ground_height(x-30)
+            y = get_ground_height(x-55)
             pygame.draw.line(screen, PERU, (x, y), (x, window_size[1]))
 
         # Update panzer position and draw
