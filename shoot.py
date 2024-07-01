@@ -8,9 +8,9 @@ class Shoot() :
     def __init__(self,x,y) :
           self.x = x
           self.y = y
-          self.rect = pygame.Rect(self.x,self.y,20,20)
-          self.rect.x=115
-          self.rect.y=267
+          self.rect = pygame.Rect(self.x,self.y,5,5)
+          self.rect.x= x
+          self.rect.y= y
           self.speed_hor = 10
           self.speed_ver = 0
           self.gravity = 1
@@ -46,8 +46,8 @@ class Shoot() :
         if self.rect.y >= SCREEN_HEIGHT:
             self.shooting = False
             self.counter = 0
-            self.rect.x = 115
-            self.rect.y = 267
+            self.rect.x = self.x
+            self.rect.y = self.y
             self.speed_hor = 10
             self.speed_ver = 0
             self.gravity = 1
