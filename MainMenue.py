@@ -65,7 +65,7 @@ class MainMenu:
         self.draw_text(text, self.small_font, BLACK, rect.centerx, rect.centery)
 
     def start_game(self):
-        subprocess.Popen([sys.executable, 'boden.py'])
+        subprocess.Popen([sys.executable, 'game.py'])
 
     def show_options(self):
         print("Optionen anzeigen...")  # Platzhalter für die Optionslogik
