@@ -48,7 +48,7 @@ def main():
         return dy
 
     # Initialize Panzer with a scale factor to make it smaller
-    panzer = Panzer("Assets/Bilder/Spieler/Panzer/Test/Ptest.png", (95, get_ground_height(95)), scale_factor=0.05)
+    panzer = Panzer("Assets/Bilder/Spieler/Panzer/Test/Ptest.png", (95, get_ground_height(95)), scale_factor=0.08)
 
     # Main loop
     running = True
@@ -65,7 +65,7 @@ def main():
 
         # Draw the terrain with multiple waves
         for x in range(window_size[0]):
-            y = get_ground_height(x - 30)
+            y = get_ground_height(x - 50)
             pygame.draw.line(screen, PERU, (x, y), (x, window_size[1]))
 
         # Update panzer position and angle, then draw

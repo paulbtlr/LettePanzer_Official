@@ -42,7 +42,7 @@ class Panzer:
 
 
     def update_position(self, ground_height):
-        self.position[1] = ground_height - self.image.get_height() + 16
+        self.position[1] = ground_height - self.image.get_height() + 14
 
     def update_angle(self, ground_slope):
         self.angle = -math.degrees(math.atan(ground_slope))
