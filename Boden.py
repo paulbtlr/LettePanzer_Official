@@ -18,7 +18,7 @@ def main():
 
     # Define colors
     LIGHT_BLUE = (50, 100, 255)
-    PERU = (205,133,63)
+    PERU = (205, 133, 63)
 
     # Initialize UI
     ui = UI(screen)
@@ -40,8 +40,16 @@ def main():
             y += amplitude * math.sin(x / wave_length * 2 * math.pi + phase_shift)
         return int(window_size[1] / 1.5 + y)
 
-    # Initialize Panzer
-    panzer = Panzer("Assets/Bilder/Spieler/Panzer/Test/Ptest.png", (95, get_ground_height(95)))  # Startposition leicht nach links verschoben
+    def get_ground_slope(x):
+        dy = 0
+        for wave in waves:
+            wave_length, amplitude, phase_shift = wave
+            dy += (amplitude * 2 * math.pi / wave_length) * math.cos(x / wave_length * 2 * math.pi + phase_shift)
+        return dy
+
+    # Initialize Panzer with a scale factor to make it smaller
+    panzer = Panzer("Assets/Bilder/Spieler/Panzer/Test/Ptest.png", (95, get_ground_height(95)), scale_factor=0.05)
+
     # Main loop
     running = True
     while running:
@@ -62,11 +70,12 @@ def main():
 
         # Draw the terrain with multiple waves
         for x in range(window_size[0]):
-            y = get_ground_height(x-30)
+            y = get_ground_height(x - 30)
             pygame.draw.line(screen, PERU, (x, y), (x, window_size[1]))
 
-        # Update panzer position and draw
+        # Update panzer position and angle, then draw
         panzer.update_position(get_ground_height(panzer.position[0]))
+        panzer.update_angle(get_ground_slope(panzer.position[0]))
         panzer.draw(screen)
 
         # Draw UI buttons
