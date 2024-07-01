@@ -56,11 +56,6 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    panzer.move_left()
-                elif event.key == pygame.K_RIGHT:
-                    panzer.move_right()
             
             # Pass events to UI
             ui.update(event)
@@ -74,6 +69,7 @@ def main():
             pygame.draw.line(screen, PERU, (x, y), (x, window_size[1]))
 
         # Update panzer position and angle, then draw
+        panzer.move()
         panzer.update_position(get_ground_height(panzer.position[0]))
         panzer.update_angle(get_ground_slope(panzer.position[0]))
         panzer.draw(screen)

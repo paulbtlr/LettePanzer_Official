@@ -9,21 +9,27 @@ class Panzer:
                                              int(self.original_image.get_height() * scale_factor)))
         self.position = list(start_position)
         self.angle = 0
-        self.speed = 5
+        self.speed = 1
 
     def draw(self, surface):
-        rotated_image = pygame.transform.rotate(self.image, self.angle)
+        img = pygame.transform.flip(self.image, True, False)
+        rotated_image = pygame.transform.rotate(img, self.angle)
         new_rect = rotated_image.get_rect(center=self.image.get_rect(topleft=self.position).center)
         surface.blit(rotated_image, new_rect.topleft)
 
-    def move_left(self):
-        self.position[0] -= self.speed
 
-    def move_right(self):
-        self.position[0] += self.speed
+    def move(self):
+        key = pygame.key.get_pressed()
+
+        #l
+        if key[pygame.K_LEFT]:
+         self.position[0] -= self.speed
+        #r
+        if key[pygame.K_RIGHT]:
+         self.position[0] += self.speed
 
     def update_position(self, ground_height):
-        self.position[1] = ground_height - self.image.get_height() / 2
+        self.position[1] = ground_height - self.image.get_height() + 16
 
     def update_angle(self, ground_slope):
         self.angle = -math.degrees(math.atan(ground_slope))
