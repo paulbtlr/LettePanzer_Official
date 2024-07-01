@@ -1,5 +1,6 @@
 import pygame
 import math
+import os
 
 class Panzer:
     def __init__(self, image_path, start_position, scale_factor=0.5):
@@ -12,6 +13,25 @@ class Panzer:
         self.speed = 1
         self.tank = 200 #The Maximum Movement a Tank can move
         self.health = 100
+
+    def load_images(self, image_path):
+        """
+        Loads all images in directory. The directory must only contain images.
+
+        Args:
+            path: The relative or absolute path to the directory to load images from.
+
+        Returns:
+            List of images.
+        """
+        images = []
+        for file_name in os.listdir(image_path):
+            image = pygame.image.load(image_path + os.sep + file_name).convert()
+            images.append(image)
+        return images
+
+
+
 
     def draw(self, surface):
         img = pygame.transform.flip(self.image, True, False)
@@ -30,7 +50,6 @@ class Panzer:
 
          if self.tank < 0:
              self.tank == 0
-         print(self.tank)
 
         #Right Movement: Drives until Self.Tank == 0
         if (key[pygame.K_RIGHT]) and (self.tank >= 0):
@@ -38,7 +57,6 @@ class Panzer:
          self.tank -= self.speed
          if self.tank < 0:
              self.tank == 0
-         print(self.tank)
 
 
     def update_position(self, ground_height):

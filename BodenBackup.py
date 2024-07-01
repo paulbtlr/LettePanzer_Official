@@ -4,7 +4,6 @@ import math
 import random
 from UI import UI
 from Panzer import Panzer
-from Boden import Boden
 
 def main():
     # Initialize Pygame
@@ -15,20 +14,41 @@ def main():
     screen = pygame.display.set_mode(window_size)
 
     # Set the title of the window
-    pygame.display.set_caption('TinCans')
+    pygame.display.set_caption('Lette Panzer')
 
     # Define colors
     LIGHT_BLUE = (50, 100, 255)
     PERU = (205, 133, 63)
 
-    # Initialize Imports
+    # Initialize UI
     ui = UI(screen)
-    boden = Boden()
 
     # Define parameters for multiple waves
+    num_waves = 3
+    waves = []
+
+    for _ in range(num_waves):
+        wave_length = random.randint(100, 400)
+        amplitude = random.randint(10, 40)
+        phase_shift = random.uniform(0, 2 * math.pi)
+        waves.append((wave_length, amplitude, phase_shift))
+
+    def get_ground_height(x):
+        y = 0
+        for wave in waves:
+            wave_length, amplitude, phase_shift = wave
+            y += amplitude * math.sin(x / wave_length * 2 * math.pi + phase_shift)
+        return int(window_size[1] / 1.5 + y)
+
+    def get_ground_slope(x):
+        dy = 0
+        for wave in waves:
+            wave_length, amplitude, phase_shift = wave
+            dy += (amplitude * 2 * math.pi / wave_length) * math.cos(x / wave_length * 2 * math.pi + phase_shift)
+        return dy
 
     # Initialize Panzer with a scale factor to make it smaller
-    panzer = Panzer("Assets/Bilder/Spieler/Panzer/Blau/BBR/BBR0.png", (95, boden.get_ground_height(95)), scale_factor=0.08)
+    panzer = Panzer("Assets/Bilder/Spieler/Panzer/Blau/BBR.png", (95, get_ground_height(95)), scale_factor=0.08)
 
     # Main loop
     running = True
@@ -45,15 +65,13 @@ def main():
 
         # Draw the terrain with multiple waves
         for x in range(window_size[0]):
-            y = boden.get_ground_height(x - 50)
+            y = get_ground_height(x - 50)
             pygame.draw.line(screen, PERU, (x, y), (x, window_size[1]))
-
-
 
         # Update panzer position and angle, then draw
         panzer.move()
-        panzer.update_position(boden.get_ground_height(panzer.position[0]))
-        panzer.update_angle(boden.get_ground_slope(panzer.position[0]))
+        panzer.update_position(get_ground_height(panzer.position[0]))
+        panzer.update_angle(get_ground_slope(panzer.position[0]))
         panzer.draw(screen)
 
         # Draw UI buttons
