@@ -75,6 +75,10 @@ def main():
         panzer.draw(screen)
 
         # Draw UI buttons
+        ui.draw_tank(panzer.tank,500,100,screen,True)
+        ui.draw_tank(panzer.tank,100,100,screen,False)
+        ui.draw_health(panzer.health,500,150,screen,True)
+        ui.draw_health(panzer.health,100,150,screen,False)
         ui.draw()
 
         # Update the display

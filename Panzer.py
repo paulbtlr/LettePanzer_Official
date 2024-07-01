@@ -11,6 +11,7 @@ class Panzer:
         self.angle = 0
         self.speed = 1
         self.tank = 100 #The Maximum Movement a Tank can move
+        self.health = 100
 
     def draw(self, surface):
         img = pygame.transform.flip(self.image, True, False)

@@ -56,6 +56,20 @@ class UI:
             button = Button(info["text"], info["position"], info["width"], info["height"])
             self.buttons.append(button)
 
+    def draw_health(self,health, x, y, surface,flip):
+        ratio_m = health / 100
+        if flip == False:
+            pygame.draw.rect(surface, (0, 255, 0), (x, (y), 400 * ratio_m, 35 ))
+        elif flip == True:
+            pygame.draw.rect(surface, (0, 255, 0), (x + int(400 * (1-ratio_m)), y, int(400 * ratio_m), 35 ))
+
+    def draw_tank(self,tank, x, y, surface, flip):
+        ratio_m = tank / 100
+        if flip == False:
+            pygame.draw.rect(surface, (0, 255, 255), (x, (y), 400 * ratio_m, 35 ))
+        elif flip == True:
+            pygame.draw.rect(surface, (0, 255, 255), (x + int(400 * (1-ratio_m)), y, int(400 * ratio_m), 35 ))
+
     def update(self, event):
         for button in self.buttons:
             button.update(event)
