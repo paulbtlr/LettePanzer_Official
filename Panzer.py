@@ -10,6 +10,7 @@ class Panzer:
         self.position = list(start_position)
         self.angle = 0
         self.speed = 1
+        self.tank = 100 #The Maximum Movement a Tank can move
 
     def draw(self, surface):
         img = pygame.transform.flip(self.image, True, False)
@@ -21,12 +22,23 @@ class Panzer:
     def move(self):
         key = pygame.key.get_pressed()
 
-        #l
-        if key[pygame.K_LEFT]:
+        #Left Movement: Drives until Self.Tank == 0
+        if (key[pygame.K_LEFT]) and (self.tank >= 0):
          self.position[0] -= self.speed
-        #r
-        if key[pygame.K_RIGHT]:
+         self.tank -= self.speed
+
+         if self.tank < 0:
+             self.tank == 0
+         print(self.tank)
+
+        #Right Movement: Drives until Self.Tank == 0
+        if (key[pygame.K_RIGHT]) and (self.tank >= 0):
          self.position[0] += self.speed
+         self.tank -= self.speed
+         if self.tank < 0:
+             self.tank == 0
+         print(self.tank)
+
 
     def update_position(self, ground_height):
         self.position[1] = ground_height - self.image.get_height() + 16
