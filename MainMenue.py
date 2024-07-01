@@ -3,7 +3,7 @@ import sys
 import subprocess
 
 # Konstanten
-WIDTH, HEIGHT = 2400, 1200
+WIDTH, HEIGHT = 1920, 1030
 FPS = 60
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
