@@ -38,7 +38,7 @@ prev_x, prev_y = 0, 0
 #a1 = angle((75, 300),(250, 175), 500/350)
 #a2 = angle((400, 315),(250, 175), 500/350)
 x = 10
-y = 10
+y = 100
 shoot = Shoot(x, y)
 
 running = True
