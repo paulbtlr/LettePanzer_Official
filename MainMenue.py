@@ -20,25 +20,27 @@ class MainMenu:
         self.background_image = pygame.transform.scale(self.background_image, (WIDTH, HEIGHT))
 
         # Button-Bilder laden und skalieren
+        button_width, button_height = 400, 100
+        button_gap = 150
+        button_y = HEIGHT // 2 - 1.5 * button_height + 50  # Adjusted position
+
         self.start_button_image = pygame.image.load('Assets/Buttons/Start1.png')
-        self.start_button_image = pygame.transform.scale(self.start_button_image, (400, 100))
+        self.start_button_image = pygame.transform.scale(self.start_button_image, (button_width, button_height))
         self.start_button_hover_image = pygame.image.load('Assets/Buttons/Start2.png')
-        self.start_button_hover_image = pygame.transform.scale(self.start_button_hover_image, (400, 100))
+        self.start_button_hover_image = pygame.transform.scale(self.start_button_hover_image, (button_width, button_height))
+        self.start_button_rect = self.start_button_image.get_rect(center=(WIDTH // 2, button_y))
 
         self.options_button_image = pygame.image.load('Assets/Buttons/Options1.png')
-        self.options_button_image = pygame.transform.scale(self.options_button_image, (400, 100))
+        self.options_button_image = pygame.transform.scale(self.options_button_image, (button_width, button_height))
         self.options_button_hover_image = pygame.image.load('Assets/Buttons/Options2.png')
-        self.options_button_hover_image = pygame.transform.scale(self.options_button_hover_image, (400, 100))
+        self.options_button_hover_image = pygame.transform.scale(self.options_button_hover_image, (button_width, button_height))
+        self.options_button_rect = self.options_button_image.get_rect(center=(WIDTH // 2, button_y + button_gap))
 
         self.quit_button_image = pygame.image.load('Assets/Buttons/Quit1.png')
-        self.quit_button_image = pygame.transform.scale(self.quit_button_image, (400, 100))
+        self.quit_button_image = pygame.transform.scale(self.quit_button_image, (button_width, button_height))
         self.quit_button_hover_image = pygame.image.load('Assets/Buttons/Quit2.png')
-        self.quit_button_hover_image = pygame.transform.scale(self.quit_button_hover_image, (400, 100))
-
-        # Positionen der Buttons
-        self.start_button_rect = self.start_button_image.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 2))
-        self.options_button_rect = self.options_button_image.get_rect(center=(WIDTH // 2, HEIGHT //  + 1.6))
-        self.quit_button_rect = self.quit_button_image.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 250))
+        self.quit_button_hover_image = pygame.transform.scale(self.quit_button_hover_image, (button_width, button_height))
+        self.quit_button_rect = self.quit_button_image.get_rect(center=(WIDTH // 2, button_y + 2 * button_gap))
 
     def run(self):
         clock = pygame.time.Clock()
@@ -61,7 +63,7 @@ class MainMenu:
                         self.start_game()
                         running = False
                     elif self.options_button_rect.collidepoint(mouse_pos):
-                        self.show_options()
+                        self.open_options()
                     elif self.quit_button_rect.collidepoint(mouse_pos):
                         running = False
 
@@ -80,8 +82,55 @@ class MainMenu:
     def start_game(self):
         subprocess.Popen([sys.executable, 'game.py'])
 
-    def show_options(self):
-        print("Optionen anzeigen...")  # Platzhalter für die Optionslogik
+    def open_options(self):
+        options_window = OptionsWindow()
+        options_window.run()
+
+class OptionsWindow:
+    def __init__(self):
+        pygame.init()
+        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        pygame.display.set_caption('Options')
+
+        # Hintergrundbild für das Optionsfenster laden
+        self.background_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/OptionsBackground.png')
+        self.background_image = pygame.transform.scale(self.background_image, (WIDTH, HEIGHT))
+
+        # Button-Bilder für Optionsfenster laden und skalieren
+        self.new_button_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/MusikAN1.png')
+        self.new_button_image = pygame.transform.scale(self.new_button_image, (400, 100))
+        self.new_button_hover_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/MusikAN2.png')
+        self.new_button_hover_image = pygame.transform.scale(self.new_button_hover_image, (400, 100))
+
+        # Position des neuen Buttons
+        self.new_button_rect = self.new_button_image.get_rect(center=(WIDTH // 2, HEIGHT // 2))
+
+    def run(self):
+        clock = pygame.time.Clock()
+        running = True
+
+        while running:
+            self.screen.blit(self.background_image, (0, 0))
+
+            # Zeichnen des neuen Buttons mit Hover-Effekt
+            mouse_pos = pygame.mouse.get_pos()
+            self.draw_button(self.new_button_rect, self.new_button_image, self.new_button_hover_image, mouse_pos)
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+
+            pygame.display.flip()
+            clock.tick(FPS)
+
+        pygame.quit()
+        sys.exit()
+
+    def draw_button(self, rect, image, hover_image, mouse_pos):
+        if rect.collidepoint(mouse_pos):
+            self.screen.blit(hover_image, rect.topleft)
+        else:
+            self.screen.blit(image, rect.topleft)
 
 if __name__ == '__main__':
     main_menu = MainMenu()
