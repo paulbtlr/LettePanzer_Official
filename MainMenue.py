@@ -5,30 +5,40 @@ import subprocess
 # Konstanten
 WIDTH, HEIGHT = 1920, 1030
 FPS = 60
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-GRAY = (200, 200, 200)
-BUTTON_WIDTH, BUTTON_HEIGHT = 400, 100
-DARKGRAY = (60, 60, 59)
 
 class MainMenu:
     def __init__(self):
         pygame.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption('PanzerGame')
-        
+
         # Eigene Schriftart laden
-        self.font = pygame.font.Font("Assets/Schrift/Pixellari.ttf" , 74)
-        self.small_font = pygame.font.Font("Assets/Schrift/Pixellari.ttf" , 36)
+        self.font = pygame.font.Font("Assets/Schrift/Pixellari.ttf", 74)
 
         # Hintergrundbild laden
         self.background_image = pygame.image.load('Assets/Bilder/Hintergrund/WinnerScreen/BattleTanks.png')
         self.background_image = pygame.transform.scale(self.background_image, (WIDTH, HEIGHT))
 
-        # Positionen der Schaltflächen
-        self.start_button_rect = pygame.Rect((WIDTH // 2 - BUTTON_WIDTH // 2, HEIGHT // 2 - 1.5 * BUTTON_HEIGHT), (BUTTON_WIDTH, BUTTON_HEIGHT))
-        self.options_button_rect = pygame.Rect((WIDTH // 2 - BUTTON_WIDTH // 2, HEIGHT // 2 - 0.5 * BUTTON_HEIGHT + 20), (BUTTON_WIDTH, BUTTON_HEIGHT))
-        self.quit_button_rect = pygame.Rect((WIDTH // 2 - BUTTON_WIDTH // 2, HEIGHT // 2 + 0.5 * BUTTON_HEIGHT + 40), (BUTTON_WIDTH, BUTTON_HEIGHT))
+        # Button-Bilder laden und skalieren
+        self.start_button_image = pygame.image.load('Assets/Buttons/Start1.png')
+        self.start_button_image = pygame.transform.scale(self.start_button_image, (400, 100))
+        self.start_button_hover_image = pygame.image.load('Assets/Buttons/Start2.png')
+        self.start_button_hover_image = pygame.transform.scale(self.start_button_hover_image, (400, 100))
+
+        self.options_button_image = pygame.image.load('Assets/Buttons/Options1.png')
+        self.options_button_image = pygame.transform.scale(self.options_button_image, (400, 100))
+        self.options_button_hover_image = pygame.image.load('Assets/Buttons/Options2.png')
+        self.options_button_hover_image = pygame.transform.scale(self.options_button_hover_image, (400, 100))
+
+        self.quit_button_image = pygame.image.load('Assets/Buttons/Quit1.png')
+        self.quit_button_image = pygame.transform.scale(self.quit_button_image, (400, 100))
+        self.quit_button_hover_image = pygame.image.load('Assets/Buttons/Quit2.png')
+        self.quit_button_hover_image = pygame.transform.scale(self.quit_button_hover_image, (400, 100))
+
+        # Positionen der Buttons
+        self.start_button_rect = self.start_button_image.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 150))
+        self.options_button_rect = self.options_button_image.get_rect(center=(WIDTH // 2, HEIGHT // 2))
+        self.quit_button_rect = self.quit_button_image.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 150))
 
     def run(self):
         clock = pygame.time.Clock()
@@ -36,12 +46,12 @@ class MainMenu:
 
         while running:
             self.screen.blit(self.background_image, (0, 0))
-           
-            # Zeichnen der Schaltflächen mit Hover-Effekt
+
+            # Zeichnen der Buttons mit Hover-Effekt
             mouse_pos = pygame.mouse.get_pos()
-            self.draw_button(self.start_button_rect, 'Start', mouse_pos)
-            self.draw_button(self.options_button_rect, 'Optionen', mouse_pos)
-            self.draw_button(self.quit_button_rect, 'Beenden', mouse_pos)
+            self.draw_button(self.start_button_rect, self.start_button_image, self.start_button_hover_image, mouse_pos)
+            self.draw_button(self.options_button_rect, self.options_button_image, self.options_button_hover_image, mouse_pos)
+            self.draw_button(self.quit_button_rect, self.quit_button_image, self.quit_button_hover_image, mouse_pos)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -60,26 +70,18 @@ class MainMenu:
 
         pygame.quit()
         sys.exit()
-        
-    def draw_text(self, text, font, color, x, y):
-        text_obj = font.render(text, True, color)
-        text_rect = text_obj.get_rect(center=(x, y))
-        self.screen.blit(text_obj, text_rect)
 
-    def draw_button(self, rect, text, mouse_pos):
+    def draw_button(self, rect, image, hover_image, mouse_pos):
         if rect.collidepoint(mouse_pos):
-            pygame.draw.rect(self.screen, DARKGRAY, rect)
-            self.draw_text(text, self.small_font, BLACK, rect.centerx, rect.centery)
+            self.screen.blit(hover_image, rect.topleft)
         else:
-            pygame.draw.rect(self.screen, BLACK, rect)
-            self.draw_text(text, self.small_font, DARKGRAY, rect.centerx, rect.centery)
+            self.screen.blit(image, rect.topleft)
 
     def start_game(self):
         subprocess.Popen([sys.executable, 'game.py'])
 
     def show_options(self):
         print("Optionen anzeigen...")  # Platzhalter für die Optionslogik
-
 
 if __name__ == '__main__':
     main_menu = MainMenu()
