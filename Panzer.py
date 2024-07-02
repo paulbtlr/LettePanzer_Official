@@ -3,9 +3,9 @@ import math
 import os
 
 class Panzer:
-    def __init__(self, image_path, start_position, panzer_rohr_path,scale_factor=0.5):
+    def __init__(self, image_path, start_position, panzer_rohr, image_list,scale_factor=0.5):
         self.original_image = pygame.image.load(image_path)
-        self.original_panzerrohr = pygame.image.load(panzer_rohr_path)
+        self.original_panzerrohr = panzer_rohr
 
         self.image = pygame.transform.scale(self.original_image, 
                                             (int(self.original_image.get_width() * scale_factor), 
@@ -19,27 +19,26 @@ class Panzer:
         self.speed = 1
         self.tank = 200 #The Maximum Movement a Tank can move
         self.health = 100
-        self.images = []
+        self.frame = 0
+        self.image_list = image_list
         self.rohr_angle = 0
 
-    def load_images(self, images,image_path):
-        """
-        Loads all images in directory. The directory must only contain images.
+    #def load_images(self, images,image_path):
+    #    """
+    #    Loads all images in directory. The directory must only contain images.
 
-        Args:
-            path: The relative or absolute path to the directory to load images from.
-
-        Returns:
-            List of images.
-        """
-        self.images = images
-        for file_name in os.listdir(image_path):
-            image = pygame.image.load(image_path + os.sep + file_name).convert()
-            images.append(image)
-        return images
-
-
-
+#        Args:
+ #           path: The relative or absolute path to the directory to load images from.
+#
+ #       Returns:
+  #          List of images.
+   #     """
+    #    self.image_path = image_path
+     #   images = []
+      #  for file_name in os.listdir(image_path):
+       #     image = pygame.image.load(image_path + os.sep + file_name).convert()
+        #    images.append(image)
+        #return images
 
     def draw(self, surface):
         rohr = pygame.transform.flip(self.rohr_image, True, False)
