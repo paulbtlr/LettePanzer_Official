@@ -36,9 +36,9 @@ class MainMenu:
         self.quit_button_hover_image = pygame.transform.scale(self.quit_button_hover_image, (400, 100))
 
         # Positionen der Buttons
-        self.start_button_rect = self.start_button_image.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 150))
-        self.options_button_rect = self.options_button_image.get_rect(center=(WIDTH // 2, HEIGHT // 2))
-        self.quit_button_rect = self.quit_button_image.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 150))
+        self.start_button_rect = self.start_button_image.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 2))
+        self.options_button_rect = self.options_button_image.get_rect(center=(WIDTH // 2, HEIGHT //  + 1.6))
+        self.quit_button_rect = self.quit_button_image.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 250))
 
     def run(self):
         clock = pygame.time.Clock()
