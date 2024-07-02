@@ -16,7 +16,7 @@ class Boden:
 
         for _ in range(num_waves):
             wave_length = random.randint(100, 400)
-            amplitude = random.randint(10, 40)
+            amplitude = random.randint(10, 20)
             phase_shift = random.uniform(0, 2 * math.pi)
             self.waves.append((wave_length, amplitude, phase_shift))
 
