@@ -16,7 +16,7 @@ class MainMenu:
         self.font = pygame.font.Font("Assets/Schrift/Pixellari.ttf", 74)
 
         # Hintergrundbild laden
-        self.background_image = pygame.image.load('Assets/Bilder/Hintergrund/WinnerScreen/BattleTanks.jpg')
+        self.background_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/BattleTanks.jpg')
         self.background_image = pygame.transform.scale(self.background_image, (WIDTH, HEIGHT))
 
         # Button-Bilder laden und skalieren
