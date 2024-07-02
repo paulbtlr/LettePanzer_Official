@@ -28,7 +28,7 @@ def main():
     # Define parameters for multiple waves
 
     # Initialize Panzer with a scale factor to make it smaller
-    panzer = Panzer("Assets/Bilder/Spieler/Panzer/Blau/BBR/BBR0.png", (95, boden.get_ground_height(95)), scale_factor=0.08)
+    panzer = Panzer("Assets/Bilder/Spieler/Panzer/Blau/BBR/BBR0.png", (95, boden.get_ground_height(95)), "Assets/Bilder/Spieler/Panzer/Blau/BSR.png",scale_factor=0.08)
 
     # Main loop
     running = True

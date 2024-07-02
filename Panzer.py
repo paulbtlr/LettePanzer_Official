@@ -3,18 +3,26 @@ import math
 import os
 
 class Panzer:
-    def __init__(self, image_path, start_position, scale_factor=0.5):
+    def __init__(self, image_path, start_position, panzer_rohr_path,scale_factor=0.5):
         self.original_image = pygame.image.load(image_path)
+        self.original_panzerrohr = pygame.image.load(panzer_rohr_path)
+
         self.image = pygame.transform.scale(self.original_image, 
                                             (int(self.original_image.get_width() * scale_factor), 
                                              int(self.original_image.get_height() * scale_factor)))
+
+        self.rohr_image = pygame.transform.scale(self.original_panzerrohr, 
+                                            (int(self.original_panzerrohr.get_width() * scale_factor), 
+                                             int(self.original_panzerrohr.get_height() * scale_factor)))                                             
         self.position = list(start_position)
         self.angle = 0
         self.speed = 1
         self.tank = 200 #The Maximum Movement a Tank can move
         self.health = 100
+        self.images = []
+        self.rohr_angle = 0
 
-    def load_images(self, image_path):
+    def load_images(self, images,image_path):
         """
         Loads all images in directory. The directory must only contain images.
 
@@ -24,7 +32,7 @@ class Panzer:
         Returns:
             List of images.
         """
-        images = []
+        self.images = images
         for file_name in os.listdir(image_path):
             image = pygame.image.load(image_path + os.sep + file_name).convert()
             images.append(image)
@@ -34,10 +42,15 @@ class Panzer:
 
 
     def draw(self, surface):
+        rohr = pygame.transform.flip(self.rohr_image, True, False)
+        rotated_rohr = pygame.transform.rotate(rohr, self.angle)
+        new_rect = rotated_rohr.get_rect(center=self.rohr_image.get_rect(topleft=self.position).center)
+        surface.blit(rohr, new_rect.topleft)
+
         img = pygame.transform.flip(self.image, True, False)
         rotated_image = pygame.transform.rotate(img, self.angle)
-        new_rect = rotated_image.get_rect(center=self.image.get_rect(topleft=self.position).center)
-        surface.blit(rotated_image, new_rect.topleft)
+        new_rect2 = rotated_image.get_rect(center=self.image.get_rect(topleft=self.position).center)
+        surface.blit(rotated_image, new_rect2.topleft)
 
 
     def move(self):
@@ -64,3 +77,6 @@ class Panzer:
 
     def update_angle(self, ground_slope):
         self.angle = -math.degrees(math.atan(ground_slope))
+
+    #def update_rohr_angle(self):
+     #   self.rohr_angle = -math.degrees(math.atan(ground_slope))
