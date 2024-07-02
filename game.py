@@ -91,8 +91,10 @@ def main():
         # Update panzer position and angle, then draw
         panzer.move()
         panzer.update_position(boden.get_ground_height(panzer.position[0]))
+        panzer.update_rohr_position(boden.get_ground_height(panzer.position[0]))
         panzer.update_angle(boden.get_ground_slope(panzer.position[0]))
-        panzer.draw(screen)
+        panzer.draw_rohr(screen)
+        panzer.draw_panzer(screen)
 
         # Draw UI buttons
         ui.draw_tank(panzer.tank,200,150,screen,True)
