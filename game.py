@@ -66,7 +66,7 @@ def main():
     panzer_orange_rohr = pygame.image.load("Assets/Bilder/Spieler/Panzer/Orange/OSR.png")
 
     # Initialize Panzer with a scale factor to make it smaller
-    panzer = Panzer("Assets/Bilder/Spieler/Panzer/Blau/BBR/BBR0.png", (95, boden.get_ground_height(95)), panzer_blue_rohr,panzer_imagelist_blue_v,scale_factor=0.08)
+    panzer = Panzer("Assets/Bilder/Spieler/Panzer/Blau/BBR/BBR0.png", (95, boden.get_ground_height(95)), panzer_blue_rohr,panzer_imagelist_blue_v,panzer_imagelist_blue_r,scale_factor=0.4) #0.08
 
     # Main loop
     running = True
@@ -90,6 +90,7 @@ def main():
 
         # Update panzer position and angle, then draw
         panzer.move()
+        panzer.update_animation(screen)
         panzer.update_position(boden.get_ground_height(panzer.position[0]))
         panzer.update_rohr_position(boden.get_ground_height(panzer.position[0]))
         panzer.update_angle(boden.get_ground_slope(panzer.position[0]))
