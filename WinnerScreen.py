@@ -80,16 +80,16 @@ def display_winner(winner, winner_image):
     wait_for_click()
 
 # Funktion zum Zeichnen der Buttons
-def draw_buttons():
+def draw_buttons(selected_button=None):
     mouse_x, mouse_y = pygame.mouse.get_pos()
 
-    draw_button("Startmenü", button_menu_x, button_y, mouse_x, mouse_y)
-    draw_button("Neustarten", button_neustart_x, button_y, mouse_x, mouse_y)
-    draw_button("Quit", button_quit_x, button_y, mouse_x, mouse_y)
+    draw_button("Startmenü", button_menu_x, button_y, mouse_x, mouse_y, selected_button == 0)
+    draw_button("Neustarten", button_neustart_x, button_y, mouse_x, mouse_y, selected_button == 1)
+    draw_button("Quit", button_quit_x, button_y, mouse_x, mouse_y, selected_button == 2)
 
 # Funktion zum Zeichnen eines Buttons
-def draw_button(text, x, y, mouse_x, mouse_y):
-    if x <= mouse_x <= x + button_width and y <= mouse_y <= y + button_height:
+def draw_button(text, x, y, mouse_x, mouse_y, selected):
+    if selected or (x <= mouse_x <= x + button_width and y <= mouse_y <= y + button_height):
         pygame.draw.rect(screen, BLACK, (x, y, button_width, button_height))
         button_text = font_button.render(text, True, WHITE)
     else:
@@ -98,8 +98,10 @@ def draw_button(text, x, y, mouse_x, mouse_y):
 
     screen.blit(button_text, (x + (button_width - button_text.get_width()) // 2, y + (button_height - button_text.get_height()) // 2))
 
-# Funktion zum Warten auf einen Mausklick
+# Funktion zum Warten auf einen Mausklick oder Tastendruck
 def wait_for_click():
+    selected_button = 0
+    button_count = 3
     waiting = True
     while waiting:
         for event in pygame.event.get():
@@ -119,9 +121,26 @@ def wait_for_click():
                 elif button_quit_x <= mouse_x <= button_quit_x + button_width and button_y <= mouse_y <= button_y + button_height:
                     pygame.quit()
                     sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    if selected_button == 0:
+                        # Startmenü-Button
+                        waiting = False
+                        return
+                    elif selected_button == 1:
+                        # Neustarten-Button
+                        waiting = False
+                        return
+                    elif selected_button == 2:
+                        pygame.quit()
+                        sys.exit()
+                elif event.key == pygame.K_RIGHT:
+                    selected_button = (selected_button + 1) % button_count
+                elif event.key == pygame.K_LEFT:
+                    selected_button = (selected_button - 1) % button_count
 
-        # Aktualisiere die Buttons, um den Hover-Effekt zu zeigen
-        draw_buttons()
+        # Aktualisiere die Buttons, um den Hover-Effekt und die Tastennavigation zu zeigen
+        draw_buttons(selected_button)
         pygame.display.flip()
 
 # Hauptspielschleife
