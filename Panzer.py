@@ -3,7 +3,7 @@ import math
 import os
 
 class Panzer:
-    def __init__(self, image_path, start_position, panzer_rohr, image_list_v,image_list_r,scale_factor=0.5):
+    def __init__(self, image_path, start_position, panzer_rohr, image_list_v,image_list_r,flip,scale_factor=0.5):
         self.original_image = pygame.image.load(image_path)
         self.original_panzerrohr = panzer_rohr
         self.image = pygame.transform.scale(self.original_image, 
@@ -16,6 +16,7 @@ class Panzer:
 
         self.position = list(start_position)
         self.scale_factor = scale_factor
+        self.flip = flip
         self.angle = 0
         self.speed = 1
         self.tank = 200 #The Maximum Movement a Tank can move
@@ -45,16 +46,26 @@ class Panzer:
         #return images
 
     def draw_panzer(self, surface):
-        img = pygame.transform.flip(self.image, True, False)
-        rotated_image = pygame.transform.rotate(img, self.angle)
-        new_rect2 = rotated_image.get_rect(center=self.image.get_rect(topleft=self.position).center)
-        surface.blit(rotated_image, new_rect2.topleft)
+        if self.flip == True:
+            img = pygame.transform.flip(self.image, True, False)
+            rotated_image = pygame.transform.rotate(img, self.angle)
+            new_rect2 = rotated_image.get_rect(center=self.image.get_rect(topleft=self.position).center)
+            surface.blit(rotated_image, new_rect2.topleft)
+        else:
+            rotated_image = pygame.transform.rotate(self.image, self.angle)
+            new_rect2 = rotated_image.get_rect(center=self.image.get_rect(topleft=self.position).center)
+            surface.blit(rotated_image, new_rect2.topleft)
 
     def draw_rohr(self, surface):
-        rohr = pygame.transform.flip(self.rohr_image, True, False)
-        rotated_rohr = pygame.transform.rotate(rohr, self.angle)
-        new_rect = rotated_rohr.get_rect(center=self.rohr_image.get_rect(topleft=self.position).center)
-        surface.blit(rotated_rohr, new_rect.topleft)
+        if self.flip == True:
+            rohr = pygame.transform.flip(self.rohr_image, True, False)
+            rotated_rohr = pygame.transform.rotate(rohr, self.angle)
+            new_rect = rotated_rohr.get_rect(center=self.rohr_image.get_rect(topleft=self.position).center)
+            surface.blit(rotated_rohr, new_rect.topleft)
+        else:
+            rotated_rohr = pygame.transform.rotate(self.rohr_image, self.angle)
+            new_rect = rotated_rohr.get_rect(center=self.rohr_image.get_rect(topleft=self.position).center)
+            surface.blit(rotated_rohr, new_rect.topleft)
 
 
     def move(self):
@@ -62,25 +73,44 @@ class Panzer:
         self.move_left = False
         self.move_right = False
         #Left Movement: Drives until Self.Tank == 0
-        if (key[pygame.K_LEFT]) and (self.tank >= 0):
-         self.position[0] -= self.speed
-         self.tank -= self.speed
-         self.move_left = True
-         self.move_right = False
+        if self.flip == True:
+            if (key[pygame.K_LEFT]) and (self.tank >= 0):
+                self.position[0] -= self.speed
+                self.tank -= self.speed
+                self.move_left = True
+                self.move_right = False
 
-         if self.tank < 0:
-             self.tank == 0
+                if self.tank < 0:
+                    self.tank == 0
 
-        #Right Movement: Drives until Self.Tank == 0
-        if (key[pygame.K_RIGHT]) and (self.tank >= 0):
-         self.position[0] += self.speed
-         self.tank -= self.speed
-         self.move_left = False
-         self.move_right = True
+            #Right Movement: Drives until Self.Tank == 0
+            if (key[pygame.K_RIGHT]) and (self.tank >= 0):
+                self.position[0] += self.speed
+                self.tank -= self.speed
+                self.move_left = False
+                self.move_right = True
 
-         if self.tank < 0:
-             self.tank == 0
+                if self.tank < 0:
+                    self.tank == 0
+        elif self.flip == False:
+            if (key[pygame.K_RIGHT]) and (self.tank >= 0):
+                self.position[0] -= self.speed
+                self.tank -= self.speed
+                self.move_left = True
+                self.move_right = False
 
+                if self.tank < 0:
+                    self.tank == 0
+
+            #Right Movement: Drives until Self.Tank == 0
+            if (key[pygame.K_LEFT]) and (self.tank >= 0):
+                self.position[0] += self.speed
+                self.tank -= self.speed
+                self.move_left = False
+                self.move_right = True
+
+                if self.tank < 0:
+                    self.tank == 0
     def update_animation(self, surface):
         if self.move_right == True:
             if self.frame <= 7:

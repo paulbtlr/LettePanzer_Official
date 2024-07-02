@@ -66,7 +66,8 @@ def main():
     panzer_orange_rohr = pygame.image.load("Assets/Bilder/Spieler/Panzer/Orange/OSR.png")
 
     # Initialize Panzer with a scale factor to make it smaller
-    panzer = Panzer("Assets/Bilder/Spieler/Panzer/Blau/BBR/BBR0.png", (95, boden.get_ground_height(95)), panzer_blue_rohr,panzer_imagelist_blue_v,panzer_imagelist_blue_r,scale_factor=0.4) #0.08
+    panzer_blu = Panzer("Assets/Bilder/Spieler/Panzer/Blau/BBR/BBR0.png", (95, boden.get_ground_height(95)), panzer_blue_rohr, panzer_imagelist_blue_v, panzer_imagelist_blue_r, True, scale_factor=0.4) #0.08
+    panzer_or = Panzer("Assets/Bilder/Spieler/Panzer/Blau/BBR/BBR0.png", (1725, boden.get_ground_height(1725)), panzer_orange_rohr, panzer_imagelist_orange_v, panzer_imagelist_orange_r, False, scale_factor=0.4)
 
     # Main loop
     running = True
@@ -86,22 +87,29 @@ def main():
             y = boden.get_ground_height(x - 50)
             pygame.draw.line(screen, PERU, (x, y), (x, window_size[1]))
 
+        # Update blue panzer position and angle, then draw
+        panzer_or.move()
+        panzer_or.update_animation(screen)
+        panzer_or.update_position(boden.get_ground_height(panzer_or.position[0]))
+        panzer_or.update_rohr_position(boden.get_ground_height(panzer_or.position[0]))
+        panzer_or.update_angle(boden.get_ground_slope(panzer_or.position[0]))
+        panzer_or.draw_rohr(screen)
+        panzer_or.draw_panzer(screen)
 
-
-        # Update panzer position and angle, then draw
-        panzer.move()
-        panzer.update_animation(screen)
-        panzer.update_position(boden.get_ground_height(panzer.position[0]))
-        panzer.update_rohr_position(boden.get_ground_height(panzer.position[0]))
-        panzer.update_angle(boden.get_ground_slope(panzer.position[0]))
-        panzer.draw_rohr(screen)
-        panzer.draw_panzer(screen)
+        # Update blue panzer position and angle, then draw
+        panzer_blu.move()
+        panzer_blu.update_animation(screen)
+        panzer_blu.update_position(boden.get_ground_height(panzer_blu.position[0]))
+        panzer_blu.update_rohr_position(boden.get_ground_height(panzer_blu.position[0]))
+        panzer_blu.update_angle(boden.get_ground_slope(panzer_blu.position[0]))
+        panzer_blu.draw_rohr(screen)
+        panzer_blu.draw_panzer(screen)
 
         # Draw UI buttons
-        ui.draw_tank(panzer.tank,200,150,screen,True)
-        ui.draw_tank(panzer.tank,1620,150,screen,False)
-        ui.draw_health(panzer.health,100,100,screen,True)
-        ui.draw_health(panzer.health,1620,100,screen,False)
+        ui.draw_tank(panzer_blu.tank,200,150,screen,True)
+        ui.draw_tank(panzer_blu.tank,1620,150,screen,False)
+        ui.draw_health(panzer_blu.health,100,100,screen,True)
+        ui.draw_health(panzer_blu.health,1620,100,screen,False)
         ui.draw()
 
         # Update the display
