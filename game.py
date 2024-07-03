@@ -23,7 +23,7 @@ def main():
     ui = UI(screen)
     boden = Boden()
     #Load Background
-    background = pygame.image.load("Assets/Bilder/Hintergrund/Background/BGChopper.png")
+    background = pygame.image.load("Assets/Bilder/Hintergrund/Background/BGSpace.png")
     
     # Load Panzer Pictures for Blue Panzer
     panzer_imagelist_blue_v = [pygame.image.load("Assets/Bilder/Spieler/Panzer/Blau/BBV/BBV0.png"),
