@@ -60,11 +60,9 @@ class MainMenu:
                     running = False
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.start_button_rect.collidepoint(mouse_pos):
-                        self.start_game()
-                        running = False
+                        self.open_start_window()
                     elif self.options_button_rect.collidepoint(mouse_pos):
                         self.open_options()
-                        running = False
                     elif self.quit_button_rect.collidepoint(mouse_pos):
                         running = False
 
@@ -80,17 +78,71 @@ class MainMenu:
         else:
             self.screen.blit(image, rect.topleft)
 
-    def start_game(self):
-        subprocess.Popen([sys.executable, 'game.py'])
+    def open_start_window(self):
+        start_window = StartWindow(self)
+        start_window.run()
 
     def open_options(self):
         options_window = OptionsWindow(self)
         options_window.run()
 
+class StartWindow:
+    def __init__(self, main_menu):
+        self.main_menu = main_menu
+        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        pygame.display.set_caption('Start Window')
+
+        # Hintergrundbild für das Startfenster laden
+        self.background_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/SpielmodusBackground.jpg')
+        self.background_image = pygame.transform.scale(self.background_image, (WIDTH, HEIGHT))
+
+        # Button-Bilder für Start-Button laden und skalieren
+        self.start_game_button_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/1vs1_1.png')
+        self.start_game_button_image = pygame.transform.scale(self.start_game_button_image, (400, 100))
+        self.start_game_button_hover_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/1vs1_2.png')
+        self.start_game_button_hover_image = pygame.transform.scale(self.start_game_button_hover_image, (400, 100))
+
+        self.start_game_button_rect = self.start_game_button_image.get_rect(center=(WIDTH // 2, HEIGHT // 2))
+
+    def run(self):
+        clock = pygame.time.Clock()
+        running = True
+
+        while running:
+            self.screen.blit(self.background_image, (0, 0))
+
+            # Zeichnen des Start-Buttons mit Hover-Effekt
+            mouse_pos = pygame.mouse.get_pos()
+            self.draw_button(self.start_game_button_rect, mouse_pos)
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if self.start_game_button_rect.collidepoint(mouse_pos):
+                        self.start_game()
+                        running = False
+
+            pygame.display.flip()
+            clock.tick(FPS)
+
+        pygame.quit()
+
+    def draw_button(self, rect, mouse_pos):
+        if rect.collidepoint(mouse_pos):
+            self.screen.blit(self.start_game_button_hover_image, rect.topleft)
+        else:
+            self.screen.blit(self.start_game_button_image, rect.topleft)
+
+    def start_game(self):
+        subprocess.Popen([sys.executable, 'game.py'])
+
 class OptionsWindow:
     def __init__(self, main_menu):
         self.main_menu = main_menu
         self.music_on = True  # Zustand des Musik-Buttons
+        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        pygame.display.set_caption('Options Window')
 
         # Hintergrundbild für das Optionsfenster laden
         self.background_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/OptionsBackground.png')
@@ -121,7 +173,7 @@ class OptionsWindow:
         running = True
 
         while running:
-            self.main_menu.screen.blit(self.background_image, (0, 0))
+            self.screen.blit(self.background_image, (0, 0))
 
             # Zeichnen der Buttons mit Hover-Effekt
             mouse_pos = pygame.mouse.get_pos()
@@ -151,15 +203,15 @@ class OptionsWindow:
             hover_image = self.music_off_button_hover_image
 
         if rect.collidepoint(mouse_pos):
-            self.main_menu.screen.blit(hover_image, rect.topleft)
+            self.screen.blit(hover_image, rect.topleft)
         else:
-            self.main_menu.screen.blit(image, rect.topleft)
+            self.screen.blit(image, rect.topleft)
 
     def draw_back_button(self, mouse_pos):
         if self.back_button_rect.collidepoint(mouse_pos):
-            self.main_menu.screen.blit(self.back_button_hover_image, self.back_button_rect.topleft)
+            self.screen.blit(self.back_button_hover_image, self.back_button_rect.topleft)
         else:
-            self.main_menu.screen.blit(self.back_button_image, self.back_button_rect.topleft)
+            self.screen.blit(self.back_button_image, self.back_button_rect.topleft)
 
     def toggle_music(self):
         self.music_on = not self.music_on
