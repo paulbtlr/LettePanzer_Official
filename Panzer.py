@@ -112,33 +112,61 @@ class Panzer:
                 if self.tank < 0:
                     self.tank == 0
     def update_animation(self, surface):
-        if self.move_right == True:
-            if self.frame <= 7:
-                self.current_image = self.image_list_v[self.frame]
-                self.image = pygame.transform.scale(self.current_image, 
-                                                (int(self.current_image.get_width() * self.scale_factor), 
-                                                int(self.current_image.get_height() * self.scale_factor)))
-                img = pygame.transform.flip(self.image, True, False)
-                rotated_image = pygame.transform.rotate(img, self.angle)
-                new_rect2 = rotated_image.get_rect(center=self.image.get_rect(topleft=self.position).center)
-                surface.blit(rotated_image, new_rect2.topleft)
-            self.frame += 1
-            if self.frame > 6:
-                self.frame = 0
+        if self.flip == True:
+            if self.move_right == True:
+                if self.frame <= 7:
+                    self.current_image = self.image_list_v[self.frame]
+                    self.image = pygame.transform.scale(self.current_image, 
+                                                    (int(self.current_image.get_width() * self.scale_factor), 
+                                                    int(self.current_image.get_height() * self.scale_factor)))
+                    img = pygame.transform.flip(self.image, True, False)
+                    rotated_image = pygame.transform.rotate(img, self.angle)
+                    new_rect2 = rotated_image.get_rect(center=self.image.get_rect(topleft=self.position).center)
+                    surface.blit(rotated_image, new_rect2.topleft)
+                self.frame += 1
+                if self.frame > 6:
+                    self.frame = 0
 
-        if self.move_left == True:
-            if self.frame <= 7:
-                self.current_image = self.image_list_r[self.frame]
-                self.image = pygame.transform.scale(self.current_image, 
-                                                (int(self.current_image.get_width() * self.scale_factor), 
-                                                int(self.current_image.get_height() * self.scale_factor)))
-                img = pygame.transform.flip(self.image, True, False)
-                rotated_image = pygame.transform.rotate(img, self.angle)
-                new_rect2 = rotated_image.get_rect(center=self.image.get_rect(topleft=self.position).center)
-                surface.blit(rotated_image, new_rect2.topleft)
-            self.frame += 1    
-            if self.frame > 6:
-                self.frame = 0
+            if self.move_left == True:
+                if self.frame <= 7:
+                    self.current_image = self.image_list_r[self.frame]
+                    self.image = pygame.transform.scale(self.current_image, 
+                                                    (int(self.current_image.get_width() * self.scale_factor), 
+                                                    int(self.current_image.get_height() * self.scale_factor)))
+                    img = pygame.transform.flip(self.image, True, False)
+                    rotated_image = pygame.transform.rotate(img, self.angle)
+                    new_rect2 = rotated_image.get_rect(center=self.image.get_rect(topleft=self.position).center)
+                    surface.blit(rotated_image, new_rect2.topleft)
+                self.frame += 1    
+                if self.frame > 6:
+                    self.frame = 0
+        else:
+            if self.move_right == True:
+                if self.frame <= 7:
+                    self.current_image = self.image_list_v[self.frame]
+                    self.image = pygame.transform.scale(self.current_image, 
+                                                    (int(self.current_image.get_width() * self.scale_factor), 
+                                                    int(self.current_image.get_height() * self.scale_factor)))
+                    rotated_image = pygame.transform.rotate(self.image, self.angle)
+                    new_rect2 = rotated_image.get_rect(center=self.image.get_rect(topleft=self.position).center)
+                    surface.blit(rotated_image, new_rect2.topleft)
+                self.frame += 1
+                if self.frame > 6:
+                    self.frame = 0
+
+            if self.move_left == True:
+                if self.frame <= 7:
+                    self.current_image = self.image_list_r[self.frame]
+                    self.image = pygame.transform.scale(self.current_image, 
+                                                    (int(self.current_image.get_width() * self.scale_factor), 
+                                                    int(self.current_image.get_height() * self.scale_factor)))
+                    rotated_image = pygame.transform.rotate(self.image, self.angle)
+                    new_rect2 = rotated_image.get_rect(center=self.image.get_rect(topleft=self.position).center)
+                    surface.blit(rotated_image, new_rect2.topleft)
+                self.frame += 1    
+                if self.frame > 6:
+                    self.frame = 0
+
 
 
     def update_position(self, ground_height):

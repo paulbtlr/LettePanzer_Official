@@ -26,7 +26,7 @@ def main():
     boden = Boden()
 
     # Define parameters for multiple waves
-
+    
     # Load Panzer Pictures for Blue Panzer
     panzer_imagelist_blue_v = [pygame.image.load("Assets/Bilder/Spieler/Panzer/Blau/BBV/BBV0.png"),
                                 pygame.image.load("Assets/Bilder/Spieler/Panzer/Blau/BBV/BBV1.png"),
@@ -66,8 +66,8 @@ def main():
     panzer_orange_rohr = pygame.image.load("Assets/Bilder/Spieler/Panzer/Orange/OSR.png")
 
     # Initialize Panzer with a scale factor to make it smaller
-    panzer_blu = Panzer("Assets/Bilder/Spieler/Panzer/Blau/BBR/BBR0.png", (95, boden.get_ground_height(95)), panzer_blue_rohr, panzer_imagelist_blue_v, panzer_imagelist_blue_r, True, scale_factor=0.4) #0.08
-    panzer_or = Panzer("Assets/Bilder/Spieler/Panzer/Blau/BBR/BBR0.png", (1725, boden.get_ground_height(1725)), panzer_orange_rohr, panzer_imagelist_orange_v, panzer_imagelist_orange_r, False, scale_factor=0.4)
+    panzer_blu = Panzer("Assets/Bilder/Spieler/Panzer/Blau/BBR/BBR0.png", (95, boden.get_ground_height(95)), panzer_blue_rohr, panzer_imagelist_blue_v, panzer_imagelist_blue_r, True, scale_factor=0.08) #0.08
+    panzer_or = Panzer("Assets/Bilder/Spieler/Panzer/Orange/OBR/OBR0.png", (1722, boden.get_ground_height(1722)), panzer_orange_rohr, panzer_imagelist_orange_v, panzer_imagelist_orange_r, False, scale_factor=0.08)
 
     # Main loop
     running = True
