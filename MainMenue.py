@@ -164,6 +164,13 @@ class MapSelectionWindow:
         self.map3_button_hover_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/Space2.png')
         self.map3_button_hover_image = pygame.transform.scale(self.map3_button_hover_image, (400, 100))
 
+        # Zurück-Button Bild laden und skalieren
+        self.back_button_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/Zurück1.png')
+        self.back_button_image = pygame.transform.scale(self.back_button_image, (400, 100))
+        self.back_button_hover_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/Zurück2.png')
+        self.back_button_hover_image = pygame.transform.scale(self.back_button_hover_image, (400, 100))
+        self.back_button_rect = self.back_button_image.get_rect(center=(WIDTH // 2, HEIGHT - 150))
+
         button_gap = 150
         button_y = HEIGHT // 2 - 0.5 * button_gap
 
@@ -183,6 +190,7 @@ class MapSelectionWindow:
             self.draw_button(self.map1_button_rect, self.map1_button_image, self.map1_button_hover_image, mouse_pos)
             self.draw_button(self.map2_button_rect, self.map2_button_image, self.map2_button_hover_image, mouse_pos)
             self.draw_button(self.map3_button_rect, self.map3_button_image, self.map3_button_hover_image, mouse_pos)
+            self.draw_button(self.back_button_rect, self.back_button_image, self.back_button_hover_image, mouse_pos)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -194,6 +202,9 @@ class MapSelectionWindow:
                         self.start_game()
                     elif self.map3_button_rect.collidepoint(mouse_pos):
                         self.start_game()
+                    elif self.back_button_rect.collidepoint(mouse_pos):
+                        self.main_menu.run()
+                        running = False
 
             pygame.display.flip()
             clock.tick(FPS)
