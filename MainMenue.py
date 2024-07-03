@@ -209,6 +209,85 @@ class MapSelectionWindow:
     def start_game(self):
         subprocess.Popen([sys.executable, 'game.py'])
 
+class OptionsWindow:
+    def __init__(self, main_menu):
+        self.main_menu = main_menu
+        self.music_on = True  # Zustand des Musik-Buttons
+        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        pygame.display.set_caption('Options Window')
+
+        # Hintergrundbild für das Optionsfenster laden
+        self.background_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/OptionsBackground.png')
+        self.background_image = pygame.transform.scale(self.background_image, (WIDTH, HEIGHT))
+
+        # Button-Bilder für Musik-Button laden und skalieren
+        self.music_on_button_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/MusikAN1.png')
+        self.music_on_button_image = pygame.transform.scale(self.music_on_button_image, (400, 100))
+        self.music_on_button_hover_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/MusikAN2.png')
+        self.music_on_button_hover_image = pygame.transform.scale(self.music_on_button_hover_image, (400, 100))
+
+        self.music_off_button_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/MusikAUS1.png')
+        self.music_off_button_image = pygame.transform.scale(self.music_off_button_image, (400, 100))
+        self.music_off_button_hover_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/MusikAUS2.png')
+        self.music_off_button_hover_image = pygame.transform.scale(self.music_off_button_hover_image, (400, 100))
+
+        self.music_button_rect = self.music_on_button_image.get_rect(center=(WIDTH // 2, HEIGHT // 2))
+
+        # Button-Bilder für Zurück-Button laden und skalieren
+        self.back_button_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/Zurück1.png')
+        self.back_button_image = pygame.transform.scale(self.back_button_image, (400, 100))
+        self.back_button_hover_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/Zurück2.png')
+        self.back_button_hover_image = pygame.transform.scale(self.back_button_hover_image, (400, 100))
+        self.back_button_rect = self.back_button_image.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 150))
+
+    def run(self):
+        clock = pygame.time.Clock()
+        running = True
+
+        while running:
+            self.screen.blit(self.background_image, (0, 0))
+
+            # Zeichnen der Buttons mit Hover-Effekt
+            mouse_pos = pygame.mouse.get_pos()
+            self.draw_button(self.music_button_rect, mouse_pos)
+            self.draw_back_button(mouse_pos)
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                    self.main_menu.run()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if self.music_button_rect.collidepoint(mouse_pos):
+                        self.toggle_music()
+                    elif self.back_button_rect.collidepoint(mouse_pos):
+                        running = False
+                        self.main_menu.run()
+
+            pygame.display.flip()
+            clock.tick(FPS)
+
+    def draw_button(self, rect, mouse_pos):
+        if self.music_on:
+            image = self.music_on_button_image
+            hover_image = self.music_on_button_hover_image
+        else:
+            image = self.music_off_button_image
+            hover_image = self.music_off_button_hover_image
+
+        if rect.collidepoint(mouse_pos):
+            self.screen.blit(hover_image, rect.topleft)
+        else:
+            self.screen.blit(image, rect.topleft)
+
+    def draw_back_button(self, mouse_pos):
+        if self.back_button_rect.collidepoint(mouse_pos):
+            self.screen.blit(self.back_button_hover_image, self.back_button_rect.topleft)
+        else:
+            self.screen.blit(self.back_button_image, self.back_button_rect.topleft)
+
+    def toggle_music(self):
+        self.music_on = not self.music_on
+
 if __name__ == '__main__':
     main_menu = MainMenu()
     main_menu.run()
