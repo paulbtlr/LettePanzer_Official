@@ -1,6 +1,5 @@
 import pygame
 import math
-import os
 
 class Panzer:
     def __init__(self, image_path, start_position, panzer_rohr, image_list_v,image_list_r,flip,scale_factor=0.5):
@@ -28,41 +27,32 @@ class Panzer:
         self.image_list_r = image_list_r
         self.rohr_angle = 0
 
-    #def load_images(self, images,image_path):
-    #    """
-    #    Loads all images in directory. The directory must only contain images.
-
-#        Args:
- #           path: The relative or absolute path to the directory to load images from.
-#
- #       Returns:
-  #          List of images.
-   #     """
-    #    self.image_path = image_path
-     #   images = []
-      #  for file_name in os.listdir(image_path):
-       #     image = pygame.image.load(image_path + os.sep + file_name).convert()
-        #    images.append(image)
-        #return images
-
     def draw_panzer(self, surface):
+        #Player 1
         if self.flip == True:
+            #Flips the Rohr, Rotates it and draws it
             img = pygame.transform.flip(self.image, True, False)
             rotated_image = pygame.transform.rotate(img, self.angle)
             new_rect2 = rotated_image.get_rect(center=self.image.get_rect(topleft=self.position).center)
             surface.blit(rotated_image, new_rect2.topleft)
+        #Player 2
         else:
+            #Rotates it and draws it
             rotated_image = pygame.transform.rotate(self.image, self.angle)
             new_rect2 = rotated_image.get_rect(center=self.image.get_rect(topleft=self.position).center)
             surface.blit(rotated_image, new_rect2.topleft)
 
     def draw_rohr(self, surface):
+        #Player 1
         if self.flip == True:
+            #Flips the Rohr, Rotates it and draws it
             rohr = pygame.transform.flip(self.rohr_image, True, False)
             rotated_rohr = pygame.transform.rotate(rohr, self.angle)
             new_rect = rotated_rohr.get_rect(center=self.rohr_image.get_rect(topleft=self.position).center)
             surface.blit(rotated_rohr, new_rect.topleft)
+        #Player 2
         else:
+            #Rotates it and draws it
             rotated_rohr = pygame.transform.rotate(self.rohr_image, self.angle)
             new_rect = rotated_rohr.get_rect(center=self.rohr_image.get_rect(topleft=self.position).center)
             surface.blit(rotated_rohr, new_rect.topleft)
@@ -72,8 +62,10 @@ class Panzer:
         key = pygame.key.get_pressed()
         self.move_left = False
         self.move_right = False
-        #Left Movement: Drives until Self.Tank == 0
+
+        #Player 1
         if self.flip == True:
+            #Left Movement: Drives until Self.Tank == 0
             if (key[pygame.K_a]) and (self.tank >= 0):
                 self.position[0] -= self.speed
                 self.tank -= self.speed
@@ -92,7 +84,9 @@ class Panzer:
 
                 if self.tank < 0:
                     self.tank == 0
+        #Player 2
         elif self.flip == False:
+            #Left Movement: Drives until Self.Tank == 0
             if (key[pygame.K_LEFT]) and (self.tank >= 0):
                 self.position[0] -= self.speed
                 self.tank -= self.speed
@@ -111,9 +105,11 @@ class Panzer:
 
                 if self.tank < 0:
                     self.tank == 0
-                    
+
     def update_animation(self, surface):
+        #Player 1
         if self.flip == True:
+            #Animation for driving forward
             if self.move_right == True:
                 if self.frame <= 7:
                     self.current_image = self.image_list_v[self.frame]
@@ -128,6 +124,7 @@ class Panzer:
                 if self.frame > 6:
                     self.frame = 0
 
+            #Animation for driving backwards
             if self.move_left == True:
                 if self.frame <= 7:
                     self.current_image = self.image_list_r[self.frame]
@@ -141,8 +138,9 @@ class Panzer:
                 self.frame += 1    
                 if self.frame > 6:
                     self.frame = 0
-
+        #Player 2
         else:
+            #Animation for driving forward
             if self.move_right == True:
                 if self.frame <= 7:
                     self.current_image = self.image_list_v[self.frame]
@@ -156,6 +154,7 @@ class Panzer:
                 if self.frame > 6:
                     self.frame = 0
 
+            #Animation for driving backwards
             if self.move_left == True:
                 if self.frame <= 7:
                     self.current_image = self.image_list_r[self.frame]
@@ -170,12 +169,15 @@ class Panzer:
                     self.frame = 0
 
     def update_position(self, ground_height):
+        #keeps the tank in place
         self.position[1] = ground_height - self.image.get_height() + 14
 
     def update_rohr_position(self, ground_height):
+        #keeps the rohr in place
         self.position[1] = ground_height - self.rohr_image.get_height() + 14
 
     def update_angle(self, ground_slope):
+        #Angles the tank to drive slopes
         self.angle = -math.degrees(math.atan(ground_slope))
 
     #def rohr_setting(self,)

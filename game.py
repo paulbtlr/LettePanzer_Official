@@ -1,7 +1,5 @@
 import pygame
 import sys
-import math
-import random
 from UI import UI
 from Panzer import Panzer
 from Boden import Boden
@@ -24,8 +22,8 @@ def main():
     # Initialize Imports
     ui = UI(screen)
     boden = Boden()
-
-    # Define parameters for multiple waves
+    #Load Background
+    background = pygame.image.load("Assets/Bilder/Hintergrund/Background/BGChopper.png")
     
     # Load Panzer Pictures for Blue Panzer
     panzer_imagelist_blue_v = [pygame.image.load("Assets/Bilder/Spieler/Panzer/Blau/BBV/BBV0.png"),
@@ -81,6 +79,7 @@ def main():
 
         # Fill the screen with a light blue color for the sky
         screen.fill(LIGHT_BLUE)
+        #screen.blit(background,(0,0))
 
         # Draw the terrain with multiple waves
         for x in range(window_size[0]):

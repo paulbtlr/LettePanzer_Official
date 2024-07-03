@@ -1,13 +1,8 @@
-import pygame
 import math
 import random
 
 class Boden:
-    # Define colors
     def __init__(self):
-        LIGHT_BLUE = (50, 100, 255)
-        PERU = (205, 133, 63)
-
         # Define parameters for multiple waves
         num_waves = 3
         self.waves = []
