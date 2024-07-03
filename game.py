@@ -107,9 +107,9 @@ def main():
 
         # Draw UI buttons
         ui.draw_tank(panzer_blu.tank,200,150,screen,True)
-        ui.draw_tank(panzer_blu.tank,1620,150,screen,False)
+        ui.draw_tank(panzer_or.tank,1620,150,screen,False)
         ui.draw_health(panzer_blu.health,100,100,screen,True)
-        ui.draw_health(panzer_blu.health,1620,100,screen,False)
+        ui.draw_health(panzer_or.health,1620,100,screen,False)
         ui.draw()
 
         # Update the display

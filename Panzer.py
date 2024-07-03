@@ -74,7 +74,7 @@ class Panzer:
         self.move_right = False
         #Left Movement: Drives until Self.Tank == 0
         if self.flip == True:
-            if (key[pygame.K_LEFT]) and (self.tank >= 0):
+            if (key[pygame.K_a]) and (self.tank >= 0):
                 self.position[0] -= self.speed
                 self.tank -= self.speed
                 self.move_left = True
@@ -84,7 +84,7 @@ class Panzer:
                     self.tank == 0
 
             #Right Movement: Drives until Self.Tank == 0
-            if (key[pygame.K_RIGHT]) and (self.tank >= 0):
+            if (key[pygame.K_d]) and (self.tank >= 0):
                 self.position[0] += self.speed
                 self.tank -= self.speed
                 self.move_left = False
@@ -93,7 +93,7 @@ class Panzer:
                 if self.tank < 0:
                     self.tank == 0
         elif self.flip == False:
-            if (key[pygame.K_RIGHT]) and (self.tank >= 0):
+            if (key[pygame.K_LEFT]) and (self.tank >= 0):
                 self.position[0] -= self.speed
                 self.tank -= self.speed
                 self.move_left = True
@@ -103,7 +103,7 @@ class Panzer:
                     self.tank == 0
 
             #Right Movement: Drives until Self.Tank == 0
-            if (key[pygame.K_LEFT]) and (self.tank >= 0):
+            if (key[pygame.K_RIGHT]) and (self.tank >= 0):
                 self.position[0] += self.speed
                 self.tank -= self.speed
                 self.move_left = False
@@ -111,6 +111,7 @@ class Panzer:
 
                 if self.tank < 0:
                     self.tank == 0
+                    
     def update_animation(self, surface):
         if self.flip == True:
             if self.move_right == True:
@@ -140,6 +141,7 @@ class Panzer:
                 self.frame += 1    
                 if self.frame > 6:
                     self.frame = 0
+
         else:
             if self.move_right == True:
                 if self.frame <= 7:
@@ -167,8 +169,6 @@ class Panzer:
                 if self.frame > 6:
                     self.frame = 0
 
-
-
     def update_position(self, ground_height):
         self.position[1] = ground_height - self.image.get_height() + 14
 
@@ -177,6 +177,8 @@ class Panzer:
 
     def update_angle(self, ground_slope):
         self.angle = -math.degrees(math.atan(ground_slope))
+
+    #def rohr_setting(self,)
 
     #def update_rohr_angle(self):
      #   self.rohr_angle = -math.degrees(math.atan(ground_slope))
