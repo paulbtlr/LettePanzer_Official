@@ -37,7 +37,7 @@ class Shoot() :
         #self.rect.x += dx
         #self.rect.y += dy
 
-    def update_patty(self):
+    def update_shoot(self):
         if self.shooting == True:
             gravity = self.gravity
             self.rect.x += self.speed_hor

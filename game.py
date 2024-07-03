@@ -3,6 +3,7 @@ import sys
 from UI import UI
 from Panzer import Panzer
 from Boden import Boden
+from shoot import Shoot
 
 def main():
     # Initialize Pygame
@@ -66,6 +67,7 @@ def main():
     # Initialize Panzer with a scale factor to make it smaller
     panzer_blu = Panzer("Assets/Bilder/Spieler/Panzer/Blau/BBR/BBR0.png", (95, boden.get_ground_height(95)), panzer_blue_rohr, panzer_imagelist_blue_v, panzer_imagelist_blue_r, True, scale_factor=0.08) #0.08
     panzer_or = Panzer("Assets/Bilder/Spieler/Panzer/Orange/OBR/OBR0.png", (1722, boden.get_ground_height(1722)), panzer_orange_rohr, panzer_imagelist_orange_v, panzer_imagelist_orange_r, False, scale_factor=0.08)
+    shoot = Shoot(panzer_blu.position[0]+102, panzer_blu.position[1]-28)
 
     # Main loop
     running = True
@@ -102,7 +104,12 @@ def main():
         panzer_blu.update_rohr_position(boden.get_ground_height(panzer_blu.position[0]))
         panzer_blu.update_angle(boden.get_ground_slope(panzer_blu.position[0]))
         panzer_blu.draw_rohr(screen)
+        panzer_blu.rohr_setting(screen)
         panzer_blu.draw_panzer(screen)
+
+        #shoot.move()
+        #shoot.update_shoot()
+        #shoot.draw(screen)
 
         # Draw UI buttons
         ui.draw_tank(panzer_blu.tank,200,150,screen,True)

@@ -68,7 +68,7 @@ while running:
     #            pygame.draw.line(screen, color, (prev_y, prev_x), (y, x))
     #            prev_x, prev_y = x, y
     shoot.move()
-    shoot.update_patty()
+    shoot.update_shoot()
     shoot.draw(screen)
 
     pygame.draw.line(screen, (0, 255, 0),[0, 600],[SCREEN_WIDTH, 600], 10)
