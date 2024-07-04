@@ -18,7 +18,7 @@ def main():
 
     # Define colors
     LIGHT_BLUE = (50, 100, 255)
-    PERU = (205, 133, 63)
+    PERU = (0, 0, 0)
 
     # Initialize Imports
     ui = UI(screen)
@@ -110,7 +110,14 @@ def main():
         shoot.move()
         shoot.update_shoot()
         shoot.draw(screen)
-
+    # Load the Interface image
+        interface_image = pygame.image.load("Assets/Bilder/Interface/Interface.png")
+        
+        # Draw the Interface image on top
+        screen.blit(interface_image, (0, -20))
+        
+        # Update the display again to show the Interface image
+        pygame.display.flip()
         # Draw UI buttons
         ui.draw_tank(panzer_blu.tank,200,150,screen,True)
         ui.draw_tank(panzer_or.tank,1620,150,screen,False)
@@ -127,3 +134,6 @@ def main():
 
 if __name__ == '__main__':
     main()
+    
+    
+
