@@ -18,7 +18,7 @@ def main():
 
     # Define colors
     LIGHT_BLUE = (50, 100, 255)
-    PERU = (205, 133, 63)
+    PERU = (0, 0, 0)
 
     # Initialize Imports
     ui = UI(screen)
