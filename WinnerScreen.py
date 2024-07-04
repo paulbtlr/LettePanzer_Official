@@ -19,7 +19,7 @@ GRAY = (200, 200, 200)
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption('1v1 Spiel')
 
-#Spielergröße
+# Spielergröße
 player_speed = 10
 
 # Zielposition
@@ -29,13 +29,13 @@ goal_x = screen_width // 2 - goal_width // 2
 goal_y = screen_height // 2 - goal_height // 2
 
 # Schriftart
-font_path = "Assets/Schrift/Pixellari.ttf"  
+font_path = "Assets/Schrift/Pixellari.ttf"
 font = pygame.font.Font(font_path, 65)
 font_button = pygame.font.Font(font_path, 50)
 
 button_width = 300
 button_height = 100
-button_spacing = 10  
+button_spacing = 10
 button_y = screen_height // 1.2
 button_menu_x = screen_width // 2 - (1.5 * button_width + button_spacing)
 button_neustart_x = screen_width // 2 - (0.5 * button_width)
@@ -43,7 +43,7 @@ button_quit_x = screen_width // 2 + (0.5 * button_width + button_spacing)
 
 # Spielerbilder
 player1_image = pygame.image.load('Assets/Bilder/Spieler/Panzer/Blau/BWS.png')
-player2_image = pygame.image.load('Assets/Bilder/Spieler/Panzer/Orange/OWS.png')  
+player2_image = pygame.image.load('Assets/Bilder/Spieler/Panzer/Orange/OWS.png')
 
 new_player_width = 640
 new_player_height = 360
@@ -52,26 +52,21 @@ player1_image = pygame.transform.scale(player1_image, (new_player_width, new_pla
 player2_image = pygame.transform.scale(player2_image, (new_player_width, new_player_height))
 player_width, player_height = player1_image.get_size()
 
-# Hintergrundbild laden
-background_image = pygame.image.load('Assets/Bilder/Hintergrund/WinnerScreen/HintergrundTest.jpg')
-background_image = pygame.transform.scale(background_image, (screen_width, screen_height))
+# Hintergrundbilder für den Winner Screen laden
+background_player1_win = pygame.image.load('Assets/Bilder/Hintergrund/WinnerScreen/Spieler1.jpg')
+background_player2_win = pygame.image.load('Assets/Bilder/Hintergrund/WinnerScreen/Spieler2.jpg')
 
 # Bilder für den Winner Screen laden
 winner_screen_image_player1 = pygame.image.load('Assets/Bilder/Spieler/Panzer/Blau/BWS_Sieg.png')
 winner_screen_image_player2 = pygame.image.load('Assets/Bilder/Spieler/Panzer/Orange/OWS_Sieg.png')
 
-new_player_width = 640
-new_player_height = 360
-
 winner_screen_image_player1 = pygame.transform.scale(winner_screen_image_player1, (new_player_width, new_player_height))
 winner_screen_image_player2 = pygame.transform.scale(winner_screen_image_player2, (new_player_width, new_player_height))
 
-# Funktion zur Anzeige der Gewinnnachricht und des Gewinnerbilds
-def display_winner(winner, winner_image):
-    winner_text = font.render(f"{winner} hat gewonnen!", True, BLACK)
+# Funktion zur Anzeige des Winner Screens
+def display_winner(winner, winner_image, background_image):
     screen.blit(background_image, (0, 0))  # Hintergrundbild zeichnen
     screen.blit(winner_image, (screen_width // 2 - winner_image.get_width() // 2, screen_height // 2 - winner_image.get_height() // 2))  # Gewinnerbild zeichnen
-    screen.blit(winner_text, (screen_width // 2 - winner_text.get_width() // 2, screen_height // 4 - winner_text.get_height() // 2))
 
     # Buttons
     draw_buttons()
@@ -194,10 +189,10 @@ while True:
 
         # Überprüfen, ob ein Spieler das Ziel erreicht hat
         if player1_rect.colliderect(goal):
-            display_winner("Spieler 1", winner_screen_image_player1)
+            display_winner("Spieler 1", winner_screen_image_player1, background_player1_win)
             running = False
         if player2_rect.colliderect(goal):
-            display_winner("Spieler 2", winner_screen_image_player2)
+            display_winner("Spieler 2", winner_screen_image_player2, background_player2_win)
             running = False
 
         pygame.display.flip()

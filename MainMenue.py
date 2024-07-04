@@ -68,6 +68,7 @@ class MainMenu:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.start_button_rect.collidepoint(mouse_pos):
                         self.open_start_window()
+                        running = False
                     elif self.options_button_rect.collidepoint(mouse_pos):
                         self.open_options()
                     elif self.quit_button_rect.collidepoint(mouse_pos):
@@ -108,7 +109,6 @@ class StartWindow:
         self.start_game_button_image = pygame.transform.scale(self.start_game_button_image, (400, 100))
         self.start_game_button_hover_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/1vs1_2.png')
         self.start_game_button_hover_image = pygame.transform.scale(self.start_game_button_hover_image, (400, 100))
-
         self.start_game_button_rect = self.start_game_button_image.get_rect(center=(WIDTH // 2, HEIGHT // 2))
 
         # Zurück-Button Bild laden und skalieren
@@ -223,11 +223,14 @@ class MapSelectionWindow:
                     running = False
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.map1_button_rect.collidepoint(mouse_pos):
-                        self.start_game()
+                        self.start_game('map1')  # Hier könnte der Name der Karte übergeben werden
+                        running = False
                     elif self.map2_button_rect.collidepoint(mouse_pos):
-                        self.start_game()
+                        self.start_game('map2')  # Hier könnte der Name der Karte übergeben werden
+                        running = False
                     elif self.map3_button_rect.collidepoint(mouse_pos):
-                        self.start_game()
+                        self.start_game('map3')  # Hier könnte der Name der Karte übergeben werden
+                        running = False
                     elif self.back_button_rect.collidepoint(mouse_pos):
                         running = False
                         self.open_start_window()
@@ -243,8 +246,11 @@ class MapSelectionWindow:
         else:
             self.screen.blit(image, rect.topleft)
 
-    def start_game(self):
-        subprocess.Popen([sys.executable, 'game.py'])
+    def start_game(self, map_name):
+        # Hier könnte die Logik für den Spielstart eingefügt werden
+        print(f'Starting game on map: {map_name}')
+        subprocess.Popen([sys.executable, 'game.py'])  # Starten des Spiels
+        pygame.quit()  # Pygame beenden
 
     def open_start_window(self):
         start_window = StartWindow(self.main_menu)
