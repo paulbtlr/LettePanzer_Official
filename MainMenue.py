@@ -42,6 +42,10 @@ class MainMenu:
         self.quit_button_hover_image = pygame.transform.scale(self.quit_button_hover_image, (button_width, button_height))
         self.quit_button_rect = self.quit_button_image.get_rect(center=(WIDTH // 2, button_y + 2 * button_gap))
 
+        # Musik laden und abspielen
+        pygame.mixer.music.load("Assets/Audio/Clash of Clans Main Theme 1.mp3")
+        pygame.mixer.music.play(-1)  # -1 für Endlosschleife
+
     def run(self):
         clock = pygame.time.Clock()
         running = True
@@ -79,6 +83,7 @@ class MainMenu:
             self.screen.blit(image, rect.topleft)
 
     def open_start_window(self):
+        pygame.mixer.music.stop()
         start_window = StartWindow(self)
         start_window.run()
 
@@ -297,6 +302,10 @@ class OptionsWindow:
             self.screen.blit(self.back_button_image, self.back_button_rect.topleft)
 
     def toggle_music(self):
+        if self.music_on:
+            pygame.mixer.music.pause()
+        else:
+            pygame.mixer.music.unpause()
         self.music_on = not self.music_on
 
 if __name__ == '__main__':
