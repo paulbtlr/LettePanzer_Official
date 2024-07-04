@@ -93,9 +93,6 @@ class MainMenu:
         options_window = OptionsWindow(self, self.music_on)
         options_window.run()
 
-    def close_menu(self):
-        pygame.quit()
-
 class StartWindow:
     def __init__(self, main_menu):
         self.main_menu = main_menu
@@ -114,6 +111,13 @@ class StartWindow:
 
         self.start_game_button_rect = self.start_game_button_image.get_rect(center=(WIDTH // 2, HEIGHT // 2))
 
+        # Zurück-Button Bild laden und skalieren
+        self.back_button_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/Zurück1.png')
+        self.back_button_image = pygame.transform.scale(self.back_button_image, (400, 100))
+        self.back_button_hover_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/Zurück2.png')
+        self.back_button_hover_image = pygame.transform.scale(self.back_button_hover_image, (400, 100))
+        self.back_button_rect = self.back_button_image.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 150))
+
     def run(self):
         clock = pygame.time.Clock()
         running = True
@@ -124,15 +128,19 @@ class StartWindow:
             # Zeichnen des Start-Buttons mit Hover-Effekt
             mouse_pos = pygame.mouse.get_pos()
             self.draw_button(self.start_game_button_rect, self.start_game_button_image, self.start_game_button_hover_image, mouse_pos)
+            self.draw_back_button(mouse_pos)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
-                    self.main_menu.close_menu()  # Schließe das Hauptmenü
+                    self.main_menu.run()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.start_game_button_rect.collidepoint(mouse_pos):
                         self.open_map_selection()
                         running = False
+                    elif self.back_button_rect.collidepoint(mouse_pos):
+                        running = False
+                        self.main_menu.run()
 
             pygame.display.flip()
             clock.tick(FPS)
@@ -144,6 +152,12 @@ class StartWindow:
             self.screen.blit(hover_image, rect.topleft)
         else:
             self.screen.blit(image, rect.topleft)
+
+    def draw_back_button(self, mouse_pos):
+        if self.back_button_rect.collidepoint(mouse_pos):
+            self.screen.blit(self.back_button_hover_image, self.back_button_rect.topleft)
+        else:
+            self.screen.blit(self.back_button_image, self.back_button_rect.topleft)
 
     def open_map_selection(self):
         map_selection_window = MapSelectionWindow(self.main_menu)
@@ -207,20 +221,16 @@ class MapSelectionWindow:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
-                    self.main_menu.close_menu()  # Schließe das Hauptmenü
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.map1_button_rect.collidepoint(mouse_pos):
-                        self.start_game("Map 1")
-                        running = False
+                        self.start_game()
                     elif self.map2_button_rect.collidepoint(mouse_pos):
-                        self.start_game("Map 2")
-                        running = False
+                        self.start_game()
                     elif self.map3_button_rect.collidepoint(mouse_pos):
-                        self.start_game("Map 3")
-                        running = False
+                        self.start_game()
                     elif self.back_button_rect.collidepoint(mouse_pos):
                         running = False
-                        self.main_menu.run()
+                        self.open_start_window()
 
             pygame.display.flip()
             clock.tick(FPS)
@@ -233,9 +243,12 @@ class MapSelectionWindow:
         else:
             self.screen.blit(image, rect.topleft)
 
-    def start_game(self, map_name):
-        self.main_menu.close_menu()  # Schließe das Hauptmenü
-        subprocess.Popen([sys.executable, 'game.py', map_name])  # Starte das Spiel in einem neuen Prozess
+    def start_game(self):
+        subprocess.Popen([sys.executable, 'game.py'])
+
+    def open_start_window(self):
+        start_window = StartWindow(self.main_menu)
+        start_window.run()
 
 class OptionsWindow:
     def __init__(self, main_menu, music_on):
