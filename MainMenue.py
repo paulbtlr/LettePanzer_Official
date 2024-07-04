@@ -46,6 +46,9 @@ class MainMenu:
         pygame.mixer.music.load("Assets/Audio/Clash of Clans Main Theme 1.mp3")
         pygame.mixer.music.play(-1)  # -1 für Endlosschleife
 
+        # Zustand der Musik (AN/AUS)
+        self.music_on = True
+
     def run(self):
         clock = pygame.time.Clock()
         running = True
@@ -83,12 +86,11 @@ class MainMenu:
             self.screen.blit(image, rect.topleft)
 
     def open_start_window(self):
-        pygame.mixer.music.stop()
         start_window = StartWindow(self)
         start_window.run()
 
     def open_options(self):
-        options_window = OptionsWindow(self)
+        options_window = OptionsWindow(self, self.music_on)
         options_window.run()
 
 class StartWindow:
@@ -109,6 +111,13 @@ class StartWindow:
 
         self.start_game_button_rect = self.start_game_button_image.get_rect(center=(WIDTH // 2, HEIGHT // 2))
 
+        # Zurück-Button Bild laden und skalieren
+        self.back_button_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/Zurück1.png')
+        self.back_button_image = pygame.transform.scale(self.back_button_image, (400, 100))
+        self.back_button_hover_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/Zurück2.png')
+        self.back_button_hover_image = pygame.transform.scale(self.back_button_hover_image, (400, 100))
+        self.back_button_rect = self.back_button_image.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 150))
+
     def run(self):
         clock = pygame.time.Clock()
         running = True
@@ -119,14 +128,19 @@ class StartWindow:
             # Zeichnen des Start-Buttons mit Hover-Effekt
             mouse_pos = pygame.mouse.get_pos()
             self.draw_button(self.start_game_button_rect, self.start_game_button_image, self.start_game_button_hover_image, mouse_pos)
+            self.draw_back_button(mouse_pos)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+                    self.main_menu.run()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.start_game_button_rect.collidepoint(mouse_pos):
                         self.open_map_selection()
                         running = False
+                    elif self.back_button_rect.collidepoint(mouse_pos):
+                        running = False
+                        self.main_menu.run()
 
             pygame.display.flip()
             clock.tick(FPS)
@@ -138,6 +152,12 @@ class StartWindow:
             self.screen.blit(hover_image, rect.topleft)
         else:
             self.screen.blit(image, rect.topleft)
+
+    def draw_back_button(self, mouse_pos):
+        if self.back_button_rect.collidepoint(mouse_pos):
+            self.screen.blit(self.back_button_hover_image, self.back_button_rect.topleft)
+        else:
+            self.screen.blit(self.back_button_image, self.back_button_rect.topleft)
 
     def open_map_selection(self):
         map_selection_window = MapSelectionWindow(self.main_menu)
@@ -174,14 +194,15 @@ class MapSelectionWindow:
         self.back_button_image = pygame.transform.scale(self.back_button_image, (400, 100))
         self.back_button_hover_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/Zurück2.png')
         self.back_button_hover_image = pygame.transform.scale(self.back_button_hover_image, (400, 100))
-        self.back_button_rect = self.back_button_image.get_rect(center=(WIDTH // 2, HEIGHT - 150))
 
+        # Positionen der Buttons
         button_gap = 150
-        button_y = HEIGHT // 2 - 0.5 * button_gap
+        button_y = HEIGHT // 2 - 1.5 * button_gap + 50  # Adjusted position
 
         self.map1_button_rect = self.map1_button_image.get_rect(center=(WIDTH // 2, button_y))
         self.map2_button_rect = self.map2_button_image.get_rect(center=(WIDTH // 2, button_y + button_gap))
         self.map3_button_rect = self.map3_button_image.get_rect(center=(WIDTH // 2, button_y + 2 * button_gap))
+        self.back_button_rect = self.back_button_image.get_rect(center=(WIDTH // 2, button_y + 3 * button_gap))
 
     def run(self):
         clock = pygame.time.Clock()
@@ -208,8 +229,8 @@ class MapSelectionWindow:
                     elif self.map3_button_rect.collidepoint(mouse_pos):
                         self.start_game()
                     elif self.back_button_rect.collidepoint(mouse_pos):
-                        self.main_menu.run()
                         running = False
+                        self.open_start_window()
 
             pygame.display.flip()
             clock.tick(FPS)
@@ -225,10 +246,14 @@ class MapSelectionWindow:
     def start_game(self):
         subprocess.Popen([sys.executable, 'game.py'])
 
+    def open_start_window(self):
+        start_window = StartWindow(self.main_menu)
+        start_window.run()
+
 class OptionsWindow:
-    def __init__(self, main_menu):
+    def __init__(self, main_menu, music_on):
         self.main_menu = main_menu
-        self.music_on = True  # Zustand des Musik-Buttons
+        self.music_on = music_on  # Zustand des Musik-Buttons
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption('Options Window')
 
@@ -282,6 +307,8 @@ class OptionsWindow:
             pygame.display.flip()
             clock.tick(FPS)
 
+        pygame.quit()
+
     def draw_button(self, rect, mouse_pos):
         if self.music_on:
             image = self.music_on_button_image
@@ -307,6 +334,7 @@ class OptionsWindow:
         else:
             pygame.mixer.music.unpause()
         self.music_on = not self.music_on
+        self.main_menu.music_on = self.music_on  # Aktualisieren des Musik-Zustands im Hauptmenü
 
 if __name__ == '__main__':
     main_menu = MainMenu()
