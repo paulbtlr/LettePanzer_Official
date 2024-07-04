@@ -18,7 +18,7 @@ class Panzer:
         self.flip = flip
         self.angle = 0
         self.speed = 1
-        self.tank = 200 #The Maximum Movement a Tank can move
+        self.tank = 2000 #The Maximum Movement a Tank can move
         self.health = 100 #The Health of a Tank
         self.move_right = False
         self.move_left = False
@@ -203,11 +203,14 @@ class Panzer:
                 self.aiming = True
                 #Flips the Rohr, Rotates it and draws it
                 self.rohr_angle += ANGLE_SPEED
-                if self.rohr_angle > 90:
-                    self.rohr_angle = 90
+                print(self.rohr_angle)
+                print(self.angle)
+                if self.rohr_angle > self.angle + abs(self.angle)*4:
+                    self.rohr_angle = self.angle + abs(self.angle)*4
+
 
                 rohr = pygame.transform.flip(self.rohr_image, True, False)
-                self.rotated_rohr = pygame.transform.rotate(rohr, self.rohr_angle)
+                self.rotated_rohr = pygame.transform.rotate(rohr, (self.rohr_angle - self.angle))
                 new_rect = self.rotated_rohr.get_rect(center=self.rohr_image.get_rect(topleft=self.position).center)
                 surface.blit(self.rotated_rohr, new_rect.topleft)
             #Player 2
@@ -215,10 +218,10 @@ class Panzer:
                 #Rotates it and draws it
                 self.aiming = True
                 self.rohr_angle += ANGLE_SPEED
-                if self.rohr_angle > 90:
-                    self.rohr_angle = 90
+                if self.rohr_angle > self.angle + abs(self.angle)*4:
+                    self.rohr_angle = self.angle + abs(self.angle)*4
 
-                self.rotated_rohr = pygame.transform.rotate(rohr, self.rohr_angle)
+                self.rotated_rohr = pygame.transform.rotate(rohr, (self.rohr_angle - self.angle))
                 new_rect = self.rotated_rohr.get_rect(center=self.rohr_image.get_rect(topleft=self.position).center)
                 surface.blit(self.rotated_rohr, new_rect.topleft)
 
@@ -227,11 +230,13 @@ class Panzer:
                 #Flips the Rohr, Rotates it and draws it
                 self.aiming = True
                 self.rohr_angle -= ANGLE_SPEED
-                if self.rohr_angle < 0:
-                    self.rohr_angle = 0
+                print(self.rohr_angle)
+                print(self.angle)
+                if self.rohr_angle < (self.angle)*2:
+                    self.rohr_angle = (self.angle)*2
 
                 rohr = pygame.transform.flip(self.rohr_image, True, False)
-                self.rotated_rohr = pygame.transform.rotate(rohr, self.rohr_angle)
+                self.rotated_rohr = pygame.transform.rotate(rohr, (self.rohr_angle - self.angle))
                 new_rect = self.rotated_rohr.get_rect(center=self.rohr_image.get_rect(topleft=self.position).center)
                 surface.blit(self.rotated_rohr, new_rect.topleft)
             #Player 2
@@ -239,10 +244,10 @@ class Panzer:
                 #Rotates it and draws it
                 self.aiming = True
                 self.rohr_angle -= ANGLE_SPEED
-                if self.rohr_angle < 0:
-                    self.rohr_angle = 0
+                if self.rohr_angle < (self.angle)*2:
+                    self.rohr_angle = (self.angle)*2
 
-                self.rotated_rohr = pygame.transform.rotate(rohr, self.rohr_angle)
+                self.rotated_rohr = pygame.transform.rotate(rohr, (self.rohr_angle - self.angle))
                 new_rect = self.rotated_rohr.get_rect(center=self.rohr_image.get_rect(topleft=self.position).center)
                 surface.blit(self.rotated_rohr, new_rect.topleft)
 
