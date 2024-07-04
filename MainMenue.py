@@ -46,6 +46,9 @@ class MainMenu:
         pygame.mixer.music.load("Assets/Audio/Clash of Clans Main Theme 1.mp3")
         pygame.mixer.music.play(-1)  # -1 für Endlosschleife
 
+        # Zustand der Musik (AN/AUS)
+        self.music_on = True
+
     def run(self):
         clock = pygame.time.Clock()
         running = True
@@ -83,13 +86,15 @@ class MainMenu:
             self.screen.blit(image, rect.topleft)
 
     def open_start_window(self):
-        pygame.mixer.music.stop()
         start_window = StartWindow(self)
         start_window.run()
 
     def open_options(self):
-        options_window = OptionsWindow(self)
+        options_window = OptionsWindow(self, self.music_on)
         options_window.run()
+
+    def close_menu(self):
+        pygame.quit()
 
 class StartWindow:
     def __init__(self, main_menu):
@@ -123,6 +128,7 @@ class StartWindow:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+                    self.main_menu.close_menu()  # Schließe das Hauptmenü
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.start_game_button_rect.collidepoint(mouse_pos):
                         self.open_map_selection()
@@ -174,14 +180,15 @@ class MapSelectionWindow:
         self.back_button_image = pygame.transform.scale(self.back_button_image, (400, 100))
         self.back_button_hover_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/Zurück2.png')
         self.back_button_hover_image = pygame.transform.scale(self.back_button_hover_image, (400, 100))
-        self.back_button_rect = self.back_button_image.get_rect(center=(WIDTH // 2, HEIGHT - 150))
 
+        # Positionen der Buttons
         button_gap = 150
-        button_y = HEIGHT // 2 - 0.5 * button_gap
+        button_y = HEIGHT // 2 - 1.5 * button_gap + 50  # Adjusted position
 
         self.map1_button_rect = self.map1_button_image.get_rect(center=(WIDTH // 2, button_y))
         self.map2_button_rect = self.map2_button_image.get_rect(center=(WIDTH // 2, button_y + button_gap))
         self.map3_button_rect = self.map3_button_image.get_rect(center=(WIDTH // 2, button_y + 2 * button_gap))
+        self.back_button_rect = self.back_button_image.get_rect(center=(WIDTH // 2, button_y + 3 * button_gap))
 
     def run(self):
         clock = pygame.time.Clock()
@@ -200,16 +207,20 @@ class MapSelectionWindow:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+                    self.main_menu.close_menu()  # Schließe das Hauptmenü
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.map1_button_rect.collidepoint(mouse_pos):
-                        self.start_game()
-                    elif self.map2_button_rect.collidepoint(mouse_pos):
-                        self.start_game()
-                    elif self.map3_button_rect.collidepoint(mouse_pos):
-                        self.start_game()
-                    elif self.back_button_rect.collidepoint(mouse_pos):
-                        self.main_menu.run()
+                        self.start_game("Map 1")
                         running = False
+                    elif self.map2_button_rect.collidepoint(mouse_pos):
+                        self.start_game("Map 2")
+                        running = False
+                    elif self.map3_button_rect.collidepoint(mouse_pos):
+                        self.start_game("Map 3")
+                        running = False
+                    elif self.back_button_rect.collidepoint(mouse_pos):
+                        running = False
+                        self.main_menu.run()
 
             pygame.display.flip()
             clock.tick(FPS)
@@ -222,13 +233,14 @@ class MapSelectionWindow:
         else:
             self.screen.blit(image, rect.topleft)
 
-    def start_game(self):
-        subprocess.Popen([sys.executable, 'game.py'])
+    def start_game(self, map_name):
+        self.main_menu.close_menu()  # Schließe das Hauptmenü
+        subprocess.Popen([sys.executable, 'game.py', map_name])  # Starte das Spiel in einem neuen Prozess
 
 class OptionsWindow:
-    def __init__(self, main_menu):
+    def __init__(self, main_menu, music_on):
         self.main_menu = main_menu
-        self.music_on = True  # Zustand des Musik-Buttons
+        self.music_on = music_on  # Zustand des Musik-Buttons
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption('Options Window')
 
@@ -282,6 +294,8 @@ class OptionsWindow:
             pygame.display.flip()
             clock.tick(FPS)
 
+        pygame.quit()
+
     def draw_button(self, rect, mouse_pos):
         if self.music_on:
             image = self.music_on_button_image
@@ -307,6 +321,7 @@ class OptionsWindow:
         else:
             pygame.mixer.music.unpause()
         self.music_on = not self.music_on
+        self.main_menu.music_on = self.music_on  # Aktualisieren des Musik-Zustands im Hauptmenü
 
 if __name__ == '__main__':
     main_menu = MainMenu()
