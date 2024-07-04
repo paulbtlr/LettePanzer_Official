@@ -205,8 +205,8 @@ class Panzer:
                 self.rohr_angle += ANGLE_SPEED
                 print(self.rohr_angle)
                 print(self.angle)
-                if self.rohr_angle > self.angle + abs(self.angle)*4:
-                    self.rohr_angle = self.angle + abs(self.angle)*4
+                if self.rohr_angle > 90 + self.angle:
+                    self.rohr_angle = 90 + self.angle
 
 
                 rohr = pygame.transform.flip(self.rohr_image, True, False)
@@ -218,8 +218,8 @@ class Panzer:
                 #Rotates it and draws it
                 self.aiming = True
                 self.rohr_angle += ANGLE_SPEED
-                if self.rohr_angle > self.angle + abs(self.angle)*4:
-                    self.rohr_angle = self.angle + abs(self.angle)*4
+                if self.rohr_angle > 90 + self.angle:
+                    self.rohr_angle = 90 + self.angle
 
                 self.rotated_rohr = pygame.transform.rotate(rohr, (self.rohr_angle - self.angle))
                 new_rect = self.rotated_rohr.get_rect(center=self.rohr_image.get_rect(topleft=self.position).center)
