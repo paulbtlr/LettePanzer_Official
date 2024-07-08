@@ -68,10 +68,31 @@ def main():
 
     panzer_orange_rohr = pygame.image.load("Assets/Bilder/Spieler/Panzer/Orange/OSR.png")
 
+
+    # Load All Panzers 
+    # P1
+    panzer_p1 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P1.png")
+    panzer_p1_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR1.png")
+    # P2
+    panzer_p2 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P2.png")
+    panzer_p2_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR2.png")
+    # P3
+    panzer_p1 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P3.png")
+    panzer_p1_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR3.png")
+    # P4
+    panzer_p1 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P4.png")
+    panzer_p1_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR4.png")
+    # P5
+    panzer_p1 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P5.png")
+    panzer_p1_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR5.png")
+    # P6
+    panzer_p1 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P6.png")
+    panzer_p1_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR6.png")
+
     # Initialize Panzer with a scale factor to make it smaller
-    panzer_blu = Panzer("Assets/Bilder/Spieler/Panzer/Blau/BBR/BBR0.png", (95, boden.get_ground_height(95)), panzer_blue_rohr, panzer_imagelist_blue_v, panzer_imagelist_blue_r, True, scale_factor=0.09) #0.08
+    panzer_left = Panzer("Assets/Bilder/Spieler/Panzer/P1.png", (95, boden.get_ground_height(95)), panzer_p1_rohr, panzer_imagelist_blue_v, panzer_imagelist_blue_r, True, scale_factor=0.09) #0.08
     panzer_or = Panzer("Assets/Bilder/Spieler/Panzer/Orange/OBR/OBR0.png", (1722, boden.get_ground_height(1722)), panzer_orange_rohr, panzer_imagelist_orange_v, panzer_imagelist_orange_r, False, scale_factor=0.09)
-    shoot = Shoot(panzer_blu.position[0]+115, panzer_blu.position[1]-28)
+    shoot = Shoot(panzer_left.position[0]+115, panzer_left.position[1]-28)
 
     # Main loop
     running = True
@@ -105,14 +126,14 @@ def main():
         panzer_or.draw_panzer(screen)
 
         # Update blue panzer position and angle, then draw
-        panzer_blu.move()
-        panzer_blu.update_animation(screen)
-        panzer_blu.update_position(boden.get_ground_height(panzer_blu.position[0]))
-        panzer_blu.update_rohr_position(boden.get_ground_height(panzer_blu.position[0]))
-        panzer_blu.update_angle(boden.get_ground_slope(panzer_blu.position[0]))
-        panzer_blu.draw_rohr(screen)
-        panzer_blu.rohr_setting(screen)
-        panzer_blu.draw_panzer(screen)
+        panzer_left.move()
+        #panzer_blu.update_animation(screen)
+        panzer_left.update_position(boden.get_ground_height(panzer_left.position[0]))
+        panzer_left.update_rohr_position(boden.get_ground_height(panzer_left.position[0]))
+        panzer_left.update_angle(boden.get_ground_slope(panzer_left.position[0]))
+        panzer_left.draw_rohr(screen)
+        panzer_left.rohr_setting(screen)
+        panzer_left.draw_panzer(screen)
 
         shoot.move()
         shoot.update_shoot()
@@ -126,9 +147,9 @@ def main():
         # Update the display again to show the Interface image
         pygame.display.flip()
         # Draw UI buttons
-        ui.draw_tank(panzer_blu.tank,200,150,screen,True)
+        ui.draw_tank(panzer_left.tank,200,150,screen,True)
         ui.draw_tank(panzer_or.tank,1620,150,screen,False)
-        ui.draw_health(panzer_blu.health,100,100,screen,True)
+        ui.draw_health(panzer_left.health,100,100,screen,True)
         ui.draw_health(panzer_or.health,1620,100,screen,False)
         ui.draw()
 
