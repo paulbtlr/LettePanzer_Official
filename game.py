@@ -114,7 +114,7 @@ def main():
         interface_image = pygame.image.load("Assets/Bilder/Interface/Interface.png")
         
         # Draw the Interface image on top
-        screen.blit(interface_image, (0, -20))
+        screen.blit(interface_image, (0, -51))
         
         # Update the display again to show the Interface image
         pygame.display.flip()
