@@ -5,22 +5,29 @@ from Panzer import Panzer
 from Boden import Boden
 from shoot import Shoot
 
-def main():
+WIDTH, HEIGHT = 1920, 1020
+FPS = 60
+
+def main(map_selection, background_image_path):
     # Initialize Pygame
     pygame.init()
 
     # Set the dimensions of the window
     window_size = (1920, 1020)
-    screen = pygame.display.set_mode(window_size)
+    screen = pygame.display.set_mode(WIDTH, HEIGHT)
 
     # Set the title of the window
     pygame.display.set_caption('BattleTanks')
 
+    background = pygame.image.load(background_image_path)
+    background = pygame.transform.scale(background, (WIDTH, HEIGHT))
     # Initialise Clock
     clock = pygame.time.Clock()
     FPS = 60
 
     # Define colors
+    clock = pygame.time.Clock()
+    running = True
     LIGHT_BLUE = (50, 100, 255)
     PERU = (0, 0, 0)
 
@@ -161,7 +168,10 @@ def main():
     sys.exit()
 
 if __name__ == '__main__':
-    main()
-    
-    
+    if len(sys.argv) < 3:
+        print("Usage: python game.py <map_selection> <background_image_path>")
+        sys.exit(1)
 
+    map_selection = sys.argv[1]
+    background_image_path = sys.argv[2]
+    main(map_selection, background_image_path)
