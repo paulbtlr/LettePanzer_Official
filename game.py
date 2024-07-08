@@ -16,6 +16,10 @@ def main():
     # Set the title of the window
     pygame.display.set_caption('BattleTanks')
 
+    # Initialise Clock
+    clock = pygame.time.Clock()
+    FPS = 60
+
     # Define colors
     LIGHT_BLUE = (50, 100, 255)
     PERU = (0, 0, 0)
@@ -67,7 +71,7 @@ def main():
     # Initialize Panzer with a scale factor to make it smaller
     panzer_blu = Panzer("Assets/Bilder/Spieler/Panzer/Blau/BBR/BBR0.png", (95, boden.get_ground_height(95)), panzer_blue_rohr, panzer_imagelist_blue_v, panzer_imagelist_blue_r, True, scale_factor=0.09) #0.08
     panzer_or = Panzer("Assets/Bilder/Spieler/Panzer/Orange/OBR/OBR0.png", (1722, boden.get_ground_height(1722)), panzer_orange_rohr, panzer_imagelist_orange_v, panzer_imagelist_orange_r, False, scale_factor=0.09)
-    shoot = Shoot(panzer_blu.position[0]+102, panzer_blu.position[1]-28)
+    shoot = Shoot(panzer_blu.position[0]+115, panzer_blu.position[1]-28)
 
     # Main loop
     running = True
@@ -78,6 +82,9 @@ def main():
             
             # Pass events to UI
             ui.update(event)
+
+            
+        clock.tick(FPS)
 
         # Fill the screen with a light blue color for the sky
         screen.fill(LIGHT_BLUE)
