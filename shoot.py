@@ -20,7 +20,7 @@ class Shoot() :
     def move(self):
         key = pygame.key.get_pressed()
 
-        if((key[pygame.K_UP] == True) and (self.shooting == False)):
+        if((key[pygame.K_e] == True) and (self.shooting == False)):
           self.counter += 1
           print(self.counter)
           if self.counter == 25:
