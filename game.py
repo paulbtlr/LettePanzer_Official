@@ -35,9 +35,8 @@ def main(map_selection, background_image_path):
     clock = pygame.time.Clock()
     running = True
     LIGHT_BLUE = background_image_path
-    PERU = (30, 30, 30)
-    TOP_COLOR = (230, 230, 250)
-    BOTTOM_COLOR = (255, 0, 255)
+    TOP_COLOR = (255, 0, 255)
+    BOTTOM_COLOR = (230, 230, 250)
 
     # Initialize Imports
     ui = UI(screen)
