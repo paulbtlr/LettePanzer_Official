@@ -283,13 +283,13 @@ class OptionsWindow:
         pygame.display.set_caption('Options Window')
 
         # Hintergrundbild für das Options-Fenster laden
-        self.background_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/OptionsBackground.jpg')
+        self.background_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/OptionsBackground.png')
         self.background_image = pygame.transform.scale(self.background_image, (WIDTH, HEIGHT))
 
         # Schaltflächenbilder für Musik und Zurück laden und skalieren
-        self.music_on_button_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/MusikAn.png')
+        self.music_on_button_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/MusikAn1.png')
         self.music_on_button_image = pygame.transform.scale(self.music_on_button_image, (400, 100))
-        self.music_off_button_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/MusikAus.png')
+        self.music_off_button_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/MusikAus1.png')
         self.music_off_button_image = pygame.transform.scale(self.music_off_button_image, (400, 100))
         self.music_button_rect = self.music_on_button_image.get_rect(center=(WIDTH // 2, HEIGHT // 2))
 
