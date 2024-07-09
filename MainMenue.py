@@ -263,6 +263,7 @@ class MapSelectionWindow:
             background_image_path = 'Assets/Bilder/Hintergrund/Background/BGSchnee.png'  # Default
 
         # Launch the game with the selected map
+        
         subprocess.Popen([sys.executable, 'game.py', map_name, background_image_path])
         pygame.quit()
 

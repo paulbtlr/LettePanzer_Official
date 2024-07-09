@@ -4,9 +4,15 @@ from UI import UI
 from Panzer import Panzer
 from Boden import Boden
 from shoot import Shoot
+from MainMenue import MainMenu
 
-WIDTH, HEIGHT = 1920, 1020
-FPS = 60
+def interpolate_color(start_color, end_color, factor):
+    return (
+        int(start_color[0] + (end_color[0] - start_color[0]) * factor),
+        int(start_color[1] + (end_color[1] - start_color[1]) * factor),
+        int(start_color[2] + (end_color[2] - start_color[2]) * factor)
+    )
+
 
 def main(map_selection, background_image_path):
     # Initialize Pygame
@@ -14,13 +20,13 @@ def main(map_selection, background_image_path):
 
     # Set the dimensions of the window
     window_size = (1920, 1020)
-    screen = pygame.display.set_mode(WIDTH, HEIGHT)
+    screen = pygame.display.set_mode(window_size)
 
     # Set the title of the window
     pygame.display.set_caption('BattleTanks')
 
     background = pygame.image.load(background_image_path)
-    background = pygame.transform.scale(background, (WIDTH, HEIGHT))
+    background = pygame.transform.scale(background, (window_size))
     # Initialise Clock
     clock = pygame.time.Clock()
     FPS = 60
@@ -28,8 +34,9 @@ def main(map_selection, background_image_path):
     # Define colors
     clock = pygame.time.Clock()
     running = True
-    LIGHT_BLUE = (50, 100, 255)
-    PERU = (0, 0, 0)
+    LIGHT_BLUE = background_image_path
+    TOP_COLOR = (255, 0, 255)
+    BOTTOM_COLOR = (230, 230, 250)
 
     # Initialize Imports
     ui = UI(screen)
@@ -84,21 +91,21 @@ def main(map_selection, background_image_path):
     panzer_p2 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P2.png")
     panzer_p2_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR2.png")
     # P3
-    panzer_p1 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P3.png")
-    panzer_p1_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR3.png")
+    panzer_p3 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P3.png")
+    panzer_p3_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR3.png")
     # P4
-    panzer_p1 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P4.png")
-    panzer_p1_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR4.png")
+    panzer_p4 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P4.png")
+    panzer_p4_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR4.png")
     # P5
-    panzer_p1 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P5.png")
-    panzer_p1_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR5.png")
+    panzer_p5 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P5.png")
+    panzer_p5_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR5.png")
     # P6
-    panzer_p1 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P6.png")
-    panzer_p1_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR6.png")
+    panzer_p6 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P6.png")
+    panzer_p6_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR6.png")
 
     # Initialize Panzer with a scale factor to make it smaller
     panzer_left = Panzer("Assets/Bilder/Spieler/Panzer/P1.png", (95, boden.get_ground_height(95)), panzer_p1_rohr, panzer_imagelist_blue_v, panzer_imagelist_blue_r, True, scale_factor=0.09) #0.08
-    panzer_or = Panzer("Assets/Bilder/Spieler/Panzer/Orange/OBR/OBR0.png", (1722, boden.get_ground_height(1722)), panzer_orange_rohr, panzer_imagelist_orange_v, panzer_imagelist_orange_r, False, scale_factor=0.09)
+    panzer_right = Panzer("Assets/Bilder/Spieler/Panzer/P6.png", (1722, boden.get_ground_height(1722)), panzer_p6_rohr, panzer_imagelist_orange_v, panzer_imagelist_orange_r, False, scale_factor=0.09)
     shoot = Shoot(panzer_left.position[0]+115, panzer_left.position[1]-28)
 
     # Main loop
@@ -115,22 +122,25 @@ def main(map_selection, background_image_path):
         clock.tick(FPS)
 
         # Fill the screen with a light blue color for the sky
-        screen.fill(LIGHT_BLUE)
+        screen.blit(background, (0,0))
         #screen.blit(background,(0,0))
 
         # Draw the terrain with multiple waves
         for x in range(window_size[0]):
             y = boden.get_ground_height(x - 51)
-            pygame.draw.line(screen, PERU, (x, y), (x, window_size[1]))
+            factor = y / window_size[1]  # Calculate the factor based on y position
+            color = interpolate_color(TOP_COLOR, BOTTOM_COLOR, factor)
+            pygame.draw.line(screen, color, (x, y), (x, window_size[1]))
 
         # Update blue panzer position and angle, then draw
-        panzer_or.move()
-        panzer_or.update_animation(screen)
-        panzer_or.update_position(boden.get_ground_height(panzer_or.position[0]))
-        panzer_or.update_rohr_position(boden.get_ground_height(panzer_or.position[0]))
-        panzer_or.update_angle(boden.get_ground_slope(panzer_or.position[0]))
-        panzer_or.draw_rohr(screen)
-        panzer_or.draw_panzer(screen)
+        panzer_right.move()
+        #panzer_right.update_animation(screen)
+        panzer_right.update_position(boden.get_ground_height(panzer_right.position[0]))
+        panzer_right.update_rohr_position(boden.get_ground_height(panzer_right.position[0]))
+        panzer_right.update_angle(boden.get_ground_slope(panzer_right.position[0]))
+        panzer_right.draw_rohr(screen)
+        panzer_right.rohr_setting(screen)
+        panzer_right.draw_panzer(screen)
 
         # Update blue panzer position and angle, then draw
         panzer_left.move()
@@ -155,9 +165,9 @@ def main(map_selection, background_image_path):
         pygame.display.flip()
         # Draw UI buttons
         ui.draw_tank(panzer_left.tank,200,150,screen,True)
-        ui.draw_tank(panzer_or.tank,1620,150,screen,False)
+        ui.draw_tank(panzer_right.tank,1620,150,screen,False)
         ui.draw_health(panzer_left.health,100,100,screen,True)
-        ui.draw_health(panzer_or.health,1620,100,screen,False)
+        ui.draw_health(panzer_right.health,1620,100,screen,False)
         ui.draw()
 
         # Update the display
