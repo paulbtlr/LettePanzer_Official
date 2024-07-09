@@ -2,27 +2,27 @@ import pygame
 import sys
 import subprocess
 
-# Constants
+# Konstanten für Bildschirmgröße und Bildwiederholrate
 WIDTH, HEIGHT = 1920, 1030
 FPS = 60
 
 class MainMenu:
     def __init__(self):
         pygame.init()
-        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
-        pygame.display.set_caption('PanzerGame')
+        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))  # Erstellt das Hauptfenster
+        pygame.display.set_caption('PanzerGame')  # Setzt den Fenstertitel
 
-        # Load custom font
+        # Benutzerdefinierte Schriftart laden
         self.font = pygame.font.Font("Assets/Schrift/Pixellari.ttf", 74)
 
-        # Load background image
+        # Hintergrundbild laden und skalieren
         self.background_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/BattleTanks.jpg')
         self.background_image = pygame.transform.scale(self.background_image, (WIDTH, HEIGHT))
 
-        # Load and scale button images
+       # Schaltflächenbilder laden und skalieren
         button_width, button_height = 400, 100
         button_gap = 150
-        button_y = HEIGHT // 2 - 1.5 * button_height + 50  # Adjusted position
+        button_y = HEIGHT // 2 - 1.5 * button_height + 50  # Position der Schaltflächen anpassen
 
         self.start_button_image = pygame.image.load('Assets/Buttons/Start1.png')
         self.start_button_image = pygame.transform.scale(self.start_button_image, (button_width, button_height))
@@ -42,11 +42,11 @@ class MainMenu:
         self.quit_button_hover_image = pygame.transform.scale(self.quit_button_hover_image, (button_width, button_height))
         self.quit_button_rect = self.quit_button_image.get_rect(center=(WIDTH // 2, button_y + 2 * button_gap))
 
-        # Load and play music
+        # Musik laden und abspielen
         pygame.mixer.music.load("Assets/Audio/Clash of Clans Main Theme 1.mp3")
-        pygame.mixer.music.play(-1)  # -1 for infinite loop
+        pygame.mixer.music.play(-1)  # -1 für Endlosschleife
 
-        # Music state (ON/OFF)
+        # Musikstatus (AN/AUS)
         self.music_on = True
 
     def run(self):
@@ -56,7 +56,7 @@ class MainMenu:
         while running:
             self.screen.blit(self.background_image, (0, 0))
 
-            # Draw buttons with hover effect
+            # Schaltflächen mit Hover-Effekt zeichnen
             mouse_pos = pygame.mouse.get_pos()
             self.draw_button(self.start_button_rect, self.start_button_image, self.start_button_hover_image, mouse_pos)
             self.draw_button(self.options_button_rect, self.options_button_image, self.options_button_hover_image, mouse_pos)
@@ -67,12 +67,12 @@ class MainMenu:
                     running = False
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.start_button_rect.collidepoint(mouse_pos):
-                        self.open_start_window()
+                        self.open_start_window()  # Öffnet das Startfenster
                         running = False
                     elif self.options_button_rect.collidepoint(mouse_pos):
-                        self.open_options()
+                        self.open_options()  # Öffnet das Optionsfenster
                     elif self.quit_button_rect.collidepoint(mouse_pos):
-                        running = False
+                        running = False  # Beendet das Programm
 
             pygame.display.flip()
             clock.tick(FPS)
@@ -81,16 +81,19 @@ class MainMenu:
         sys.exit()
 
     def draw_button(self, rect, image, hover_image, mouse_pos):
+        """Zeichnet eine Schaltfläche mit oder ohne Hover-Effekt."""
         if rect.collidepoint(mouse_pos):
             self.screen.blit(hover_image, rect.topleft)
         else:
             self.screen.blit(image, rect.topleft)
 
     def open_start_window(self):
+        """Öffnet das Startfenster für die Spielmodusauswahl."""
         start_window = StartWindow(self)
         start_window.run()
 
     def open_options(self):
+        """Öffnet das Optionsfenster für Einstellungen."""
         options_window = OptionsWindow(self, self.music_on)
         options_window.run()
 
@@ -100,18 +103,17 @@ class StartWindow:
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption('Start Window')
 
-        # Load background image for the start window
+        # Hintergrundbild für das Startfenster laden
         self.background_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/SpielmodusBackground.jpg')
         self.background_image = pygame.transform.scale(self.background_image, (WIDTH, HEIGHT))
 
-        # Load and scale button images for start button
+        # Schaltflächenbilder für Start- und Zurück-Schaltflächen laden und skalieren
         self.start_game_button_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/1vs1_1.png')
         self.start_game_button_image = pygame.transform.scale(self.start_game_button_image, (400, 100))
         self.start_game_button_hover_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/1vs1_2.png')
         self.start_game_button_hover_image = pygame.transform.scale(self.start_game_button_hover_image, (400, 100))
         self.start_game_button_rect = self.start_game_button_image.get_rect(center=(WIDTH // 2, HEIGHT // 2))
 
-        # Load and scale back button image
         self.back_button_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/Zurück1.png')
         self.back_button_image = pygame.transform.scale(self.back_button_image, (400, 100))
         self.back_button_hover_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/Zurück2.png')
@@ -125,7 +127,7 @@ class StartWindow:
         while running:
             self.screen.blit(self.background_image, (0, 0))
 
-            # Draw start button with hover effect
+            # Start-Schaltfläche mit Hover-Effekt zeichnen
             mouse_pos = pygame.mouse.get_pos()
             self.draw_button(self.start_game_button_rect, self.start_game_button_image, self.start_game_button_hover_image, mouse_pos)
             self.draw_back_button(mouse_pos)
@@ -133,14 +135,14 @@ class StartWindow:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
-                    self.main_menu.run()
+                    self.main_menu.run()    # Zurück zum Hauptmenü
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.start_game_button_rect.collidepoint(mouse_pos):
-                        self.open_map_selection()
+                        self.open_map_selection()   # Öffnet die Kartenwahl
                         running = False
                     elif self.back_button_rect.collidepoint(mouse_pos):
                         running = False
-                        self.main_menu.run()
+                        self.main_menu.run()    # Zurück zum Hauptmenü
 
             pygame.display.flip()
             clock.tick(FPS)
@@ -148,18 +150,21 @@ class StartWindow:
         pygame.quit()
 
     def draw_button(self, rect, image, hover_image, mouse_pos):
+        """Zeichnet eine Schaltfläche mit oder ohne Hover-Effekt."""
         if rect.collidepoint(mouse_pos):
             self.screen.blit(hover_image, rect.topleft)
         else:
             self.screen.blit(image, rect.topleft)
 
     def draw_back_button(self, mouse_pos):
+        """Zeichnet die Zurück-Schaltfläche mit oder ohne Hover-Effekt."""
         if self.back_button_rect.collidepoint(mouse_pos):
             self.screen.blit(self.back_button_hover_image, self.back_button_rect.topleft)
         else:
             self.screen.blit(self.back_button_image, self.back_button_rect.topleft)
 
     def open_map_selection(self):
+        """Öffnet das Fenster zur Auswahl der Karte."""
         map_selection_window = MapSelectionWindow(self.main_menu)
         map_selection_window.run()
 
@@ -169,11 +174,11 @@ class MapSelectionWindow:
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption('Map Selection Window')
 
-        # Load background image for the map selection window
+        # Hintergrundbild für das Kartenwahl-Fenster laden
         self.background_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/MapsBackground.jpg')
         self.background_image = pygame.transform.scale(self.background_image, (WIDTH, HEIGHT))
 
-        # Load and scale button images for map selection buttons
+        # Schaltflächenbilder für Kartenwahl laden und skalieren
         self.map1_button_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/Schnee1.png')
         self.map1_button_image = pygame.transform.scale(self.map1_button_image, (400, 100))
         self.map1_button_hover_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/Schnee2.png')
@@ -210,7 +215,7 @@ class MapSelectionWindow:
         while running:
             self.screen.blit(self.background_image, (0, 0))
 
-            # Draw map selection buttons with hover effect
+            # Kartenwahl-Schaltfläche mit Hover-Effekt zeichnen
             mouse_pos = pygame.mouse.get_pos()
             self.draw_button(self.map1_button_rect, self.map1_button_image, self.map1_button_hover_image, mouse_pos)
             self.draw_button(self.map2_button_rect, self.map2_button_image, self.map2_button_hover_image, mouse_pos)
@@ -220,20 +225,20 @@ class MapSelectionWindow:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
-                    self.main_menu.run()
+                    self.main_menu.run()    # Zurück zum Hauptmenü
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.map1_button_rect.collidepoint(mouse_pos):
-                        self.start_game('map1')
+                        self.start_game('map1') # Startet das Spiel mit ausgewählter Karte
                         running = False
                     elif self.map2_button_rect.collidepoint(mouse_pos):
-                        self.start_game('map2')
+                        self.start_game('map2') # Startet das Spiel mit ausgewählter Karte
                         running = False
                     elif self.map3_button_rect.collidepoint(mouse_pos):
-                        self.start_game('map3')
+                        self.start_game('map3') # Startet das Spiel mit ausgewählter Karte
                         running = False
                     elif self.back_button_rect.collidepoint(mouse_pos):
                         running = False
-                        self.main_menu.run()
+                        self.main_menu.run()    # Zurück zum Hauptmenü
 
             pygame.display.flip()
             clock.tick(FPS)
@@ -241,18 +246,21 @@ class MapSelectionWindow:
         pygame.quit()
 
     def draw_button(self, rect, image, hover_image, mouse_pos):
+        """Zeichnet eine Schaltfläche mit oder ohne Hover-Effekt."""
         if rect.collidepoint(mouse_pos):
             self.screen.blit(hover_image, rect.topleft)
         else:
             self.screen.blit(image, rect.topleft)
 
     def draw_back_button(self, mouse_pos):
+        """Zeichnet die Zurück-Schaltfläche mit oder ohne Hover-Effekt."""
         if self.back_button_rect.collidepoint(mouse_pos):
             self.screen.blit(self.back_button_hover_image, self.back_button_rect.topleft)
         else:
             self.screen.blit(self.back_button_image, self.back_button_rect.topleft)
 
     def start_game(self, map_name):
+        """Startet das Spiel mit der ausgewählten Karte."""
         if map_name == 'map1':
             background_image_path = 'Assets/Bilder/Hintergrund/Background/BGSchnee.png'
         elif map_name == 'map2':
@@ -263,22 +271,22 @@ class MapSelectionWindow:
             background_image_path = 'Assets/Bilder/Hintergrund/Background/BGSchnee.png'  # Default
 
         # Launch the game with the selected map
-        
         subprocess.Popen([sys.executable, 'game.py', map_name, background_image_path])
         pygame.quit()
 
 class OptionsWindow:
     def __init__(self, main_menu, music_on):
         self.main_menu = main_menu
+        # Musikstatus (AN/AUS)
         self.music_on = music_on
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption('Options Window')
 
-        # Load background image for options window
+        # Hintergrundbild für das Options-Fenster laden
         self.background_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/OptionsBackground.jpg')
         self.background_image = pygame.transform.scale(self.background_image, (WIDTH, HEIGHT))
 
-        # Load and scale button images for music toggle and back button
+        # Schaltflächenbilder für Musik und Zurück laden und skalieren
         self.music_on_button_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/MusikAn.png')
         self.music_on_button_image = pygame.transform.scale(self.music_on_button_image, (400, 100))
         self.music_off_button_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/MusikAus.png')
@@ -298,26 +306,26 @@ class OptionsWindow:
         while running:
             self.screen.blit(self.background_image, (0, 0))
 
-            # Draw music toggle button with appropriate image based on music state
+            # Musik-Schaltfläche zeichnen
             if self.music_on:
                 self.screen.blit(self.music_on_button_image, self.music_button_rect.topleft)
             else:
                 self.screen.blit(self.music_off_button_image, self.music_button_rect.topleft)
 
-            # Draw back button with hover effect
+            # Zurück-Schaltfläche mit Hover-Effekt zeichnen
             mouse_pos = pygame.mouse.get_pos()
             self.draw_back_button(mouse_pos)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
-                    self.main_menu.run()
+                    self.main_menu.run()    # Zurück zum Hauptmenü
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.music_button_rect.collidepoint(mouse_pos):
-                        self.toggle_music()
+                        self.toggle_music() # Musik AN/AUS schalten
                     elif self.back_button_rect.collidepoint(mouse_pos):
                         running = False
-                        self.main_menu.run()
+                        self.main_menu.run()    # Zurück zum Hauptmenü
 
             pygame.display.flip()
             clock.tick(FPS)
@@ -325,12 +333,14 @@ class OptionsWindow:
         pygame.quit()
 
     def draw_back_button(self, mouse_pos):
+        """Zeichnet die Zurück-Schaltfläche mit oder ohne Hover-Effekt."""
         if self.back_button_rect.collidepoint(mouse_pos):
             self.screen.blit(self.back_button_hover_image, self.back_button_rect.topleft)
         else:
             self.screen.blit(self.back_button_image, self.back_button_rect.topleft)
 
     def toggle_music(self):
+        """Schaltet die Musik AN oder AUS."""
         self.music_on = not self.music_on
         if self.music_on:
             pygame.mixer.music.unpause()
