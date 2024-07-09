@@ -1,5 +1,6 @@
 import pygame
 import math
+import shoot
 
 class Panzer:
     def __init__(self, image_path, start_position, panzer_rohr, image_list_v,image_list_r,flip,scale_factor):
@@ -18,7 +19,7 @@ class Panzer:
         self.flip = flip
         self.angle = 0
         self.speed = 2
-        self.tank = 2000 #The Maximum Movement a Tank can move
+        self.tank = 200 #The Maximum Movement a Tank can move
         self.health = 100 #The Health of a Tank
         self.move_right = False
         self.move_left = False
@@ -34,6 +35,7 @@ class Panzer:
     def draw_panzer(self, surface):
         #Player 1
         if self.flip == True:
+            
             #Flips the Rohr, Rotates it and draws it
             img = pygame.transform.flip(self.image, True, False)
             rotated_image = pygame.transform.rotate(img, self.angle)
