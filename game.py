@@ -28,7 +28,7 @@ def main(map_selection, background_image_path):
     clock = pygame.time.Clock()
     running = True
     LIGHT_BLUE = background_image_path
-    PERU = (0, 0, 0)
+    PERU = (30, 30, 30)
 
     # Initialize Imports
     ui = UI(screen)
@@ -97,7 +97,7 @@ def main(map_selection, background_image_path):
 
     # Initialize Panzer with a scale factor to make it smaller
     panzer_left = Panzer("Assets/Bilder/Spieler/Panzer/P1.png", (95, boden.get_ground_height(95)), panzer_p1_rohr, panzer_imagelist_blue_v, panzer_imagelist_blue_r, True, scale_factor=0.09) #0.08
-    panzer_or = Panzer("Assets/Bilder/Spieler/Panzer/Orange/OBR/OBR0.png", (1722, boden.get_ground_height(1722)), panzer_orange_rohr, panzer_imagelist_orange_v, panzer_imagelist_orange_r, False, scale_factor=0.09)
+    panzer_right = Panzer("Assets/Bilder/Spieler/Panzer/P6.png", (1722, boden.get_ground_height(1722)), panzer_p6_rohr, panzer_imagelist_orange_v, panzer_imagelist_orange_r, False, scale_factor=0.09)
     shoot = Shoot(panzer_left.position[0]+115, panzer_left.position[1]-28)
 
     # Main loop
@@ -123,13 +123,14 @@ def main(map_selection, background_image_path):
             pygame.draw.line(screen, PERU, (x, y), (x, window_size[1]))
 
         # Update blue panzer position and angle, then draw
-        panzer_or.move()
-        panzer_or.update_animation(screen)
-        panzer_or.update_position(boden.get_ground_height(panzer_or.position[0]))
-        panzer_or.update_rohr_position(boden.get_ground_height(panzer_or.position[0]))
-        panzer_or.update_angle(boden.get_ground_slope(panzer_or.position[0]))
-        panzer_or.draw_rohr(screen)
-        panzer_or.draw_panzer(screen)
+        panzer_right.move()
+        #panzer_right.update_animation(screen)
+        panzer_right.update_position(boden.get_ground_height(panzer_right.position[0]))
+        panzer_right.update_rohr_position(boden.get_ground_height(panzer_right.position[0]))
+        panzer_right.update_angle(boden.get_ground_slope(panzer_right.position[0]))
+        panzer_right.draw_rohr(screen)
+        panzer_right.rohr_setting(screen)
+        panzer_right.draw_panzer(screen)
 
         # Update blue panzer position and angle, then draw
         panzer_left.move()
@@ -154,9 +155,9 @@ def main(map_selection, background_image_path):
         pygame.display.flip()
         # Draw UI buttons
         ui.draw_tank(panzer_left.tank,200,150,screen,True)
-        ui.draw_tank(panzer_or.tank,1620,150,screen,False)
+        ui.draw_tank(panzer_right.tank,1620,150,screen,False)
         ui.draw_health(panzer_left.health,100,100,screen,True)
-        ui.draw_health(panzer_or.health,1620,100,screen,False)
+        ui.draw_health(panzer_right.health,1620,100,screen,False)
         ui.draw()
 
         # Update the display
