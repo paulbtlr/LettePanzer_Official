@@ -4,8 +4,10 @@ from UI import UI
 from Panzer import Panzer
 from Boden import Boden
 from shoot import Shoot
+from MainMenue import MainMenu
 
-def main():
+
+def main(map_selection, background_image_path):
     # Initialize Pygame
     pygame.init()
 
@@ -16,12 +18,16 @@ def main():
     # Set the title of the window
     pygame.display.set_caption('BattleTanks')
 
+    background = pygame.image.load(background_image_path)
+    background = pygame.transform.scale(background, (window_size))
     # Initialise Clock
     clock = pygame.time.Clock()
     FPS = 60
 
     # Define colors
-    LIGHT_BLUE = (50, 100, 255)
+    clock = pygame.time.Clock()
+    running = True
+    LIGHT_BLUE = background_image_path
     PERU = (0, 0, 0)
 
     # Initialize Imports
@@ -161,7 +167,10 @@ def main():
     sys.exit()
 
 if __name__ == '__main__':
-    main()
-    
-    
+    if len(sys.argv) < 3:
+        print("Usage: python game.py <map_selection> <background_image_path>")
+        sys.exit(1)
 
+    map_selection = sys.argv[1]
+    background_image_path = sys.argv[2]
+    main(map_selection, background_image_path)
