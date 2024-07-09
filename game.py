@@ -6,6 +6,13 @@ from Boden import Boden
 from shoot import Shoot
 from MainMenue import MainMenu
 
+def interpolate_color(start_color, end_color, factor):
+    return (
+        int(start_color[0] + (end_color[0] - start_color[0]) * factor),
+        int(start_color[1] + (end_color[1] - start_color[1]) * factor),
+        int(start_color[2] + (end_color[2] - start_color[2]) * factor)
+    )
+
 
 def main(map_selection, background_image_path):
     # Initialize Pygame
@@ -29,6 +36,8 @@ def main(map_selection, background_image_path):
     running = True
     LIGHT_BLUE = background_image_path
     PERU = (30, 30, 30)
+    TOP_COLOR = (230, 230, 250)
+    BOTTOM_COLOR = (255, 0, 255)
 
     # Initialize Imports
     ui = UI(screen)
@@ -120,7 +129,9 @@ def main(map_selection, background_image_path):
         # Draw the terrain with multiple waves
         for x in range(window_size[0]):
             y = boden.get_ground_height(x - 51)
-            pygame.draw.line(screen, PERU, (x, y), (x, window_size[1]))
+            factor = y / window_size[1]  # Calculate the factor based on y position
+            color = interpolate_color(TOP_COLOR, BOTTOM_COLOR, factor)
+            pygame.draw.line(screen, color, (x, y), (x, window_size[1]))
 
         # Update blue panzer position and angle, then draw
         panzer_right.move()
