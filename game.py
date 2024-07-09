@@ -77,17 +77,17 @@ def main():
     panzer_p2 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P2.png")
     panzer_p2_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR2.png")
     # P3
-    panzer_p1 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P3.png")
-    panzer_p1_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR3.png")
+    panzer_p3 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P3.png")
+    panzer_p3_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR3.png")
     # P4
-    panzer_p1 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P4.png")
-    panzer_p1_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR4.png")
+    panzer_p4 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P4.png")
+    panzer_p4_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR4.png")
     # P5
-    panzer_p1 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P5.png")
-    panzer_p1_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR5.png")
+    panzer_p5 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P5.png")
+    panzer_p5_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR5.png")
     # P6
-    panzer_p1 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P6.png")
-    panzer_p1_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR6.png")
+    panzer_p6 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P6.png")
+    panzer_p6_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR6.png")
 
     # Initialize Panzer with a scale factor to make it smaller
     panzer_left = Panzer("Assets/Bilder/Spieler/Panzer/P1.png", (95, boden.get_ground_height(95)), panzer_p1_rohr, panzer_imagelist_blue_v, panzer_imagelist_blue_r, True, scale_factor=0.09) #0.08

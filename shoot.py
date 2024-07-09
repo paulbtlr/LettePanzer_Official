@@ -1,7 +1,7 @@
 import pygame
 
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
+SCREEN_WIDTH = 1920
+SCREEN_HEIGHT = 1020
 
 #shootitooti
 class Shoot() :
@@ -28,7 +28,7 @@ class Shoot() :
               self.speed_ver += 1
               print("UPGRADED: ",self.speed_ver)
 
-        if(key[pygame.K_DOWN] == True):
+        if(key[pygame.K_f] == True):
             self.shooting = True
 
         #if(key_up[pygame.K_UP] == True):

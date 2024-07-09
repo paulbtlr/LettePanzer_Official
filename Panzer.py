@@ -47,34 +47,6 @@ class Panzer:
             surface.blit(rotated_image, new_rect2.topleft)
 
     def draw_rohr(self, surface):
-        if self.aiming == True:
-            #Player 1
-            if self.flip == True:
-                if self.ascending_rohr == True:
-                    #Flips the Rohr, Rotates it and draws it
-                    rohr = pygame.transform.flip(self.rohr_image, True, False)
-                    self.rotated_rohr = pygame.transform.rotate(rohr, -(self.rohr_angle - self.angle))
-                    new_rect = self.rotated_rohr.get_rect(center=self.rohr_image.get_rect(topleft=self.position).center)
-                    surface.blit(self.rotated_rohr, new_rect.topleft)
-
-                elif self.descending_rohr == True:
-                    #Flips the Rohr, Rotates it and draws it
-                    rohr = pygame.transform.flip(self.rohr_image, True, False)
-                    self.rotated_rohr = pygame.transform.rotate(rohr, -(self.rohr_angle - self.angle))
-                    new_rect = self.rotated_rohr.get_rect(center=self.rohr_image.get_rect(topleft=self.position).center)
-                    surface.blit(self.rotated_rohr, new_rect.topleft)
-
-                #Player 2
-            else:
-                if self.ascending_rohr == True:
-                    #Rotates it and draws it
-                    new_rect = self.rotated_rohr.get_rect(center=self.rohr_image.get_rect(topleft=self.position).center)
-                    surface.blit(self.rotated_rohr, new_rect.topleft)
-
-                elif self.descending_rohr == True:
-                     #Rotates it and draws it
-                    new_rect = self.rotated_rohr.get_rect(center=self.rohr_image.get_rect(topleft=self.position).center)
-                    surface.blit(self.rotated_rohr, new_rect.topleft)
         if self.aiming == False:
             #Player 1
             if self.flip == True:
@@ -89,6 +61,38 @@ class Panzer:
                 self.rotated_rohr = pygame.transform.rotate(self.rohr_image, self.angle)
                 new_rect = self.rotated_rohr.get_rect(center=self.rohr_image.get_rect(topleft=self.position).center)
                 surface.blit(self.rotated_rohr, new_rect.topleft)
+
+
+
+        if self.aiming == True:
+            #Player 1
+            if self.flip == True:
+                rohr = pygame.transform.flip(self.rohr_image, True, False)
+                if self.ascending_rohr == True:
+                    #Flips the Rohr, Rotates it and draws it
+                    self.rotated_rohr = pygame.transform.rotate(rohr, -(self.rohr_angle - self.angle))
+                    #new_rect = self.rotated_rohr.get_rect(center=self.rohr_image.get_rect(topleft=self.position).center)
+                    #surface.blit(self.rotated_rohr, new_rect.topleft)
+
+                elif self.descending_rohr == True:
+                    #Flips the Rohr, Rotates it and draws it
+                    self.rotated_rohr = pygame.transform.rotate(rohr, (self.angle - self.rohr_angle))
+                    #new_rect = self.rotated_rohr.get_rect(center=self.rohr_image.get_rect(topleft=self.position).center)
+                    #surface.blit(self.rotated_rohr, new_rect.topleft)
+                new_rect = self.rotated_rohr.get_rect(center=self.rohr_image.get_rect(topleft=self.position).center)
+                surface.blit(self.rotated_rohr, new_rect.topleft)
+
+                #Player 2
+            else:
+                if self.ascending_rohr == True:
+                    #Rotates it and draws it
+                    new_rect = self.rotated_rohr.get_rect(center=self.rohr_image.get_rect(topleft=self.position).center)
+                    surface.blit(self.rotated_rohr, new_rect.topleft)
+
+                elif self.descending_rohr == True:
+                     #Rotates it and draws it
+                    new_rect = self.rotated_rohr.get_rect(center=self.rohr_image.get_rect(topleft=self.position).center)
+                    surface.blit(self.rotated_rohr, new_rect.topleft)
 
     def move(self):
         key = pygame.key.get_pressed()
@@ -215,7 +219,6 @@ class Panzer:
     def rohr_setting(self, surface):
         key = pygame.key.get_pressed()
         ANGLE_SPEED = 1
-        self.rohr_degree = 0
         if key[pygame.K_UP] == True:
             self.descending_rohr = False
             self.ascending_rohr = True
@@ -223,17 +226,21 @@ class Panzer:
                 self.aiming = True
                 #Flips the Rohr, Rotates it and draws it
                 self.rohr_angle -= ANGLE_SPEED
+                self.rohr_degree += ANGLE_SPEED
                 print(self.rohr_angle)
-                print(self.angle)
-                if self.rohr_angle > 90 + self.angle:
-                    self.rohr_angle = 90 + self.angle
+                print(self.rohr_degree)
+                if self.rohr_degree >= 45:
+                    self.rohr_angle = -45
+                    self.rohr_degree = 45
             #Player 2
             else:
-                #Rotates it and draws it
                 self.aiming = True
+                #Rotates it and draws it
                 self.rohr_angle -= ANGLE_SPEED
-                if self.rohr_angle > 90 + self.angle:
-                    self.rohr_angle = 90 + self.angle
+                self.rohr_degree += ANGLE_SPEED
+                if self.rohr_degree > 45:
+                    self.rohr_angle = -45
+                    self.rohr_degree = 45
 
                 self.rotated_rohr = pygame.transform.rotate(rohr, (self.rohr_angle - self.angle))
                 new_rect = self.rotated_rohr.get_rect(center=self.rohr_image.get_rect(topleft=self.position).center)
@@ -246,10 +253,12 @@ class Panzer:
                 #Flips the Rohr, Rotates it and draws it
                 self.aiming = True
                 self.rohr_angle += ANGLE_SPEED
+                self.rohr_degree -= ANGLE_SPEED
                 print(self.rohr_angle)
-                print(self.angle)
-                if self.rohr_angle < (self.angle)*2:
-                    self.rohr_angle = (self.angle)*2
+                print(self.rohr_degree)
+                if self.rohr_degree <= 0:
+                    self.rohr_angle = 0
+                    self.rohr_degree = 0
 
             #Player 2
             else:
@@ -259,9 +268,9 @@ class Panzer:
                 if self.rohr_angle < (self.angle)*2:
                     self.rohr_angle = (self.angle)*2
 
-                self.rotated_rohr = pygame.transform.rotate(rohr, (self.rohr_angle - self.angle))
-                new_rect = self.rotated_rohr.get_rect(center=self.rohr_image.get_rect(topleft=self.position).center)
-                surface.blit(self.rotated_rohr, new_rect.topleft)
+                #self.rotated_rohr = pygame.transform.rotate(rohr, (self.rohr_angle - self.angle))
+                #new_rect = self.rotated_rohr.get_rect(center=self.rohr_image.get_rect(topleft=self.position).center)
+                #surface.blit(self.rotated_rohr, new_rect.topleft)
 
     #def update_rohr_angle(self):
      #   self.rohr_angle = -math.degrees(math.atan(ground_slope))
