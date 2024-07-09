@@ -114,7 +114,7 @@ def main(map_selection, background_image_path):
         clock.tick(FPS)
 
         # Fill the screen with a light blue color for the sky
-        screen.fill(LIGHT_BLUE)
+        screen.blit(background, (0,0))
         #screen.blit(background,(0,0))
 
         # Draw the terrain with multiple waves
