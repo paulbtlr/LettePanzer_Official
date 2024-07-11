@@ -115,6 +115,22 @@ class UI:
         else:
             pygame.draw.rect(surface, (0, 255, 255), (x + int(100 * (1 - ratio_m)), y, int(100 * ratio_m), 35))  # Zeichnen der Tankanzeige (rechts nach links)
 
+    def draw_armor(self, armor, x, y , surface, flip):
+        """
+        Zeichnet eine Rüstungsanzeige auf der angegebenen Oberfläche.
+        Parameter:
+        tank (float): Der aktuelle Rüstung (0-50).
+        x (int): Die x-Position der Rüstungsanzeige.
+        y (int): Die y-Position der Rüstungsanzeige.
+        surface (pygame.Surface): Die Oberfläche, auf der die Rüstungsanzeige gezeichnet wird.
+        flip (bool): Bestimmt die Richtung der Anzeige.
+        """
+        ratio_m = armor / 50  # Verhältnis der Rüstung zu 50
+        if not flip:
+            pygame.draw.rect(surface, (0, 0, 255), (x, y, 200 * ratio_m, 17.5))  # Zeichnen der Rüstungsanzeige (links nach rechts)
+        else:
+            pygame.draw.rect(surface, (0, 0, 255), (x + int(200 * (1 - ratio_m)), y, int(200 * ratio_m), 17.5))  # Zeichnen der Rüstungsanzeige (rechts nach links)
+
     def update(self, event):
         """
         Aktualisiert den Zustand der UI-Elemente basierend auf Ereignissen.

@@ -2,7 +2,7 @@ import pygame
 import math
 import shoot
 
-class Panzer:
+class Panzer():
     def __init__(self, image_path, start_position, panzer_rohr, image_list_v,image_list_r,flip,scale_factor):
         self.original_image = pygame.image.load(image_path)
         self.original_panzerrohr = panzer_rohr
@@ -19,8 +19,9 @@ class Panzer:
         self.flip = flip
         self.angle = 0
         self.speed = 2
-        self.tank = 200 #The Maximum Movement a Tank can move
+        self.tank = 2000 #The Maximum Movement a Tank can move
         self.health = 100 #The Health of a Tank
+        self.armor = 50
         self.move_right = False
         self.move_left = False
         self.aiming = False

@@ -106,7 +106,8 @@ def main(map_selection, background_image_path):
     # Initialize Panzer with a scale factor to make it smaller
     panzer_left = Panzer("Assets/Bilder/Spieler/Panzer/P1.png", (95, boden.get_ground_height(95)), panzer_p1_rohr, panzer_imagelist_blue_v, panzer_imagelist_blue_r, True, scale_factor=0.09) #0.08
     panzer_right = Panzer("Assets/Bilder/Spieler/Panzer/P6.png", (1722, boden.get_ground_height(1722)), panzer_p6_rohr, panzer_imagelist_orange_v, panzer_imagelist_orange_r, False, scale_factor=0.09)
-    shoot = Shoot(panzer_left.position[0]+115, panzer_left.position[1]-28)
+    shoot = Shoot(panzer_left.position[0]+114, panzer_left.position[1]-19,panzer_left.position[0]+56, panzer_left.position[1]-19)  
+
 
     # Main loop
     running = True
@@ -127,7 +128,7 @@ def main(map_selection, background_image_path):
 
         # Draw the terrain with multiple waves
         for x in range(window_size[0]):
-            y = boden.get_ground_height(x - 51)
+            y = boden.get_ground_height(x - 55)
             factor = y / window_size[1]  # Calculate the factor based on y position
             color = interpolate_color(TOP_COLOR, BOTTOM_COLOR, factor)
             pygame.draw.line(screen, color, (x, y), (x, window_size[1]))
@@ -152,7 +153,9 @@ def main(map_selection, background_image_path):
         panzer_left.rohr_setting(screen)
         panzer_left.draw_panzer(screen)
 
-        shoot.move()
+        shoot.move(panzer_left.tank,panzer_left.speed)
+        shoot.vector_angle(panzer_left.rohr_angle,panzer_left.angle)
+        shoot.update_y(boden.get_ground_height(panzer_left.position[0]))
         shoot.update_shoot()
         shoot.draw(screen)
     # Load the Interface image
@@ -166,6 +169,8 @@ def main(map_selection, background_image_path):
         # Draw UI buttons
         ui.draw_tank(panzer_left.tank,200,150,screen,True)
         ui.draw_tank(panzer_right.tank,1620,150,screen,False)
+        ui.draw_armor(panzer_left.armor,100,81,screen,True)
+        ui.draw_armor(panzer_right.armor,1620,81,screen,False)
         ui.draw_health(panzer_left.health,100,100,screen,True)
         ui.draw_health(panzer_right.health,1620,100,screen,False)
         ui.draw()
