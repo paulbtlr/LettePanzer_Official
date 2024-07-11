@@ -84,7 +84,6 @@ class Shoot() :
         if(key[pygame.K_f] == True):
             self.shooting = True
 
-
     def update_shoot(self):
         if self.shooting == True:
             gravity = self.gravity
@@ -100,11 +99,14 @@ class Shoot() :
             self.speed_ver = 5
             self.gravity = 1
 
-    def update_y(self, ground_height1):
+    def update_y(self, ground_height,panzer_position):
         #keeps the tank in place......
-        self.start_y = ground_height1 - self.rect.y + 114
+        self.rect2.y = ground_height - self.rect2.y + 14
+        print(ground_height)
+    
 
     def draw(self, surface):
         #if self.shooting == True:
+        #print(self.rect2.y)
         pygame.draw.rect(surface, (255, 0, 255), self.rect)
         pygame.draw.rect(surface, (255, 0, 0), self.rect2)

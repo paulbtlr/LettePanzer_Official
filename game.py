@@ -38,7 +38,6 @@ def main(map_selection, background_image_path):
     FPS = 60
 
     # Define colors
-    clock = pygame.time.Clock()
     running = True
     LIGHT_BLUE = background_image_path
     TOP_COLOR = (255, 0, 255)
@@ -154,7 +153,7 @@ def main(map_selection, background_image_path):
 
         shoot.move(panzer_left.tank,panzer_left.speed)
         shoot.vector_angle(panzer_left.rohr_angle,panzer_left.angle)
-        shoot.update_y(boden.get_ground_height(panzer_left.position[0]))
+        shoot.update_y(boden.get_ground_height(panzer_left.position[0]), panzer_left.position[0])
         shoot.update_shoot()
         shoot.draw(screen)
 
