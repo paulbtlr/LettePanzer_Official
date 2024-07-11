@@ -295,7 +295,7 @@ class OptionsWindow:
 
         self.back_button_image = pygame.image.load('Assets/Screens/Buttons/Zurück1.png')
         self.back_button_image = pygame.transform.scale(self.back_button_image, (400, 100))
-        self.back_button_hover_image = pygame.image.load('Assets/Screens/Buttons/Zurück2.png')
+        self.back_button_hover_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/Zurück2.png')
         self.back_button_hover_image = pygame.transform.scale(self.back_button_hover_image, (400, 100))
         self.back_button_rect = self.back_button_image.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 150))
 

@@ -5,6 +5,12 @@ from Panzer import Panzer
 from Boden import Boden
 from shoot import Shoot
 from MainMenue import MainMenu
+from button import Button
+
+from pygame.locals import (
+    K_ESCAPE,
+    KEYDOWN
+)
 
 def interpolate_color(start_color, end_color, factor):
     return (
@@ -19,7 +25,7 @@ def main(map_selection, background_image_path):
     pygame.init()
 
     # Set the dimensions of the window
-    window_size = (1920, 1020)
+    window_size = (1920, 1080)
     screen = pygame.display.set_mode(window_size)
 
     # Set the title of the window
@@ -43,7 +49,11 @@ def main(map_selection, background_image_path):
     boden = Boden()
     #Load Background
 
-    # Load All Panzers 
+
+    """
+    Spieler Panzer
+    """
+    # Load All Panzers
     # P1
     panzer_p1 = pygame.image.load("Assets/Game/Panzer/Body/P1.png")
     panzer_p1_rohr = pygame.image.load("Assets/Game/Rohr/PR1.png")
@@ -68,22 +78,52 @@ def main(map_selection, background_image_path):
     panzer_right = Panzer("Assets/Game/Panzer/Body/P6.png", (1722, boden.get_ground_height(1722)), panzer_p6_rohr,  False, scale_factor=0.09)
     shoot = Shoot(panzer_left.position[0]+115, panzer_left.position[1]-28)
 
+    """
+    Interface Buttouns (GUI)
+    """
+
+    # Load Button Images
+    off = pygame.image.load("Assets/Game/Interface/OFF.png")
+    on = pygame.image.load("Assets/Game/Interface/ON.png")
+    feueroff = pygame.image.load("Assets/Game/Interface/FeuerOFF.png")
+    feueron = pygame.image.load("Assets/Game/Interface/FeuerON.png")
+    quitoff = pygame.image.load("Assets/Game/Interface/QuitOFF.png")
+    quiton = pygame.image.load("Assets/Game/Interface/QuitON.png")
+    tankoff = pygame.image.load("Assets/Game/Interface/TankOFF.png")
+    tankon = pygame.image.load("Assets/Game/Interface/TankON.png")
+    waffenoff = pygame.image.load("Assets/Game/Interface/WaffenOFF.png")
+    waffenon = pygame.image.load("Assets/Game/Interface/WaffenON.png")
+
+    # Initialize Buttons
+    buttons = [
+        Button(30, 895, off, on),
+        Button(400, 895, tankoff, tankon),
+        Button(600, 895, off, on),
+        Button(970, 895, feueroff, feueron),
+        Button(1340, 895, waffenoff, waffenon),
+        Button(1710, 895, quitoff, quiton),
+    ]
+
     # Main loop
     running = True
     while running:
         for event in pygame.event.get():
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    running = False
             if event.type == pygame.QUIT:
                 running = False
-            
+
             # Pass events to UI
             ui.update(event)
 
-            
+        # Get current mouse position
+        mouse_pos = pygame.mouse.get_pos()
+
         clock.tick(FPS)
 
         # Fill the screen with a light blue color for the sky
         screen.blit(background, (0,0))
-        #screen.blit(background,(0,0))
 
         # Draw the terrain with multiple waves
         for x in range(window_size[0]):
@@ -115,19 +155,21 @@ def main(map_selection, background_image_path):
         shoot.move()
         shoot.update_shoot()
         shoot.draw(screen)
-    # Load the Interface image
+
+        # Load the Interface image
         interface_image = pygame.image.load("Assets/Game/Interface/GUIBG.png")
-        
-        # Draw the Interface image on top
-        screen.blit(interface_image, (0, 820))
-        
-        # Update the display again to show the Interface image
-        pygame.display.flip()
-        # Draw UI buttons
-        ui.draw_tank(panzer_left.tank,200,150,screen,True)
-        ui.draw_tank(panzer_right.tank,1620,150,screen,False)
-        ui.draw_health(panzer_left.health,100,100,screen,True)
-        ui.draw_health(panzer_right.health,1620,100,screen,False)
+        screen.blit(interface_image, (0, 880))
+
+         # Update and draw the buttons
+        for button in buttons:
+            button.update(mouse_pos)
+            button.draw(screen)
+
+        # Draw UI elements
+        ui.draw_tank(panzer_left.tank, 200, 150, screen, True)
+        ui.draw_tank(panzer_right.tank, 1620, 150, screen, False)
+        ui.draw_health(panzer_left.health, 100, 100, screen, True)
+        ui.draw_health(panzer_right.health, 1620, 100, screen, False)
         ui.draw()
 
         # Update the display

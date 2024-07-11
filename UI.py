@@ -3,61 +3,6 @@ import pygame
 # Pfad zur heruntergeladenen Schriftart
 font_path = "Assets\Schrift\Pixellari.ttf"
 
-class Button:
-    def __init__(self, position, width, height):
-        """
-        Initialisierungsmethode für die Klasse Button.
-        Parameter:
-        position (tuple): Die (x, y) Position des Buttons.
-        width (int): Die Breite des Buttons.
-        height (int): Die Höhe des Buttons.
-        """
-        self.font = pygame.font.Font(font_path, 36)  # Schriftart und -größe für den Buttontext
-        self.color = (100, 100, 100)  # Standardfarbe des Buttons
-        self.highlight_color = (150, 150, 150)  # Farbe des Buttons, wenn er hervorgehoben ist
-        self.position = position  # Position des Buttons
-        self.width = width  # Breite des Buttons
-        self.height = height  # Höhe des Buttons
-        # Rechteck für den Button basierend auf Position, Breite und Höhe
-        self.rect = pygame.Rect(self.position[0], self.position[1], self.width, self.height)
-        self.highlighted = False  # Initialisiert den Zustand des Hervorhebens
-        self.visible = True  # Neue Eigenschaft für die Sichtbarkeit des Buttons
-
-    def draw(self, surface):
-        """
-        Zeichnet den Button auf der angegebenen Oberfläche.
-        Parameter:
-        surface (pygame.Surface): Die Oberfläche, auf der der Button gezeichnet wird.
-        """
-        if self.visible:  # Nur zeichnen, wenn der Button sichtbar ist
-            if self.highlighted:
-                pygame.draw.rect(surface, self.highlight_color, self.rect)  # Zeichne hervorgehobenen Button
-            else:
-                pygame.draw.rect(surface, self.color, self.rect)  # Zeichne normalen Button
-        
-    def update(self, event):
-        """
-        Aktualisiert den Zustand des Buttons basierend auf Ereignissen.
-        Parameter:
-        event (pygame.event.Event): Das Ereignis, das verarbeitet wird.
-        """
-        if self.visible:  # Nur bei sichtbaren Buttons Events bearbeiten
-            if event.type == pygame.MOUSEMOTION:
-                # Überprüfen, ob die Maus über dem Button ist, um Hervorhebung zu steuern
-                self.highlighted = self.rect.collidepoint(event.pos)
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                # Überprüfen, ob auf den Button geklickt wurde
-                if self.rect.collidepoint(event.pos):
-                    print(f"Button clicked!")
-
-    def set_visible(self, visible):
-        """
-        Setzt die Sichtbarkeit des Buttons.
-        Parameter:
-        visible (bool): Die Sichtbarkeit des Buttons.
-        """
-        self.visible = visible
-
 class UI:
     def __init__(self, screen):
         """
@@ -67,21 +12,7 @@ class UI:
         """
         self.screen = screen
         self.buttons = []  # Liste zur Speicherung der Buttons
-        self.create_buttons()  # Erstellen der Buttons
-
-    def create_buttons(self):
-        """
-        Erstellt die Buttons und fügt sie zur Liste hinzu.
-        """
-        button_info = [
-            {"position": (800, 880), "width": 300, "height": 50},
-            {"position": (1150, 880), "width": 300, "height": 150},
-            {"position": (1720, 880), "width": 160, "height": 150}  
-        ]
-
-        for info in button_info:
-            button = Button(info["position"], info["width"], info["height"])
-            self.buttons.append(button)  # Hinzufügen des Buttons zur Liste
+        
 
     def draw_health(self, health, x, y, surface, flip):
         """
