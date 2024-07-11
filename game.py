@@ -42,70 +42,30 @@ def main(map_selection, background_image_path):
     ui = UI(screen)
     boden = Boden()
     #Load Background
-    #background = pygame.image.load("Assets/Bilder/Hintergrund/Background/BGChopper.png")
-    
-    # Load Panzer Pictures for Blue Panzer
-    panzer_imagelist_blue_v = [pygame.image.load("Assets/Bilder/Spieler/Panzer/Blau/BBV/BBV0.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Blau/BBV/BBV1.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Blau/BBV/BBV2.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Blau/BBV/BBV3.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Blau/BBV/BBV4.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Blau/BBV/BBV5.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Blau/BBV/BBV6.png")]
-
-    panzer_imagelist_blue_r = [pygame.image.load("Assets/Bilder/Spieler/Panzer/Blau/BBR/BBR0.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Blau/BBR/BBR1.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Blau/BBR/BBR2.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Blau/BBR/BBR3.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Blau/BBR/BBR4.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Blau/BBR/BBR5.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Blau/BBR/BBR6.png")]
-
-    panzer_blue_rohr = pygame.image.load("Assets/Bilder/Spieler/Panzer/Blau/BSR.png")
-
-    # Load Panzer Pictures for Orange Panzer
-    panzer_imagelist_orange_v = [pygame.image.load("Assets/Bilder/Spieler/Panzer/Orange/OBV/OBV0.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Orange/OBV/OBV1.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Orange/OBV/OBV2.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Orange/OBV/OBV3.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Orange/OBV/OBV4.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Orange/OBV/OBV5.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Orange/OBV/OBV6.png")]
-
-    panzer_imagelist_orange_r = [pygame.image.load("Assets/Bilder/Spieler/Panzer/Orange/OBR/OBR0.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Orange/OBR/OBR1.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Orange/OBR/OBR2.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Orange/OBR/OBR3.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Orange/OBR/OBR4.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Orange/OBR/OBR5.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Orange/OBR/OBR6.png")]
-
-    panzer_orange_rohr = pygame.image.load("Assets/Bilder/Spieler/Panzer/Orange/OSR.png")
-
 
     # Load All Panzers 
     # P1
-    panzer_p1 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P1.png")
-    panzer_p1_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR1.png")
+    panzer_p1 = pygame.image.load("Assets/Game/Panzer/Body/P1.png")
+    panzer_p1_rohr = pygame.image.load("Assets/Game/Rohr/PR1.png")
     # P2
-    panzer_p2 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P2.png")
-    panzer_p2_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR2.png")
+    panzer_p2 = pygame.image.load("Assets/Game/Panzer/Body/P2.png")
+    panzer_p2_rohr = pygame.image.load("Assets/Game/Rohr/PR2.png")
     # P3
-    panzer_p3 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P3.png")
-    panzer_p3_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR3.png")
+    panzer_p3 = pygame.image.load("Assets/Game/Panzer/Body/P3.png")
+    panzer_p3_rohr = pygame.image.load("Assets/Game/Rohr/PR3.png")
     # P4
-    panzer_p4 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P4.png")
-    panzer_p4_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR4.png")
+    panzer_p4 = pygame.image.load("Assets/Game/Panzer/Body/P4.png")
+    panzer_p4_rohr = pygame.image.load("Assets/Game/Rohr/PR4.png")
     # P5
-    panzer_p5 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P5.png")
-    panzer_p5_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR5.png")
+    panzer_p5 = pygame.image.load("Assets/Game/Panzer/Body/P5.png")
+    panzer_p5_rohr = pygame.image.load("Assets/Game/Rohr/PR5.png")
     # P6
-    panzer_p6 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P6.png")
-    panzer_p6_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR6.png")
+    panzer_p6 = pygame.image.load("Assets/Game/Panzer/Body/P6.png")
+    panzer_p6_rohr = pygame.image.load("Assets/Game/Rohr/PR6.png")
 
     # Initialize Panzer with a scale factor to make it smaller
-    panzer_left = Panzer("Assets/Bilder/Spieler/Panzer/P1.png", (95, boden.get_ground_height(95)), panzer_p1_rohr, panzer_imagelist_blue_v, panzer_imagelist_blue_r, True, scale_factor=0.09) #0.08
-    panzer_right = Panzer("Assets/Bilder/Spieler/Panzer/P6.png", (1722, boden.get_ground_height(1722)), panzer_p6_rohr, panzer_imagelist_orange_v, panzer_imagelist_orange_r, False, scale_factor=0.09)
+    panzer_left = Panzer("Assets/Game/Panzer/Body/P1.png", (95, boden.get_ground_height(95)), panzer_p1_rohr, True, scale_factor=0.09) #0.08
+    panzer_right = Panzer("Assets/Game/Panzer/Body/P6.png", (1722, boden.get_ground_height(1722)), panzer_p6_rohr,  False, scale_factor=0.09)
     shoot = Shoot(panzer_left.position[0]+115, panzer_left.position[1]-28)
 
     # Main loop
@@ -156,10 +116,10 @@ def main(map_selection, background_image_path):
         shoot.update_shoot()
         shoot.draw(screen)
     # Load the Interface image
-        interface_image = pygame.image.load("Assets/Bilder/Interface/Interface.png")
+        interface_image = pygame.image.load("Assets/Game/Interface/GUIBG.png")
         
         # Draw the Interface image on top
-        screen.blit(interface_image, (0, -51))
+        screen.blit(interface_image, (0, 820))
         
         # Update the display again to show the Interface image
         pygame.display.flip()
