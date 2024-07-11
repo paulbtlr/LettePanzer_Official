@@ -5,6 +5,12 @@ from Panzer import Panzer
 from Boden import Boden
 from shoot import Shoot
 from MainMenue import MainMenu
+from button import Button
+
+from pygame.locals import (
+    K_ESCAPE,
+    KEYDOWN
+)
 
 def interpolate_color(start_color, end_color, factor):
     return (
@@ -19,7 +25,7 @@ def main(map_selection, background_image_path):
     pygame.init()
 
     # Set the dimensions of the window
-    window_size = (1920, 1020)
+    window_size = (1920, 1080)
     screen = pygame.display.set_mode(window_size)
 
     # Set the title of the window
@@ -42,89 +48,82 @@ def main(map_selection, background_image_path):
     ui = UI(screen)
     boden = Boden()
     #Load Background
-    #background = pygame.image.load("Assets/Bilder/Hintergrund/Background/BGChopper.png")
-    
-    # Load Panzer Pictures for Blue Panzer
-    panzer_imagelist_blue_v = [pygame.image.load("Assets/Bilder/Spieler/Panzer/Blau/BBV/BBV0.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Blau/BBV/BBV1.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Blau/BBV/BBV2.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Blau/BBV/BBV3.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Blau/BBV/BBV4.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Blau/BBV/BBV5.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Blau/BBV/BBV6.png")]
-
-    panzer_imagelist_blue_r = [pygame.image.load("Assets/Bilder/Spieler/Panzer/Blau/BBR/BBR0.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Blau/BBR/BBR1.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Blau/BBR/BBR2.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Blau/BBR/BBR3.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Blau/BBR/BBR4.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Blau/BBR/BBR5.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Blau/BBR/BBR6.png")]
-
-    panzer_blue_rohr = pygame.image.load("Assets/Bilder/Spieler/Panzer/Blau/BSR.png")
-
-    # Load Panzer Pictures for Orange Panzer
-    panzer_imagelist_orange_v = [pygame.image.load("Assets/Bilder/Spieler/Panzer/Orange/OBV/OBV0.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Orange/OBV/OBV1.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Orange/OBV/OBV2.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Orange/OBV/OBV3.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Orange/OBV/OBV4.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Orange/OBV/OBV5.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Orange/OBV/OBV6.png")]
-
-    panzer_imagelist_orange_r = [pygame.image.load("Assets/Bilder/Spieler/Panzer/Orange/OBR/OBR0.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Orange/OBR/OBR1.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Orange/OBR/OBR2.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Orange/OBR/OBR3.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Orange/OBR/OBR4.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Orange/OBR/OBR5.png"),
-                                pygame.image.load("Assets/Bilder/Spieler/Panzer/Orange/OBR/OBR6.png")]
-
-    panzer_orange_rohr = pygame.image.load("Assets/Bilder/Spieler/Panzer/Orange/OSR.png")
 
 
-    # Load All Panzers 
+    """
+    Spieler Panzer
+    """
+    # Load All Panzers
     # P1
-    panzer_p1 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P1.png")
-    panzer_p1_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR1.png")
+    panzer_p1 = pygame.image.load("Assets/Game/Panzer/Body/P1.png")
+    panzer_p1_rohr = pygame.image.load("Assets/Game/Rohr/PR1.png")
     # P2
-    panzer_p2 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P2.png")
-    panzer_p2_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR2.png")
+    panzer_p2 = pygame.image.load("Assets/Game/Panzer/Body/P2.png")
+    panzer_p2_rohr = pygame.image.load("Assets/Game/Rohr/PR2.png")
     # P3
-    panzer_p3 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P3.png")
-    panzer_p3_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR3.png")
+    panzer_p3 = pygame.image.load("Assets/Game/Panzer/Body/P3.png")
+    panzer_p3_rohr = pygame.image.load("Assets/Game/Rohr/PR3.png")
     # P4
-    panzer_p4 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P4.png")
-    panzer_p4_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR4.png")
+    panzer_p4 = pygame.image.load("Assets/Game/Panzer/Body/P4.png")
+    panzer_p4_rohr = pygame.image.load("Assets/Game/Rohr/PR4.png")
     # P5
-    panzer_p5 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P5.png")
-    panzer_p5_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR5.png")
+    panzer_p5 = pygame.image.load("Assets/Game/Panzer/Body/P5.png")
+    panzer_p5_rohr = pygame.image.load("Assets/Game/Rohr/PR5.png")
     # P6
-    panzer_p6 = pygame.image.load("Assets/Bilder/Spieler/Panzer/P6.png")
-    panzer_p6_rohr = pygame.image.load("Assets/Bilder/Spieler/Rohr/PR6.png")
+    panzer_p6 = pygame.image.load("Assets/Game/Panzer/Body/P6.png")
+    panzer_p6_rohr = pygame.image.load("Assets/Game/Rohr/PR6.png")
 
     # Initialize Panzer with a scale factor to make it smaller
-    panzer_left = Panzer("Assets/Bilder/Spieler/Panzer/P1.png", (95, boden.get_ground_height(95)), panzer_p1_rohr, panzer_imagelist_blue_v, panzer_imagelist_blue_r, True, scale_factor=0.09) #0.08
-    panzer_right = Panzer("Assets/Bilder/Spieler/Panzer/P6.png", (1722, boden.get_ground_height(1722)), panzer_p6_rohr, panzer_imagelist_orange_v, panzer_imagelist_orange_r, False, scale_factor=0.09)
+    panzer_left = Panzer("Assets/Game/Panzer/Body/P1.png", (95, boden.get_ground_height(95)), panzer_p1_rohr, True, scale_factor=0.09) #0.08
+    panzer_right = Panzer("Assets/Game/Panzer/Body/P6.png", (1722, boden.get_ground_height(1722)), panzer_p6_rohr,  False, scale_factor=0.09)
     shoot = Shoot(panzer_left.position[0]+114, panzer_left.position[1]-19,panzer_left.position[0]+56, panzer_left.position[1]-19)  
 
+    """
+    Interface Buttouns (GUI)
+    """
+
+    # Load Button Images
+    off = pygame.image.load("Assets/Game/Interface/OFF.png")
+    on = pygame.image.load("Assets/Game/Interface/ON.png")
+    feueroff = pygame.image.load("Assets/Game/Interface/FeuerOFF.png")
+    feueron = pygame.image.load("Assets/Game/Interface/FeuerON.png")
+    quitoff = pygame.image.load("Assets/Game/Interface/QuitOFF.png")
+    quiton = pygame.image.load("Assets/Game/Interface/QuitON.png")
+    tankoff = pygame.image.load("Assets/Game/Interface/TankOFF.png")
+    tankon = pygame.image.load("Assets/Game/Interface/TankON.png")
+    waffenoff = pygame.image.load("Assets/Game/Interface/WaffenOFF.png")
+    waffenon = pygame.image.load("Assets/Game/Interface/WaffenON.png")
+
+    # Initialize Buttons
+    buttons = [
+        Button(30, 895, off, on),
+        Button(400, 895, tankoff, tankon),
+        Button(600, 895, off, on),
+        Button(970, 895, feueroff, feueron),
+        Button(1340, 895, waffenoff, waffenon),
+        Button(1710, 895, quitoff, quiton),
+    ]
 
     # Main loop
     running = True
     while running:
         for event in pygame.event.get():
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    running = False
             if event.type == pygame.QUIT:
                 running = False
-            
+
             # Pass events to UI
             ui.update(event)
 
-            
+        # Get current mouse position
+        mouse_pos = pygame.mouse.get_pos()
+
         clock.tick(FPS)
 
         # Fill the screen with a light blue color for the sky
         screen.blit(background, (0,0))
-        #screen.blit(background,(0,0))
 
         # Draw the terrain with multiple waves
         for x in range(window_size[0]):
@@ -158,21 +157,23 @@ def main(map_selection, background_image_path):
         shoot.update_y(boden.get_ground_height(panzer_left.position[0]))
         shoot.update_shoot()
         shoot.draw(screen)
-    # Load the Interface image
-        interface_image = pygame.image.load("Assets/Bilder/Interface/Interface.png")
-        
-        # Draw the Interface image on top
-        screen.blit(interface_image, (0, -51))
-        
-        # Update the display again to show the Interface image
-        pygame.display.flip()
-        # Draw UI buttons
-        ui.draw_tank(panzer_left.tank,200,150,screen,True)
-        ui.draw_tank(panzer_right.tank,1620,150,screen,False)
+
+        # Load the Interface image
+        interface_image = pygame.image.load("Assets/Game/Interface/GUIBG.png")
+        screen.blit(interface_image, (0, 880))
+
+         # Update and draw the buttons
+        for button in buttons:
+            button.update(mouse_pos)
+            button.draw(screen)
+
+        # Draw UI elements
+        ui.draw_tank(panzer_left.tank, 200, 150, screen, True)
+        ui.draw_tank(panzer_right.tank, 1620, 150, screen, False)
         ui.draw_armor(panzer_left.armor,100,81,screen,True)
         ui.draw_armor(panzer_right.armor,1620,81,screen,False)
-        ui.draw_health(panzer_left.health,100,100,screen,True)
-        ui.draw_health(panzer_right.health,1620,100,screen,False)
+        ui.draw_health(panzer_left.health, 100, 100, screen, True)
+        ui.draw_health(panzer_right.health, 1620, 100, screen, False)
         ui.draw()
 
         # Update the display

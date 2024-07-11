@@ -2,8 +2,8 @@ import pygame
 import math
 import shoot
 
-class Panzer():
-    def __init__(self, image_path, start_position, panzer_rohr, image_list_v,image_list_r,flip,scale_factor):
+class Panzer:
+    def __init__(self, image_path, start_position, panzer_rohr,flip,scale_factor):
         self.original_image = pygame.image.load(image_path)
         self.original_panzerrohr = panzer_rohr
         self.image = pygame.transform.scale(self.original_image, 
@@ -28,8 +28,8 @@ class Panzer():
         self.descending_rohr = False
         self.ascending_rohr = False
         self.frame = 0
-        self.image_list_v = image_list_v
-        self.image_list_r = image_list_r
+        #self.image_list_v = image_list_v
+        #self.image_list_r = image_list_r
         self.rohr_degree = 0
         self.rohr_angle = 0
 
@@ -142,67 +142,67 @@ class Panzer():
                 if self.tank < 0:
                     self.tank == 0
 
-    def update_animation(self, surface):
-        #Player 1
-        if self.flip == True:
-            #Animation for driving forward
-            if self.move_right == True:
-                if self.frame <= 7:
-                    self.current_image = self.image_list_v[self.frame]
-                    self.image = pygame.transform.scale(self.current_image, 
-                                                    (int(self.current_image.get_width() * self.scale_factor), 
-                                                    int(self.current_image.get_height() * self.scale_factor)))
-                    img = pygame.transform.flip(self.image, True, False)
-                    rotated_image = pygame.transform.rotate(img, self.angle)
-                    new_rect2 = rotated_image.get_rect(center=self.image.get_rect(topleft=self.position).center)
-                    surface.blit(rotated_image, new_rect2.topleft)
-                self.frame += 1
-                if self.frame > 6:
-                    self.frame = 0
+    # def update_animation(self, surface):
+    #     #Player 1
+    #     if self.flip == True:
+    #         #Animation for driving forward
+    #         if self.move_right == True:
+    #             if self.frame <= 7:
+    #                 self.current_image = self.image_list_v[self.frame]
+    #                 self.image = pygame.transform.scale(self.current_image, 
+    #                                                 (int(self.current_image.get_width() * self.scale_factor), 
+    #                                                 int(self.current_image.get_height() * self.scale_factor)))
+    #                 img = pygame.transform.flip(self.image, True, False)
+    #                 rotated_image = pygame.transform.rotate(img, self.angle)
+    #                 new_rect2 = rotated_image.get_rect(center=self.image.get_rect(topleft=self.position).center)
+    #                 surface.blit(rotated_image, new_rect2.topleft)
+    #             self.frame += 1
+    #             if self.frame > 6:
+    #                 self.frame = 0
 
-            #Animation for driving backwards
-            if self.move_left == True:
-                if self.frame <= 7:
-                    self.current_image = self.image_list_r[self.frame]
-                    self.image = pygame.transform.scale(self.current_image, 
-                                                    (int(self.current_image.get_width() * self.scale_factor), 
-                                                    int(self.current_image.get_height() * self.scale_factor)))
-                    img = pygame.transform.flip(self.image, True, False)
-                    rotated_image = pygame.transform.rotate(img, self.angle)
-                    new_rect2 = rotated_image.get_rect(center=self.image.get_rect(topleft=self.position).center)
-                    surface.blit(rotated_image, new_rect2.topleft)
-                self.frame += 1    
-                if self.frame > 6:
-                    self.frame = 0
-        #Player 2
-        else:
-            #Animation for driving forward
-            if self.move_right == True:
-                if self.frame <= 7:
-                    self.current_image = self.image_list_v[self.frame]
-                    self.image = pygame.transform.scale(self.current_image, 
-                                                    (int(self.current_image.get_width() * self.scale_factor), 
-                                                    int(self.current_image.get_height() * self.scale_factor)))
-                    rotated_image = pygame.transform.rotate(self.image, self.angle)
-                    new_rect2 = rotated_image.get_rect(center=self.image.get_rect(topleft=self.position).center)
-                    surface.blit(rotated_image, new_rect2.topleft)
-                self.frame += 1
-                if self.frame > 6:
-                    self.frame = 0
+    #         #Animation for driving backwards
+    #         if self.move_left == True:
+    #             if self.frame <= 7:
+    #                 self.current_image = self.image_list_r[self.frame]
+    #                 self.image = pygame.transform.scale(self.current_image, 
+    #                                                 (int(self.current_image.get_width() * self.scale_factor), 
+    #                                                 int(self.current_image.get_height() * self.scale_factor)))
+    #                 img = pygame.transform.flip(self.image, True, False)
+    #                 rotated_image = pygame.transform.rotate(img, self.angle)
+    #                 new_rect2 = rotated_image.get_rect(center=self.image.get_rect(topleft=self.position).center)
+    #                 surface.blit(rotated_image, new_rect2.topleft)
+    #             self.frame += 1    
+    #             if self.frame > 6:
+    #                 self.frame = 0
+    #     #Player 2
+    #     else:
+    #         #Animation for driving forward
+    #         if self.move_right == True:
+    #             if self.frame <= 7:
+    #                 self.current_image = self.image_list_v[self.frame]
+    #                 self.image = pygame.transform.scale(self.current_image, 
+    #                                                 (int(self.current_image.get_width() * self.scale_factor), 
+    #                                                 int(self.current_image.get_height() * self.scale_factor)))
+    #                 rotated_image = pygame.transform.rotate(self.image, self.angle)
+    #                 new_rect2 = rotated_image.get_rect(center=self.image.get_rect(topleft=self.position).center)
+    #                 surface.blit(rotated_image, new_rect2.topleft)
+    #             self.frame += 1
+    #             if self.frame > 6:
+    #                 self.frame = 0
 
-            #Animation for driving backwards
-            if self.move_left == True:
-                if self.frame <= 7:
-                    self.current_image = self.image_list_r[self.frame]
-                    self.image = pygame.transform.scale(self.current_image, 
-                                                    (int(self.current_image.get_width() * self.scale_factor), 
-                                                    int(self.current_image.get_height() * self.scale_factor)))
-                    rotated_image = pygame.transform.rotate(self.image, self.angle)
-                    new_rect2 = rotated_image.get_rect(center=self.image.get_rect(topleft=self.position).center)
-                    surface.blit(rotated_image, new_rect2.topleft)
-                self.frame += 1    
-                if self.frame > 6:
-                    self.frame = 0
+    #         #Animation for driving backwards
+    #         if self.move_left == True:
+    #             if self.frame <= 7:
+    #                 self.current_image = self.image_list_r[self.frame]
+    #                 self.image = pygame.transform.scale(self.current_image, 
+    #                                                 (int(self.current_image.get_width() * self.scale_factor), 
+    #                                                 int(self.current_image.get_height() * self.scale_factor)))
+    #                 rotated_image = pygame.transform.rotate(self.image, self.angle)
+    #                 new_rect2 = rotated_image.get_rect(center=self.image.get_rect(topleft=self.position).center)
+    #                 surface.blit(rotated_image, new_rect2.topleft)
+    #             self.frame += 1    
+    #             if self.frame > 6:
+    #                 self.frame = 0
 
     def update_position(self, ground_height):
         #keeps the tank in place......

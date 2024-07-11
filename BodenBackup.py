@@ -48,7 +48,7 @@ def main():
         return dy
 
     # Initialize Panzer with a scale factor to make it smaller
-    panzer = Panzer("Assets/Bilder/Spieler/Panzer/Blau/BBR.png", (95, get_ground_height(95)), scale_factor=0.08)
+    panzer = Panzer("Assets/Game/Panzer/Komplet/AP6.png", (95, get_ground_height(95)), scale_factor=0.08)
 
     # Main loop
     running = True

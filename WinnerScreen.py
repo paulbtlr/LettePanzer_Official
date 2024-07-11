@@ -43,8 +43,8 @@ button_neustart_x = screen_width // 2 - (0.5 * button_width)
 button_quit_x = screen_width // 2 + (0.5 * button_width + button_spacing)
 
 # Spielerbilder
-player1_image = pygame.image.load('Assets/Bilder/Spieler/Panzer/Blau/BWS.png')
-player2_image = pygame.image.load('Assets/Bilder/Spieler/Panzer/Orange/OWS.png')
+player1_image = pygame.image.load('Assets/Game/Panzer/Komplet/AP6.png')
+player2_image = pygame.image.load('Assets/Game/Panzer/Komplet/AP4.png')
 
 new_player_width = 640
 new_player_height = 360
@@ -54,23 +54,23 @@ player2_image = pygame.transform.scale(player2_image, (new_player_width, new_pla
 player_width, player_height = player1_image.get_size()
 
 # Hintergrundbilder für den Winner Screen laden
-background_player1_win = pygame.image.load('Assets/Bilder/Hintergrund/WinnerScreen/Spieler1.jpg')
-background_player2_win = pygame.image.load('Assets/Bilder/Hintergrund/WinnerScreen/Spieler2.jpg')
+background_player1_win = pygame.image.load('Assets/Screens/WinnerScreen/Spieler1.jpg')
+background_player2_win = pygame.image.load('Assets/Screens/WinnerScreen/Spieler2.jpg')
 
 # Bilder für den Winner Screen laden
-winner_screen_image_player1 = pygame.image.load('Assets/Bilder/Spieler/Panzer/Blau/BWS_Sieg.png')
-winner_screen_image_player2 = pygame.image.load('Assets/Bilder/Spieler/Panzer/Orange/OWS_Sieg.png')
+winner_screen_image_player1 = pygame.image.load('Assets/Game/Panzer/Komplet/AP6.png')
+winner_screen_image_player2 = pygame.image.load('Assets/Game/Panzer/Komplet/AP4.png')
 
 winner_screen_image_player1 = pygame.transform.scale(winner_screen_image_player1, (new_player_width, new_player_height))
 winner_screen_image_player2 = pygame.transform.scale(winner_screen_image_player2, (new_player_width, new_player_height))
 
 # Button-Bilder laden und skalieren
-startmenu_button_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/Startmenü1.png')
-startmenu_button_hover_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/Startmenü2.png')
-neustarten_button_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/Neustarten1.png')
-neustarten_button_hover_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/Neustarten2.png')
-quit_button_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/Quit1.png')
-quit_button_hover_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/Quit2.png')
+startmenu_button_image = pygame.image.load('Assets/Screens/Buttons/Startmenü1.png')
+startmenu_button_hover_image = pygame.image.load('Assets/Screens/Buttons/Startmenü2.png')
+neustarten_button_image = pygame.image.load('Assets/Bilder/Screens/Buttons/Neustarten1.png')
+neustarten_button_hover_image = pygame.image.load('Assets/Screens/Buttons/Neustarten2.png')
+quit_button_image = pygame.image.load('Assets/Screens/Buttons/Quit1.png')
+quit_button_hover_image = pygame.image.load('Assets/Screens/Buttons/Quit2.png')
 
 startmenu_button_image = pygame.transform.scale(startmenu_button_image, (button_width, button_height))
 startmenu_button_hover_image = pygame.transform.scale(startmenu_button_hover_image, (button_width, button_height))

@@ -16,7 +16,7 @@ class MainMenu:
         self.font = pygame.font.Font("Assets/Schrift/Pixellari.ttf", 74)
 
         # Hintergrundbild laden und skalieren
-        self.background_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/BattleTanks.jpg')
+        self.background_image = pygame.image.load('Assets/Screens/Menü/BattleTanks.jpg')
         self.background_image = pygame.transform.scale(self.background_image, (WIDTH, HEIGHT))
 
        # Schaltflächenbilder laden und skalieren
@@ -24,21 +24,21 @@ class MainMenu:
         button_gap = 150
         button_y = HEIGHT // 2 - 1.5 * button_height + 50  # Position der Schaltflächen anpassen
 
-        self.start_button_image = pygame.image.load('Assets/Buttons/Start1.png')
+        self.start_button_image = pygame.image.load('Assets/Screens/Buttons/Start1.png')
         self.start_button_image = pygame.transform.scale(self.start_button_image, (button_width, button_height))
-        self.start_button_hover_image = pygame.image.load('Assets/Buttons/Start2.png')
+        self.start_button_hover_image = pygame.image.load('Assets/Screens/Buttons/Start2.png')
         self.start_button_hover_image = pygame.transform.scale(self.start_button_hover_image, (button_width, button_height))
         self.start_button_rect = self.start_button_image.get_rect(center=(WIDTH // 2, button_y))
 
-        self.options_button_image = pygame.image.load('Assets/Buttons/Options1.png')
+        self.options_button_image = pygame.image.load('Assets/Screens/Buttons/Options1.png')
         self.options_button_image = pygame.transform.scale(self.options_button_image, (button_width, button_height))
-        self.options_button_hover_image = pygame.image.load('Assets/Buttons/Options2.png')
+        self.options_button_hover_image = pygame.image.load('Assets/Screens/Buttons/Options2.png')
         self.options_button_hover_image = pygame.transform.scale(self.options_button_hover_image, (button_width, button_height))
         self.options_button_rect = self.options_button_image.get_rect(center=(WIDTH // 2, button_y + button_gap))
 
-        self.quit_button_image = pygame.image.load('Assets/Buttons/Quit1.png')
+        self.quit_button_image = pygame.image.load('Assets/Screens/Buttons/Quit1.png')
         self.quit_button_image = pygame.transform.scale(self.quit_button_image, (button_width, button_height))
-        self.quit_button_hover_image = pygame.image.load('Assets/Buttons/Quit2.png')
+        self.quit_button_hover_image = pygame.image.load('Assets/Screens/Buttons/Quit2.png')
         self.quit_button_hover_image = pygame.transform.scale(self.quit_button_hover_image, (button_width, button_height))
         self.quit_button_rect = self.quit_button_image.get_rect(center=(WIDTH // 2, button_y + 2 * button_gap))
 
@@ -104,19 +104,19 @@ class StartWindow:
         pygame.display.set_caption('Start Window')
 
         # Hintergrundbild für das Startfenster laden
-        self.background_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/SpielmodusBackground.jpg')
+        self.background_image = pygame.image.load('Assets/Screens/Menü/SpielmodusBackground.jpg')
         self.background_image = pygame.transform.scale(self.background_image, (WIDTH, HEIGHT))
 
         # Schaltflächenbilder für Start- und Zurück-Schaltflächen laden und skalieren
-        self.start_game_button_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/1vs1_1.png')
+        self.start_game_button_image = pygame.image.load('Assets/Screens/Buttons/1vs1_1.png')
         self.start_game_button_image = pygame.transform.scale(self.start_game_button_image, (400, 100))
-        self.start_game_button_hover_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/1vs1_2.png')
+        self.start_game_button_hover_image = pygame.image.load('Assets/Screens/Buttons/1vs1_2.png')
         self.start_game_button_hover_image = pygame.transform.scale(self.start_game_button_hover_image, (400, 100))
         self.start_game_button_rect = self.start_game_button_image.get_rect(center=(WIDTH // 2, HEIGHT // 2))
 
-        self.back_button_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/Zurück1.png')
+        self.back_button_image = pygame.image.load('Assets/Screens/Buttons/Zurück1.png')
         self.back_button_image = pygame.transform.scale(self.back_button_image, (400, 100))
-        self.back_button_hover_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/Zurück2.png')
+        self.back_button_hover_image = pygame.image.load('Assets/Screens/Buttons/Zurück2.png')
         self.back_button_hover_image = pygame.transform.scale(self.back_button_hover_image, (400, 100))
         self.back_button_rect = self.back_button_image.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 150))
 
@@ -175,23 +175,23 @@ class MapSelectionWindow:
         pygame.display.set_caption('Map Selection Window')
 
         # Hintergrundbild für das Kartenwahl-Fenster laden
-        self.background_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/MapsBackground.jpg')
+        self.background_image = pygame.image.load('Assets/Screens/Menü/MapsBackground.jpg')
         self.background_image = pygame.transform.scale(self.background_image, (WIDTH, HEIGHT))
 
         # Schaltflächenbilder für Kartenwahl laden und skalieren
-        self.map1_button_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/Schnee1.png')
+        self.map1_button_image = pygame.image.load('Assets/Screens/Buttons/Schnee1.png')
         self.map1_button_image = pygame.transform.scale(self.map1_button_image, (400, 100))
-        self.map1_button_hover_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/Schnee2.png')
+        self.map1_button_hover_image = pygame.image.load('Assets/Screens/Buttons/Schnee2.png')
         self.map1_button_hover_image = pygame.transform.scale(self.map1_button_hover_image, (400, 100))
 
-        self.map2_button_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/Vulkan1.png')
+        self.map2_button_image = pygame.image.load('Assets/Screens/Buttons/Vulkan1.png')
         self.map2_button_image = pygame.transform.scale(self.map2_button_image, (400, 100))
-        self.map2_button_hover_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/Vulkan2.png')
+        self.map2_button_hover_image = pygame.image.load('Assets/Screens/Buttons/Vulkan2.png')
         self.map2_button_hover_image = pygame.transform.scale(self.map2_button_hover_image, (400, 100))
 
-        self.map3_button_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/Space1.png')
+        self.map3_button_image = pygame.image.load('Assets/Screens/Buttons/Space1.png')
         self.map3_button_image = pygame.transform.scale(self.map3_button_image, (400, 100))
-        self.map3_button_hover_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/Space2.png')
+        self.map3_button_hover_image = pygame.image.load('Assets/Screens/Buttons/Space2.png')
         self.map3_button_hover_image = pygame.transform.scale(self.map3_button_hover_image, (400, 100))
 
         button_gap = 150
@@ -202,9 +202,9 @@ class MapSelectionWindow:
         self.map3_button_rect = self.map3_button_image.get_rect(center=(WIDTH // 2, button_y + 2 * button_gap))
 
         # Load and scale back button image
-        self.back_button_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/Zurück1.png')
+        self.back_button_image = pygame.image.load('Assets/Screens/Buttons/Zurück1.png')
         self.back_button_image = pygame.transform.scale(self.back_button_image, (400, 100))
-        self.back_button_hover_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/Zurück2.png')
+        self.back_button_hover_image = pygame.image.load('Assets/Screens/Buttons/Zurück2.png')
         self.back_button_hover_image = pygame.transform.scale(self.back_button_hover_image, (400, 100))
         self.back_button_rect = self.back_button_image.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 300))
 
@@ -262,13 +262,13 @@ class MapSelectionWindow:
     def start_game(self, map_name):
         """Startet das Spiel mit der ausgewählten Karte."""
         if map_name == 'map1':
-            background_image_path = 'Assets/Bilder/Hintergrund/Background/BGSchnee.png'
+            background_image_path = 'Assets/Game/Background/BGSchnee.png'
         elif map_name == 'map2':
-            background_image_path = 'Assets/Bilder/Hintergrund/Background/BGVulkan.png'
+            background_image_path = 'Assets/Game/Background/BGVulkan.png'
         elif map_name == 'map3':
-            background_image_path = 'Assets/Bilder/Hintergrund/Background/BGSpace.png'
+            background_image_path = 'Assets/Game/Background/BGSpace.png'
         else:
-            background_image_path = 'Assets/Bilder/Hintergrund/Background/BGSchnee.png'  # Default
+            background_image_path = 'Assets/Game/Background/BGSchnee.png'  # Default
 
         # Launch the game with the selected map
         subprocess.Popen([sys.executable, 'game.py', map_name, background_image_path])
@@ -283,17 +283,17 @@ class OptionsWindow:
         pygame.display.set_caption('Options Window')
 
         # Hintergrundbild für das Options-Fenster laden
-        self.background_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/OptionsBackGround.png')
+        self.background_image = pygame.image.load('Assets/Screens/Menü/OptionsBackground.png')
         self.background_image = pygame.transform.scale(self.background_image, (WIDTH, HEIGHT))
 
         # Schaltflächenbilder für Musik und Zurück laden und skalieren
-        self.music_on_button_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/MusikAN1.png')
+        self.music_on_button_image = pygame.image.load('Assets/Screens/Buttons/MusikAn1.png')
         self.music_on_button_image = pygame.transform.scale(self.music_on_button_image, (400, 100))
-        self.music_off_button_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/MusikAUS1.png')
+        self.music_off_button_image = pygame.image.load('Assets/Screens/Buttons/MusikAus1.png')
         self.music_off_button_image = pygame.transform.scale(self.music_off_button_image, (400, 100))
         self.music_button_rect = self.music_on_button_image.get_rect(center=(WIDTH // 2, HEIGHT // 2))
 
-        self.back_button_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/Zurück1.png')
+        self.back_button_image = pygame.image.load('Assets/Screens/Buttons/Zurück1.png')
         self.back_button_image = pygame.transform.scale(self.back_button_image, (400, 100))
         self.back_button_hover_image = pygame.image.load('Assets/Bilder/Hintergrund/Menü/Zurück2.png')
         self.back_button_hover_image = pygame.transform.scale(self.back_button_hover_image, (400, 100))
