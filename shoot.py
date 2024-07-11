@@ -101,9 +101,11 @@ class Shoot() :
 
     def update_y(self, ground_height,panzer_position):
         #keeps the tank in place......
-        self.rect2.y = ground_height - self.rect2.y + 14
-        print(ground_height)
-    
+        self.rect2.y = ground_height - self.rect2.y
+        #print(ground_height)
+        #x = Offset Panzer + Rohr * cos(Winkel Panzer + Winkel Rohr)
+        #y = Offset Panzer + Rohr * sin(Winkel Panzer + Winkel Rohr)
+        print(ground_height,self.rect2.y)
 
     def draw(self, surface):
         #if self.shooting == True:
