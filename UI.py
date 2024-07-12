@@ -3,25 +3,37 @@ import pygame
 # Pfad zur heruntergeladenen Schriftart
 font_path = "Assets\Schrift\Pixellari.ttf"
 
+"""
+Definiert eine Button-Klasse, um Schaltflächen zu erstellen und zu verwalten
+"""
 class Button:
     def __init__(self, x, y, off_image, on_image):
-        self.x = x
-        self.y = y
-        self.off_image = off_image
-        self.on_image = on_image
-        self.image = off_image
+        # Initialisiert die Schaltfläche mit Position und Bildern
+        self.x = x  # X-Position der Schaltfläche
+        self.y = y  # Y-Position der Schaltfläche
+        self.off_image = off_image  # Bild der Schaltfläche im inaktiven Zustand
+        self.on_image = on_image  # Bild der Schaltfläche im aktiven (hover) Zustand
+        self.image = off_image  # Aktuelles Bild der Schaltfläche (initial inaktiv)
+        
+        # Erstellt ein Rechteck (rect) für die Schaltfläche zur Kollisionserkennung
         self.rect = self.image.get_rect(topleft=(x, y))
+        
+        # Gibt an, ob die Schaltfläche gerade "gehört" wird (Maus darüber)
         self.is_hovered = False
 
+    # Aktualisiert den Zustand der Schaltfläche basierend auf der Mausposition
     def update(self, mouse_pos):
+        # Prüft, ob sich die Maus über der Schaltfläche befindet
         if self.rect.collidepoint(mouse_pos):
-            self.image = self.on_image
-            self.is_hovered = True
+            self.image = self.on_image  # Wechselt zum Bild für den aktiven Zustand
+            self.is_hovered = True  # Setzt den Zustand auf "gehört"
         else:
-            self.image = self.off_image
-            self.is_hovered = False
+            self.image = self.off_image  # Wechselt zum Bild für den inaktiven Zustand
+            self.is_hovered = False  # Setzt den Zustand auf "nicht gehört"
 
+    # Zeichnet die Schaltfläche auf der angegebenen Oberfläche (z.B. Bildschirm)
     def draw(self, surface):
+        # Blittet (zeichnet) das aktuelle Bild der Schaltfläche auf die Oberfläche
         surface.blit(self.image, (self.x, self.y))
 
 class UI:
