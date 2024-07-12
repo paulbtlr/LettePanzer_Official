@@ -5,6 +5,7 @@ from Panzer import Panzer
 from Boden import Boden
 from shoot import Shoot
 from MainMenue import MainMenu
+from weapons import Weapons
 from UI import Button
 
 from pygame.locals import (
@@ -43,6 +44,8 @@ def main(map_selection, background_image_path):
     TOP_COLOR = (255, 0, 255)
     BOTTOM_COLOR = (230, 230, 250)
 
+    ANIMATION_STEPS = [24,8]
+
     # Initialize Imports
     ui = UI(screen)
     boden = Boden()
@@ -75,8 +78,12 @@ def main(map_selection, background_image_path):
     # Initialize Panzer with a scale factor to make it smaller
     panzer_left = Panzer("Assets/Game/Panzer/Body/P1.png", (95, boden.get_ground_height(95)), panzer_p1_rohr, True, scale_factor=0.09) #0.08
     panzer_right = Panzer("Assets/Game/Panzer/Body/P6.png", (1722, boden.get_ground_height(1722)), panzer_p6_rohr,  False, scale_factor=0.09)
+    # Initialize Shoot Functions, for the Spawnpoint of Weapons
     shoot = Shoot(panzer_left.position[0]+113, panzer_left.position[1]-18,panzer_left.position[0]+56, panzer_left.position[1]-19) 
     shoot2 = Shoot(panzer_right.position[0]+113, panzer_right.position[1]-18,panzer_right.position[0]+56, panzer_right.position[1]-19) 
+    # Initialize Weapons
+    weapons = Weapons("Assets/Game/Weapon/Panzergeschoss/PGG.png","Assets/Game/Weapon/MilbradtFass/MilbradtFassSprite.png","Assets/Game/Weapon/Lightningball/LBSpriteYellow.png",ANIMATION_STEPS)
+
 
     """
     Interface Buttouns (GUI)
@@ -163,6 +170,9 @@ def main(map_selection, background_image_path):
         shoot2.vector_angle(panzer_right.rohr_angle,panzer_right.angle, False)
         shoot2.update_y(panzer_right.position[1])
         shoot2.draw(screen)
+
+        weapons.draw_weapon(screen)
+        
 
         # Load the Interface image
         interface_image = pygame.image.load("Assets/Game/Interface/GUIBG.png")

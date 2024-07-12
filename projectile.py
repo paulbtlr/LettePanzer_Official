@@ -19,7 +19,7 @@ class Shoot() :
           self.shooting = False
           self.counter = 0
 
-    def shooting(self):
+    def use_shooting(self):
         key = pygame.key.get_pressed()
         if((key[pygame.K_e] == True) and (self.shooting == False)):
           self.counter += 1
