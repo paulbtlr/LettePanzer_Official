@@ -24,7 +24,7 @@ class Shoot() :
           self.counter = 0
 
     def vector_angle(self, panzer_rohr_angle,panzer_angle):
-        LINE_LENGHT = 58
+        LINE_LENGHT = 56
         #vec = self.rohr_vector
         #vec.move_towards(self.start_x,self.start_y)
         #rotated_vec = vec.rotate(panzer_angle)
@@ -99,13 +99,14 @@ class Shoot() :
             self.speed_ver = 5
             self.gravity = 1
 
-    def update_y(self, ground_height,panzer_position):
+    def update_y(self,panzer_position):
         #keeps the tank in place......
-        self.rect2.y = ground_height - self.rect2.y
+        #self.rect2.y = ground_height - panzer_position - 19
+        self.rect2.y = panzer_position + 18
         #print(ground_height)
         #x = Offset Panzer + Rohr * cos(Winkel Panzer + Winkel Rohr)
         #y = Offset Panzer + Rohr * sin(Winkel Panzer + Winkel Rohr)
-        print(ground_height,self.rect2.y)
+        #print(ground_height,self.rect2.y)
 
     def draw(self, surface):
         #if self.shooting == True:
