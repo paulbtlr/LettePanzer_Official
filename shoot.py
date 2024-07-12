@@ -29,8 +29,8 @@ class Shoot() :
         #vec.move_towards(self.start_x,self.start_y)
         #rotated_vec = vec.rotate(panzer_angle)
         #pygame.draw.line(screen, (255,0,0),(self.start_x,self.start_y),(self.x,self.y))
-        self.rect.x = self.rect2.x + LINE_LENGHT*math.cos((panzer_rohr_angle - panzer_angle)*0.085 / 4)
-        self.rect.y = self.rect2.y + LINE_LENGHT*math.sin((panzer_rohr_angle - panzer_angle)*0.085 / 4)
+        self.rect.x = self.rect2.x + LINE_LENGHT*math.cos((panzer_rohr_angle - panzer_angle)*0.069 / 4)
+        self.rect.y = self.rect2.y + LINE_LENGHT*math.sin((panzer_rohr_angle - panzer_angle)*0.069 / 4)
 
     def move(self, tank, speed):
         key = pygame.key.get_pressed()
