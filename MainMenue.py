@@ -3,7 +3,7 @@ import sys
 import subprocess
 
 # Konstanten für Bildschirmgröße und Bildwiederholrate
-WIDTH, HEIGHT = 1920, 1080
+WIDTH, HEIGHT = 1920, 1030
 FPS = 60
 
 class MainMenu:

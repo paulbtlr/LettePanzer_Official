@@ -1,6 +1,6 @@
 import pygame
 import sys
-from UI import UI
+from UI import UI, Button
 from Panzer import Panzer
 from Boden import Boden
 from shoot import Shoot
@@ -88,7 +88,6 @@ def main(map_selection, background_image_path):
     """
     Interface Buttouns (GUI)
     """
-
     # Load Button Images
     off = pygame.image.load("Assets/Game/Interface/OFF.png")
     on = pygame.image.load("Assets/Game/Interface/ON.png")
@@ -111,7 +110,13 @@ def main(map_selection, background_image_path):
         Button(1710, 895, quitoff, quiton),
     ]
 
-    # Main loop
+    # Waffenfenster (initial nicht sichtbar)
+    waffenfenster = pygame.image.load("Assets/Game/Interface/Waffenfenster.png")
+    waffenfenster_visible = False
+
+    """ 
+    Main loop 
+    """
     running = True
     while running:
         for event in pygame.event.get():
@@ -123,6 +128,13 @@ def main(map_selection, background_image_path):
 
             # Pass events to UI
             ui.update(event)
+
+            # Check if any button is clicked
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                for button in buttons:
+                    if button.rect.collidepoint(event.pos):
+                        if button == buttons[4]:  # Check if the Waffen button is clicked
+                            waffenfenster_visible = not waffenfenster_visible  # Toggle visibility
 
         # Get current mouse position
         mouse_pos = pygame.mouse.get_pos()
@@ -178,10 +190,15 @@ def main(map_selection, background_image_path):
         interface_image = pygame.image.load("Assets/Game/Interface/GUIBG.png")
         screen.blit(interface_image, (0, 880))
 
+
          # Update and draw the buttons
         for button in buttons:
             button.update(mouse_pos)
             button.draw(screen)
+
+        # Draw Waffenfenster if visible        
+        if waffenfenster_visible:
+            screen.blit(waffenfenster, (0, 580))
 
         # Draw UI elements
         ui.draw_tank(panzer_left.tank, 200, 150, screen, True)
