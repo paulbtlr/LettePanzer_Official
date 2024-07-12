@@ -5,7 +5,7 @@ from Panzer import Panzer
 from Boden import Boden
 from shoot import Shoot
 from MainMenue import MainMenu
-from button import Button
+from UI import Button
 
 from pygame.locals import (
     K_ESCAPE,
