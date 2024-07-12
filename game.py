@@ -75,7 +75,7 @@ def main(map_selection, background_image_path):
     # Initialize Panzer with a scale factor to make it smaller
     panzer_left = Panzer("Assets/Game/Panzer/Body/P1.png", (95, boden.get_ground_height(95)), panzer_p1_rohr, True, scale_factor=0.09) #0.08
     panzer_right = Panzer("Assets/Game/Panzer/Body/P6.png", (1722, boden.get_ground_height(1722)), panzer_p6_rohr,  False, scale_factor=0.09)
-    shoot = Shoot(panzer_left.position[0]+114, panzer_left.position[1]-18,panzer_left.position[0]+56, panzer_left.position[1]-19)  
+    shoot = Shoot(panzer_left.position[0]+113, panzer_left.position[1]-18,panzer_left.position[0]+56, panzer_left.position[1]-19)  
 
     """
     Interface Buttouns (GUI)
