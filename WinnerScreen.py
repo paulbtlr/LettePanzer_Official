@@ -67,7 +67,7 @@ winner_screen_image_player2 = pygame.transform.scale(winner_screen_image_player2
 # Button-Bilder laden und skalieren
 startmenu_button_image = pygame.image.load('Assets/Screens/Buttons/Startmenü1.png')
 startmenu_button_hover_image = pygame.image.load('Assets/Screens/Buttons/Startmenü2.png')
-neustarten_button_image = pygame.image.load('Assets/Bilder/Screens/Buttons/Neustarten1.png')
+neustarten_button_image = pygame.image.load('Assets/Screens/Buttons/Neustarten1.png')
 neustarten_button_hover_image = pygame.image.load('Assets/Screens/Buttons/Neustarten2.png')
 quit_button_image = pygame.image.load('Assets/Screens/Buttons/Quit1.png')
 quit_button_hover_image = pygame.image.load('Assets/Screens/Buttons/Quit2.png')
