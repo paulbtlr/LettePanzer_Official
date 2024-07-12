@@ -74,7 +74,8 @@ def main(map_selection, background_image_path):
     # Initialize Panzer with a scale factor to make it smaller
     panzer_left = Panzer("Assets/Game/Panzer/Body/P1.png", (95, boden.get_ground_height(95)), panzer_p1_rohr, True, scale_factor=0.09) #0.08
     panzer_right = Panzer("Assets/Game/Panzer/Body/P6.png", (1722, boden.get_ground_height(1722)), panzer_p6_rohr,  False, scale_factor=0.09)
-    shoot = Shoot(panzer_left.position[0]+113, panzer_left.position[1]-18,panzer_left.position[0]+56, panzer_left.position[1]-19)  
+    shoot = Shoot(panzer_left.position[0]+113, panzer_left.position[1]-18,panzer_left.position[0]+56, panzer_left.position[1]-19) 
+    shoot2 = Shoot(panzer_right.position[0]+113, panzer_right.position[1]-18,panzer_right.position[0]+56, panzer_right.position[1]-19) 
 
     """
     Interface Buttouns (GUI)
@@ -142,7 +143,7 @@ def main(map_selection, background_image_path):
             color = interpolate_color(TOP_COLOR, BOTTOM_COLOR, factor)
             pygame.draw.line(screen, color, (x, y), (x, window_size[1]))
 
-        # Update blue panzer position and angle, then draw
+        # Update right panzer position and angle, then draw
         panzer_right.move()
         #panzer_right.update_animation(screen)
         panzer_right.update_position(boden.get_ground_height(panzer_right.position[0]))
@@ -152,7 +153,7 @@ def main(map_selection, background_image_path):
         panzer_right.rohr_setting(screen)
         panzer_right.draw_panzer(screen)
 
-        # Update blue panzer position and angle, then draw
+        # Update left panzer position and angle, then draw
         panzer_left.move()
         #panzer_blu.update_animation(screen)
         panzer_left.update_position(boden.get_ground_height(panzer_left.position[0]))
@@ -162,11 +163,17 @@ def main(map_selection, background_image_path):
         panzer_left.rohr_setting(screen)
         panzer_left.draw_panzer(screen)
 
-        shoot.move(panzer_left.tank,panzer_left.speed)
-        shoot.vector_angle(panzer_left.rohr_angle,panzer_left.angle)
+        #Load Shoot Functions for Left Tank
+        shoot.move(panzer_left.tank,panzer_left.speed, True)
+        shoot.vector_angle(panzer_left.rohr_angle,panzer_left.angle, True)
         shoot.update_y(panzer_left.position[1])
-        shoot.update_shoot()
         shoot.draw(screen)
+
+        #Load Shoot Functions for Right Tank
+        shoot2.move(panzer_right.tank,panzer_right.speed, False)
+        shoot2.vector_angle(panzer_right.rohr_angle,panzer_right.angle, False)
+        shoot2.update_y(panzer_right.position[1])
+        shoot2.draw(screen)
 
         # Load the Interface image
         interface_image = pygame.image.load("Assets/Game/Interface/GUIBG.png")
