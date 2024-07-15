@@ -5,7 +5,7 @@ SCREEN_WIDTH = 1920
 SCREEN_HEIGHT = 1020
 
 #shootitooti
-class Shoot() :
+class Projectile() :
     def __init__(self,x,y,start_x, start_y) :
           self.x = x
           self.y = y

@@ -7,6 +7,7 @@ from shoot import Shoot
 from MainMenue import MainMenu
 from weapons import Weapons
 from UI import Button
+from spritesheet import Spritesheet
 
 from pygame.locals import (
     K_ESCAPE,
@@ -37,14 +38,12 @@ def main(map_selection, background_image_path):
     # Initialise Clock
     clock = pygame.time.Clock()
     FPS = 60
-
     # Define colors
     running = True
+    BLACK = (0,0,0)
     LIGHT_BLUE = background_image_path
     TOP_COLOR = (255, 0, 255)
     BOTTOM_COLOR = (230, 230, 250)
-
-    ANIMATION_STEPS = [24,8]
 
     # Initialize Imports
     ui = UI(screen)
@@ -75,14 +74,42 @@ def main(map_selection, background_image_path):
     panzer_p6 = pygame.image.load("Assets/Game/Panzer/Body/P6.png")
     panzer_p6_rohr = pygame.image.load("Assets/Game/Rohr/PR6.png")
 
+
+    projectile_image = pygame.image.load("Assets/Game/Weapon/Panzergeschoss/PGG.png")
+    barrel_sheet = pygame.image.load("Assets/Game/Weapon/MilbradtFass/MilbradtFassSprite.png").convert_alpha()
+    lightning_sheet = pygame.image.load("Assets/Game/Weapon/Lightningball/LBSpriteYellow.png").convert_alpha()
+
     # Initialize Panzer with a scale factor to make it smaller
     panzer_left = Panzer("Assets/Game/Panzer/Body/P1.png", (95, boden.get_ground_height(95)), panzer_p1_rohr, True, scale_factor=0.09) #0.08
     panzer_right = Panzer("Assets/Game/Panzer/Body/P6.png", (1722, boden.get_ground_height(1722)), panzer_p6_rohr,  False, scale_factor=0.09)
     # Initialize Shoot Functions, for the Spawnpoint of Weapons
     shoot = Shoot(panzer_left.position[0]+113, panzer_left.position[1]-18,panzer_left.position[0]+56, panzer_left.position[1]-19) 
     shoot2 = Shoot(panzer_right.position[0]+113, panzer_right.position[1]-18,panzer_right.position[0]+56, panzer_right.position[1]-19) 
+    
+    barrel_spritesheet = Spritesheet(barrel_sheet)
+    lightning_spritesheet = Spritesheet(lightning_sheet)
+
+    # #ANIMATION
+    # animation_list = []
+    # #animation_steps = 24
+    ANIMATION_STEPS = [24,8]
+    # animation_cooldown = 100
+
+    # last_update = pygame.time.get_ticks()
+    # frame = 0
+
+    # for x in range(ANIMATION_STEPS[1]):
+    #     animation_list.append(lightning_spritesheet.get_image(x, 640, 640, 0.09 / 4, BLACK))
+
+    #for x in range(ANIMATION_STEPS[0]):
+    #    animation_list.append(barrel_spritesheet.get_image(x, 625, 640, 0.09, BLACK))
+
     # Initialize Weapons
-    weapons = Weapons("Assets/Game/Weapon/Panzergeschoss/PGG.png","Assets/Game/Weapon/MilbradtFass/MilbradtFassSprite.png","Assets/Game/Weapon/Lightningball/LBSpriteYellow.png",ANIMATION_STEPS)
+    lightning_weapon = Weapons(lightning_spritesheet,ANIMATION_STEPS[1])
+    lightning_weapon.load_animation()
+
+    lightning_weapon2 = Weapons(lightning_spritesheet,ANIMATION_STEPS[1])
+    lightning_weapon2.load_animation()
 
 
     """
@@ -173,17 +200,41 @@ def main(map_selection, background_image_path):
 
         #Load Shoot Functions for Left Tank
         shoot.move(panzer_left.tank,panzer_left.speed, True)
+        shoot.use_shooting(True)
+        shoot.update_shoot(True)
         shoot.vector_angle(panzer_left.rohr_angle,panzer_left.angle, True)
         shoot.update_y(panzer_left.position[1])
-        shoot.draw(screen)
+        #shoot.draw(screen)
+        lightning_weapon.update_weapon()
+        lightning_weapon.collide(panzer_right.position[0], panzer_right.position[1],panzer_right.width, panzer_right.height,panzer_right.health)
+        if shoot.shooting == True:
+            lightning_weapon.draw_weapon(screen,shoot.rect.x -5, shoot.rect.y -5)
 
         #Load Shoot Functions for Right Tank
         shoot2.move(panzer_right.tank,panzer_right.speed, False)
+        shoot2.use_shooting(False)
+        shoot2.update_shoot(False)
         shoot2.vector_angle(panzer_right.rohr_angle,panzer_right.angle, False)
         shoot2.update_y(panzer_right.position[1])
-        shoot2.draw(screen)
+        #shoot2.draw(screen)
 
-        weapons.draw_weapon(screen)
+        #update animation
+        lightning_weapon2.update_weapon()
+        #lightning_weapon2.collide(panzer_left.position[0], panzer_left.position[1],panzer_left.width, panzer_left.height,panzer_left.health)
+        if shoot2.shooting == True:
+            lightning_weapon2.draw_weapon(screen,shoot2.rect.x -5, shoot2.rect.y -5)
+        #current_time = pygame.time.get_ticks()
+        #if current_time - last_update >= animation_cooldown:
+        #    frame += 1
+        #    last_update = current_time
+        #    if frame >= len(animation_list)-1:
+        #        frame = 0
+
+        #if shoot.shooting == True:
+        #screen.blit(animation_list[frame], (shoot.rect.x - 5, shoot.rect.y -5))
+        #draw sprite
+        #weapons.draw_weapon(screen)
+        #screen.blit(barrel1, (300,300))
         
 
         # Load the Interface image

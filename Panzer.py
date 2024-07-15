@@ -19,10 +19,12 @@ class Panzer:
         self.rotated_rohr = 0  # rotierte Panzerrohr
         self.position = list(start_position)  # Startposition des Panzers
         self.scale_factor = scale_factor  # Speichert den Skalierungsfaktor
+        self.width = self.image.get_width() + self.rohr_image.get_width()
+        self.height = self.image.get_height() + self.rohr_image.get_height()
         self.flip = flip  # Ausrichtung des Panzers (True für Player 1, False für Player 2)
         self.angle = 0  # Initialisiert den Winkel des Panzers
         self.speed = 2  # Geschwindigkeit des Panzers
-        self.tank = 2000  # maximale Bewegungsdistanz des Panzers
+        self.tank = 200  # maximale Bewegungsdistanz des Panzers
         self.health = 100  # Gesundheit des Panzers
         self.armor = 50  # Panzerung des Panzers
         self.move_right = False  # Bewegung nach rechts
